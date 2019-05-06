@@ -1,6 +1,6 @@
 var domain = 'https://www.wonderfulsubs.com';//'http://localhost:5000';
-var posterTallPlaceholder = domain + '/img/poster_placeholder_tall.png';
-var posterWidePlaceholder = domain + '/img/poster_placeholder_wide.png';
+var posterTallPlaceholder = /*domain +*/ '/img/poster_placeholder_tall.png';
+var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
 var siteShortname = 'ws';
 var recaptchaKey = true ? '6LcC9ncUAAAAAGClorUQbnX9jl331yMXu_RZGtnx' : '6Ldb-XcUAAAAABImcnwvx1EeOEs73hVn2ecXaaKL';
 var recaptchaUrl = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
