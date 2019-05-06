@@ -1,0 +1,46 @@
+#user-panel {
+    z-index: 10001;
+    height: 100%;
+    width: 100%;
+    background-color:rgba(0, 0, 0, 0.75);
+    bottom: 0;
+    position: fixed;
+    overflow-y: scroll;
+}
+
+.user-panel-profile {
+    padding: 10px;
+    height: 50px;
+    background-color: #000000;
+}
+
+.user-panel-profile img {
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    margin-right: 10px;
+}
+
+.user-panel-profile .pointer.right {
+    margin-left: 20px;
+}
+
+.user-panel-list-buttons {
+    text-align: center;
+}
+
+.user-panel-list-buttons button.active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.user-panel-list-buttons button i {
+    padding-right: 5px;
+}
+
+@media only screen and (min-width: 610px) {
+    .user-panel-list {
+        max-width: 75%;
+        margin: 0 auto;
+    }
+}

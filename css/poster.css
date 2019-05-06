@@ -1,0 +1,86 @@
+.poster-header {
+    color: #ffffff;
+    height: 65px;
+    text-align: center;
+}
+
+.poster-item-container {
+    float: left;
+    transform-origin: center top;
+    padding-bottom: 10px;
+}
+
+.side-scroll .poster-item-container {
+    padding-right: 10px;
+}
+
+.poster-item {
+    width: 140px;
+    margin: 0 auto;
+}
+
+.poster-item img {
+    width: 100%;
+    height: 210px;
+    display: block;
+    border-radius: .2em .2em 0 0;
+}
+
+.poster-item .poster-title {
+    background: #424242;
+    color: #ffffff;
+    height: 88px;
+    overflow: hidden;
+    padding: 5px 8px;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    font-size: 13.5px;
+}
+
+.poster-item .poster-list-button-container {
+    height: 24px;
+}
+
+.poster-item .poster-watch-later, .poster-item .poster-watch-favorite {
+    line-height: 24px;
+    height: 24px;
+    font-size: 11px;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+}
+
+.poster-item .poster-watch-later {
+    background: #000000;
+}
+
+.poster-item .poster-watch-later.active {
+    background: #4caf50;
+}
+
+.poster-item .poster-watch-favorite {
+    background: #151515;
+}
+
+.poster-item .poster-watch-favorite.active {
+    background: #f44336;
+}
+
+.poster-item.removed img {
+    filter: brightness(0.5);
+}
+
+.poster-item .poster-language {
+    overflow: hidden;
+    padding: 0px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    background: #717171;
+    color: #ffffff;
+    font-size: 12px;
+    border-radius: 0 0 .2em .2em;
+}

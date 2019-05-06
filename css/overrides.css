@@ -1,0 +1,105 @@
+nav .brand {
+  padding: 0 1.2em 0 0;
+}
+
+@media only screen and (min-width: 768px) {
+  nav .brand {
+    padding: 0;
+  }
+}
+
+.flex {
+  margin: 0;
+  width: 100%;
+}
+
+.flex > * {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+
+form input:focus:not([type=checkbox]):not([type=file]), fieldset input:focus:not([type=checkbox]):not([type=file]), textarea:focus {
+  background-color: #ffffff;
+  color: #000000;
+  opacity: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+th {
+  font-weight: 600;
+}
+
+pre,
+.label,
+[data-tooltip]:after,
+button,
+.button,
+[type=submit],
+input,
+textarea,
+.select select,
+select,
+.card, .modal .overlay ~ * {
+  border-radius: 0;
+}
+
+input, textarea, .select select {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: inherit;
+}
+
+/* Default Theme*/
+.label,
+[data-tooltip]:after,
+button,
+.button,
+[type="submit"],
+.select select:focus,
+select:focus,
+select:active,
+[type="radio"] + .checkable:hover:before,
+[type="checkbox"] + .checkable:hover:before,
+[type="radio"]:focus + .checkable:before,
+[type="checkbox"]:focus + .checkable:before,
+th {
+  background-color: #000000;
+}
+
+.card,
+.modal .overlay ~ * {
+  background-color: #181818;
+  color: #bdbdbd;
+  border: none;
+}
+
+.card hr, .modal .overlay ~ * hr {
+  background-color: #3e3e3e;
+}
+
+.card header, .modal .overlay ~ * header {
+  border-color: #3e3e3e;
+}
+
+.card header h1,
+.modal .overlay ~ * header h1,
+.card header h2,
+.modal .overlay ~ * header h2,
+.card header h3,
+.modal .overlay ~ * header h3,
+.card header h4,
+.modal .overlay ~ * header h4,
+.card header h5,
+.modal .overlay ~ * header h5,
+.card header h6,
+.modal .overlay ~ * header h6,
+[type=checkbox]:checked+.checkable:after {
+  color: #ffffff;
+}
+
+.card .subtitle {
+  color: #bdbdbd;
+}

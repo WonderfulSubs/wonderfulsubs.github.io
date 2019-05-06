@@ -1,0 +1,9 @@
+.video-js .vjs-menu-button-popup .vjs-menu .vjs-menu-content {
+    transform: scale(0.6);
+    margin-bottom: -45px;
+    padding-bottom: 28px;
+}
+
+.vjs-quality-selector .vjs-icon-placeholder:before {
+    content: '\f110'
+}

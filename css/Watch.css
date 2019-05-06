@@ -1,0 +1,80 @@
+.watch-content-container {
+    max-width: 1065px;
+    width: 100%;
+    padding-top: .3em;
+}
+
+.episode-info-card {
+    max-height: 35vh;
+    height: 253px;
+}
+
+.series-info-card {
+    height: 394px;
+}
+
+.episode-info-card, .series-info-card {
+    overflow-y: scroll;
+}
+
+.episode-info-card p {
+    margin-top: -6px;
+    float: right;
+    padding-left: 10px;
+}
+
+.episode-info-card .subtitle, .series-info-card .subtitle {
+    display: block;
+}
+
+.season-list-button {
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.season-list-button i {
+    padding-right: 0.5em;
+}
+
+.episode-list .tabs .toggle {
+    color: #ffffff;
+}
+
+.episode-list .number, .episode-list .language {
+    white-space: nowrap;
+}
+
+.source-table-body {
+    text-transform: capitalize;
+}
+
+.table-container {
+    overflow-x: scroll;
+}
+
+.table-selectable {
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 16px;
+    background-color: #424242;
+}
+
+.table-selectable tr.selected, .table-selectable tr:hover {
+    background-color: #000000;
+}
+
+.list-header {
+    padding: 0 0 10px 0;
+}
+
+.list-header span {
+    margin: 0;
+}
+
+@media only screen and (min-width: 700px) {
+    .watch-content-container {
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+}

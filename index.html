@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.0/picnic.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/native-toast@2.0.0/dist/native-toast.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/overrides.css" />
+    <link rel="stylesheet" href="/css/Login.css" />
+    <link rel="stylesheet" href="/css/Welcome.css" />
+    <link rel="stylesheet" href="/css/Watch.css" />
+    <link rel="stylesheet" href="/css/poster.css" />
+    <link rel="stylesheet" href="/css/showcase.css" />
+    <link rel="stylesheet" href="/css/player.css" />
+    <link rel="stylesheet" href="/css/user.css" />
+    <link href="https://vjs.zencdn.net/7.4.1/video-js.min.css" rel="stylesheet" />
+    <link href="/css/videojs-hls-quality-selector.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/vsg-skin.css" />
+    <link rel="stylesheet" href="/css/icons.css" />
+
+    <script src="https://vjs.zencdn.net/7.4.1/video.min.js"></script>
+    <script src="/js/videojs-contrib-quality-levels.min.js"></script>
+    <script src="/js/videojs-hls-quality-selector.min.js"></script>
+    <script src="//cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
+    <script src="https://unpkg.com/native-toast@2.0.0/dist/native-toast.min.js"></script>
+    <script src="https://unpkg.com/mithril@1.1.6/mithril.min.js"></script>
+    <script src="/js/helpers.js"></script>
+    <script src="/js/poster.js"></script>
+    <script src="/js/showcase.js"></script>
+    <script src="/js/lists.js"></script>
+    <script src="/js/player.js"></script>
+    <script src="/js/user.js"></script>
+    <script src="/pages/Home.js"></script>
+    <script src="/pages/Login.js"></script>
+    <script src="/pages/Welcome.js"></script>
+    <script src="/pages/Series.js"></script>
+    <script src="/pages/Genre.js"></script>
+    <script src="/pages/Watch.js"></script>
+    <script src="/pages/Search.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="nav-menu">
+            <nav class="nav-menu-content">
+                <div>
+                    <a href="/" onclick="routeAnchor(event, '/')">
+                        <img class="brand" src="/svg/logo.svg" />
+                    </a>
+                    <form class="nav-search" action="/search" onsubmit="getSearchResults(event)" acceptCharset="utf-8">
+                        <label>
+                            <input type="search" name="q" placeholder="Search..." autoComplete="off"
+                                onsubmit="dismissKeyboard(event)" onclick="event.target.form.style['z-index'] = '1'" onblur="event.target.form.style['z-index'] = ''">
+                            <i class="icon-search"></i>
+                        </label>
+                    </form>
+                    <div class="nav-buttons side-scroll">
+                        <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
+                        <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
+                        <a href="/users" onclick="routeAnchor(event, '/users')" class="button">Users</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="content-wrapper animated" id="root"></div>
+    <div id="user-panel" class="animated faster lists slideInUp none"></div>
+    <div class="bottom-bar">
+        <div class="flex">
+            <div class="bottom-bar-button"><i class="icon-comment"></i>
+                <div>Chat</div>
+            </div>
+            <div class="bottom-bar-button left-divider" onclick="showHideUserPanel()"><i class="icon-user-circle"></i>
+                <div>User</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var root = document.getElementById('root');
+
+        m.route.prefix('');
+        m.route(root, '/', {
+            '/': Home,
+            '/login': Login,
+            '/signup': Login,
+            '/series': Series,
+            '/genre': Genre,
+            '/popular': popularSeries,
+            '/updated': updatedSeries,
+            '/search': Search,
+            '/watch/:id': Watch,
+        });
+    </script>
+</body>
+
+</html>
