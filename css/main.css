@@ -1,8 +1,11 @@
 body {
   background-color: #212121;
   color: #ffffff;
-  min-height: 110%;
   -webkit-tap-highlight-color: transparent;
+}
+
+body, .content-wrapper {
+  min-height: 110%;
 }
 
 * {
