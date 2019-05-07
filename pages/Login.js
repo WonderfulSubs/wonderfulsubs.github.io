@@ -88,10 +88,12 @@ var Login = {
                     m('i', { class: 'icon-user-circle' }),
                     m('input', { type: 'text', placeholder: 'Username', name: 'username', autocomplete: 'off', required: true })
                 ]),
+                m('span', '* Username cannot contain special characters and needs to be a minimum of 2 characters'),
                 m('label', [
                     m('i', { class: 'icon-key' }),
                     m('input', { type: 'password', placeholder: 'Password', name: 'password', autocomplete: 'off', required: true })
                 ]),
+                m('span', '* Password needs to be a minimum of 6 characters'),
                 m('label', [
                     m('i', { class: 'icon-mail-alt' }),
                     m('input', { type: 'email', placeholder: 'Email (Optional)', name: 'email', autocomplete: 'off' })
