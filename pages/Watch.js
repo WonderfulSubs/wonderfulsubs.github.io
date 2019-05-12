@@ -1,3 +1,18 @@
+function showHideMore(e) {
+    var button = e.target;
+    var previousElemSibling = button.previousElementSibling;
+    if (previousElemSibling.style['overflow-y'] === 'scroll') {
+        previousElemSibling.style['overflow-y'] = '';
+        previousElemSibling.scrollTo(0, 0);
+        button.innerText = 'Show More';
+    } else {
+        previousElemSibling.style['overflow-y'] = 'scroll';
+        previousElemSibling.scrollTo(0, 30);
+        button.innerText = 'Show Less';
+    }
+}
+
+var showMoreButton = m('div', { class: 'show-more top-divider', onclick: showHideMore }, 'Show More');
 var player = VideoPlayer();
 var sourceSelectorId = getRandomId();
 
@@ -11,14 +26,18 @@ var SeriesInfo = {
                 m("h6", { class: "subtitle" }, series.japanese_title)
             );
 
-        return m(
-            "article",
-            { class: "card series-info-card animated fadeInRight none full-700" },
-            [
-                m("header", headerElements),
-                m("section", { class: "content" }, [m("p", series.description)])
-            ]
-        );
+        return m.fragment({}, [
+            m("h2", { class: "list-header animated fadeInUp" }, [
+                m("span", { class: "label none full-700" }, "Info")
+            ]),
+            m('div', { class: 'fadeInRight animated none full-700' }, [
+                m("article", { class: "card series-info-card" }, [
+                    m("header", headerElements),
+                    m("section", { class: "content" }, [m("p", series.description)])
+                ]),
+                showMoreButton
+            ])
+        ]);
     }
 };
 
@@ -69,10 +88,8 @@ var EpisodeInfo = {
         var season = EpisodeInfo.season;
         var series = EpisodeInfo.series;
 
-        return m(
-            "article",
-            { class: "card episode-info-card animated fadeInLeft" },
-            [
+        return m('div', { class: 'animated fadeInLeft' }, [
+            m("article", { class: "card episode-info-card" }, [
                 m("header", [
                     m("h3", { class: (episode.sources || episode.retrieve_url) ? undefined : 'flash animated infinite slower' }, (episode.sources || episode.retrieve_url) ? episode.title : 'Select An Episode Below'),
                     m("h6", { class: "subtitle" }, season.title || series.title)
@@ -94,8 +111,9 @@ var EpisodeInfo = {
                         episode.description || season.description || series.description
                     )
                 ])
-            ]
-        );
+            ]),
+            showMoreButton
+        ]);
     }
 };
 
@@ -103,12 +121,15 @@ var SeasonsList = {
     list: [],
     view: function () {
         var list = SeasonsList.list;
+        var episodeListInstance;
 
         function openCloseEpisodeList(vnode) {
             vnode.dom.onclick = function (e) {
                 var listElem = e.target.nextElementSibling;
                 if (listElem.classList.contains("none")) {
                     listElem.classList.remove("none");
+                    console.log(episodeListInstance);
+                    if (episodeListInstance.firstEpisodeTab) episodeListInstance.setListHeight(0, episodeListInstance.firstEpisodeTab);
                 } else {
                     listElem.classList.add("none");
                 }
@@ -128,6 +149,7 @@ var SeasonsList = {
             { class: "animated fadeInUp" },
             list.map(function (season, index) {
                 season.index = index;
+                episodeListInstance = EpisodeList(season.episodes, season);
                 return m("div", { key: season.id || season.type + String(index) }, [
                     m(
                         "span",
@@ -141,7 +163,7 @@ var SeasonsList = {
                             m("i", { class: "icon-up-dir right" })
                         ]
                     ),
-                    m(EpisodeList(season.episodes, season))
+                    m(episodeListInstance)
                 ]);
             })
         );
@@ -155,10 +177,21 @@ function EpisodeList(list, season) {
     var pages = getEpisodePages(list, 50);
     var tabsStyle = getEpisodePagesCSS(pages.length);
 
-    return {
+
+    var _this = {
+        setListHeight: function (index, e) {
+            e.redraw = false;
+            console.log(e.target);
+            var tabs = e.target.parentElement;
+            tabs.style.height = '';
+            var row = tabs.querySelector('.row');
+            var table = tabs.querySelectorAll('.table-container table')[index];
+            tabs.style.height = (table.clientHeight + tabs.clientHeight - row.clientHeight) + 'px';
+        },
         view: function () {
             function tabs(check) {
                 var randomPrefix = getRandomId();
+
                 return pages.map(function (page, index) {
                     var id = "episode-page-tab-" + (index + 1) + "-" + (season.index + 1);
                     var name = randomPrefix + "-episodePagesTabs-" + (season.index + 1);
@@ -169,7 +202,7 @@ function EpisodeList(list, season) {
                             name: name,
                             checked: check && index === 0 ? true : undefined
                         }),
-                        m("label", { class: "pseudo button toggle", for: id }, page.title)
+                        m("label", { class: "pseudo button toggle", for: id, onclick: _this.setListHeight.bind(this, index), oncreate: function (vom) { if (index === 0) _this.firstEpisodeTab = { target: vom.dom }; } }, page.title)
                     ]);
                 });
             }
@@ -178,12 +211,12 @@ function EpisodeList(list, season) {
                 var isSubbed = episode.is_subbed;
                 var isDubbed = episode.is_dubbed;
                 if (!isSubbed && Array.isArray(episode.sources)) {
-                    isSubbed = episode.sources.some(function(source) {
+                    isSubbed = episode.sources.some(function (source) {
                         return source.language === 'subs';
                     });
                 }
                 if (!isDubbed && Array.isArray(episode.sources)) {
-                    isDubbed = episode.sources.some(function(source) {
+                    isDubbed = episode.sources.some(function (source) {
                         return source.language === 'dubs';
                     });
                 }
@@ -232,11 +265,13 @@ function EpisodeList(list, season) {
                             ]);
                         })
                     ]),
-                    tabs()
+                    // tabs()
                 ])
             ]);
         }
     };
+
+    return _this;
 }
 
 var SourceSelectModal = {
