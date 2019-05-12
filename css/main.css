@@ -224,6 +224,14 @@ body, .content-wrapper {
   border-right: 1px solid rgba(189, 189, 189, 0.2);
 }
 
+.top-divider {
+  border-top: 1px solid rgba(189, 189, 189, 0.2);
+}
+
+.bottom-divider {
+  border-bottom: 1px solid rgba(189, 189, 189, 0.2);
+}
+
 .pointer {
   cursor: pointer;
 }
