@@ -53,6 +53,10 @@
     white-space: nowrap;
 }
 
+.episode-list .table-selectable tr {
+    height: 68px;
+}
+
 .source-table-body {
     text-transform: capitalize;
 }
