@@ -66,7 +66,7 @@ select:active,
 [type="radio"]:focus + .checkable:before,
 [type="checkbox"]:focus + .checkable:before,
 th {
-  background-color: #000000;
+  background-color: #151515;
 }
 
 .card,

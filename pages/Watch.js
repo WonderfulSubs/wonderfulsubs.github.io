@@ -484,6 +484,7 @@ var Watch = {
         if (!AuthUser.data._id) return m.route.set('/');
 
         return m("div", [
+            darkThemeStyles,
             m("div", { class: "watch-content-container flex one two-700" }, [
                 m("div", { class: "two-third-700" }, [
                     m(player),
