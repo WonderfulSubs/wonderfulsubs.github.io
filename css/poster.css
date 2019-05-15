@@ -19,7 +19,6 @@
     width: 140px;
     margin: 0 auto;
     box-shadow: -1px 1px 4px #b6b6b6;
-    transition: box-shadow 1s;
 }
 
 .poster-item img {
