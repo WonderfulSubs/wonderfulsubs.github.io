@@ -1,34 +1,25 @@
-.showcase-container {
-    height: 264px;
-}
-
-.showcase-item {
+.showcase-container div {
+    width: 100%;
+    height: 80px;
+    background-color: #e7e7e7;
     overflow: hidden;
+    display: inline-flex;
 }
 
-.showcase-content-container {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
+.showcase-container img {
+    width: 148px;
+    height: 90%;
     position: relative;
+    padding: 0 5px;
 }
 
-.showcase-content {
-    width: 100%;
-    color: rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.25);
-    padding: 8px;
-    height: 262px;
-    text-shadow: rgb(0, 0, 0) 1px 1px 2px;
-    margin: 3px 0px;
-    bottom: 5px;
-    font-size: 1.35rem;
-    font-weight: 500;
-    line-height: 130%;
+.showcase-container span {
+    width: calc(100% - 148px);
+    padding-right: 5px;
+    color: #616161;
+    transition: color .2s;
 }
 
-.showcase-title {
-    bottom: 5px;
+.showcase-container span:hover {
+    color: #ff9900;
 }
