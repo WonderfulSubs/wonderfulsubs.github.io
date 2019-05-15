@@ -73,6 +73,7 @@ body, .content-wrapper {
 
 .result-switch button {
   margin: 6px 9px;
+  background-color: #ff9900;
 }
 
 .nav-menu-content > div, .bottom-bar > .flex, .footer > div {
