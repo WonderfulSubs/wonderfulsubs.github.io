@@ -2,6 +2,7 @@
     color: #686868;
     height: 65px;
     text-align: center;
+    transition: color 1s;
 }
 
 .poster-item-container {
@@ -18,6 +19,7 @@
     width: 140px;
     margin: 0 auto;
     box-shadow: -1px 1px 4px #b6b6b6;
+    transition: box-shadow 1s;
 }
 
 .poster-item img {
@@ -39,6 +41,7 @@
     -webkit-box-orient: vertical;
     line-height: 1.5;
     font-size: 13.5px;
+    transition: background-color 1s, color 1s;
 }
 
 .poster-item .poster-list-button-container {
@@ -55,20 +58,21 @@
 }
 
 .poster-item .poster-watch-later {
-    background: #ff9900;
+    background-color: #ff9900;
+    transition: background-color 1s;
 }
 
 .poster-item .poster-watch-later.active {
-    background: #4caf50;
+    background-color: #4caf50;
 }
 
 .poster-item .poster-watch-favorite {
-    background: #ff9900;
-    filter: saturate(3);
+    background-color: #ff8400;
+    transition: background-color 1s;
 }
 
 .poster-item .poster-watch-favorite.active {
-    background: #f44336;
+    background-color: #f44336;
 }
 
 .poster-item.removed img {
@@ -81,8 +85,9 @@
     height: 32px;
     line-height: 32px;
     text-align: center;
-    background: #9e9e9e;
+    background-color: #9e9e9e;
     color: #ffffff;
     font-size: 12px;
     border-radius: 0 0 .2em .2em;
+    transition: background-color 1s;
 }

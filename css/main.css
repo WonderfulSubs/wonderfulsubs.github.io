@@ -1,6 +1,8 @@
 body {
   background-color: #f5f5f5;
-  color: #151515;
+  color: #616161;
+  user-select: none;
+  transition: background-color 1s, color 1s;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -18,6 +20,7 @@ body, .content-wrapper {
   background-color: #151515;
   color: #ffffff;
   padding: 0 .6em 150px;
+  transition: background-color 1s;
 }
 
 ::-webkit-scrollbar {
@@ -81,6 +84,7 @@ body, .content-wrapper {
 .nav-menu-content {
   background-color: #ffffff;
   height: 50px;
+  transition: background-color 1s;
 }
 
 .nav-menu-content > div {
@@ -105,6 +109,7 @@ body, .content-wrapper {
   opacity: 0;
   width: 40px;
   float: right;
+  transition: background-color 1s, color 1s;
 }
 
 .nav-search input:focus {
@@ -122,6 +127,7 @@ body, .content-wrapper {
 .nav-buttons a, .nav-buttons button {
   background-color: transparent;
   color: #ff9900;
+  transition: color 1s;
 }
 
 @media only screen and (max-width: 767px) {
@@ -182,6 +188,7 @@ body, .content-wrapper {
   position: absolute;
   right: 10px;
   top: 10px;
+  transition: color 1s;
 }
 
 .nav-search,
@@ -204,6 +211,7 @@ body, .content-wrapper {
   bottom: 0;
   text-align: center;
   padding-top: .2em;
+  transition: background-color 1s;
 }
 
 .bottom-bar-button {

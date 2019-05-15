@@ -6,6 +6,7 @@
     bottom: 0;
     position: fixed;
     overflow-y: scroll;
+    transition: background-color 1s;
 }
 
 .user-panel-profile {
