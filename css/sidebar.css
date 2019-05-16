@@ -1,0 +1,34 @@
+.sidebar-top-announcement {
+    width: 100%;
+    height: 72px;
+    background: center no-repeat;
+    background-image: url(/img/Support_Rectangle.png);
+    background-color: #ffffff;
+}
+
+.sidebar-container > *:first-child {
+    margin-top: .3em;
+}
+
+.sidebar-container > * {
+    margin-bottom: 10px;
+}
+
+.sidebar-container > *:not(:first-child) {
+    display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+    .sidebar-top-announcement {
+        height: 268px;
+        background-image: url(/img/Support_Square.png);
+    }
+    
+    .sidebar-container > *:first-child {
+        margin-top: 65px;
+    }
+    
+    .sidebar-container > *:not(:first-child) {
+        display: block;
+    }
+}
