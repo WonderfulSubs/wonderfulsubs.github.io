@@ -22,8 +22,7 @@ var Home = {
                     m('div', m(popularSeries)),
                     m('div', { class: 'left-divider' }, m(updatedSeries))
                 ])
-            ]),
-            Sidebar
+            ])
         ]);
     }
 };
