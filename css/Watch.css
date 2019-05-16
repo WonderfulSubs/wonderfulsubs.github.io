@@ -71,6 +71,10 @@
     background-color: #424242;
 }
 
+.table-selectable td {
+    padding-right: 0.6em;
+}
+
 .table-selectable tr.selected, .table-selectable tr:hover {
     background-color: #000000;
 }
