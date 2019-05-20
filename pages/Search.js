@@ -20,13 +20,13 @@ var Search = {
     },
     getResults: function (query) {
         Search.results = SeriesList(
-          domain + "/api/media/search?options=summary&q=" + query,
-          {
-            header: Search.title,
-            callback: function(count) {
-              Search.count = count;
+            domain + "/api/media/search?options=summary&q=" + query,
+            {
+                header: Search.title,
+                callback: function (count) {
+                    Search.count = count;
+                }
             }
-          }
         );
     },
     results: SeriesList(),
@@ -35,11 +35,13 @@ var Search = {
 
         setTitle(Search.title);
 
-        return m('div', { class: 'main-container' }, [
-            m('div', [
+        return m.fragment({}, [
+            m('div', { class: 'main-container' }, [
                 m('div', [
-                    m(Search.results),
-                    Search.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined
+                    m('div', [
+                        m(Search.results),
+                        Search.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined
+                    ])
                 ])
             ])
         ]);

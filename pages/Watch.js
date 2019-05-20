@@ -493,7 +493,8 @@ var Watch = {
                 ]),
                 m("div", { class: "third-700" }, [m(SeriesInfo), m(RecommendedList)])
             ]),
-            m(SourceSelectModal)
+            m(SourceSelectModal),
+            hideSidebarStyles
         ]);
     },
     oncreate: function (vnode, callback) {

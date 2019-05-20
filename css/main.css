@@ -20,7 +20,7 @@ body {
   background-color: #151515;
   color: #ffffff;
   padding: 0 .6em 150px;
-  margin-top: 100vh;
+  margin-top: 33vh;
   position: static;
   transition: background-color 1s;
 }
@@ -198,15 +198,16 @@ body {
   height: 100%;
 }
 
+.content-wrapper-container.flex {
+  max-width: 1390px;
+  margin: 0 auto;
+}
+
 .content-wrapper {
   position: relative;
   max-width: 1390px;
   margin: 0 auto;
   padding-bottom: 80px;
-}
-
-.content-wrapper.flex, .content-wrapper.flex > * {
-  margin: 0 auto;
 }
 
 .bottom-bar {
@@ -224,6 +225,11 @@ body {
   text-align: center;
   color: #b0b0b0;
   cursor: pointer;
+}
+
+.flex .flex-padding-reset {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .center-element {

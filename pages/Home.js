@@ -13,9 +13,9 @@ var Home = {
         setTitle('WonderfulSubs', true);
 
         return m.fragment({}, [
-            m('div', { class: 'main-container full three-fourth-1000' }, [
+            m('div', { class: 'main-container' }, [
                 m('div', { class: 'flex two-700' }, [
-                    m('div', m(featured)),
+                    m('div', { class: 'flex-padding-reset' }, m(featured)),
                     m('div', { class: 'none half-700' }, m(randomSeries))
                 ]),
                 m('div', { class: 'flex two' }, [

@@ -71,7 +71,7 @@ function SeriesList(url, options) {
             var elements = [m(PosterGrid, { items: _this.list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeOnRemove: changeOnRemove })];
             if (header) elements.unshift(m('h4', { class: 'poster-header' }, header));
             if (nextPage || (isObject && currentCount < url.length)) elements.push(m('button', { class: 'center-element', onclick: _this.push.bind(this, nextPage, vnode) }, 'View More'));
-            return m('div', { class: className },  elements);
+            return m('div', { class: className }, elements);
         }
     };
 
@@ -101,9 +101,7 @@ function BloggerList(url) {
         load: loadList,
         push: function (u) { loadList(u, { push: true }); },
         view: function () {
-            return m(ShowcaseGrid, {
-                items: list
-            });
+            return m(ShowcaseGrid, { items: list });
         }
     };
 }

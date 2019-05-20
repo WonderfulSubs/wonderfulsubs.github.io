@@ -109,7 +109,10 @@
             </nav>
         </div>
     </div>
-    <div class="content-wrapper flex animated" id="root"></div>
+    <div class="content-wrapper-container flex animated">
+        <div class="content-wrapper animated three-fourth-1000" id="root"></div>
+        <div id="sidebar" class="fourth-1000"></div>
+    </div>
     <div id="user-panel" class="animated faster lists slideInUp none"></div>
     <div class="bottom-bar top-divider">
         <div class="flex">
@@ -147,6 +150,11 @@
             '/search': Search,
             '/watch/:id': Watch,
         });
+
+        var sidebarExists = document.querySelector('.sidebar-container');
+        if (!sidebarExists) {
+            m.render(document.getElementById('sidebar'), Sidebar);
+        }
 
         document.getElementById('footer-year').innerHTML = ' ' + (new Date()).getFullYear() + ' ';
     </script>
