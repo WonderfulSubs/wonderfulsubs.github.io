@@ -25,11 +25,14 @@
     display: block;
 }
 
+.modal.source-select-modal article {
+    background-color: #212121;
+}
+
 .show-more {
     height: 40px;
     padding-top: 5px;
     margin-bottom: .6em;
-    background-color: #212121;
     text-align: center;
     text-transform: uppercase;
     cursor: pointer;

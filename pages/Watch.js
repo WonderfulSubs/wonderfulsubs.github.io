@@ -367,7 +367,7 @@ var SourceSelectModal = {
         if (hasUncensored) theadElems.push(m("th", "Uncensored"));
         if (hasFanDub) theadElems.push(m("th", "Fan Dub"));
 
-        return m("div", { class: "modal" }, [
+        return m("div", { class: "modal source-select-modal" }, [
             m("input", { id: sourceSelectorId, type: "checkbox" }),
             m("label", { class: "overlay", for: sourceSelectorId }),
             m("article", [
