@@ -12,7 +12,7 @@ function showHideMore(e) {
     }
 }
 
-var showMoreButton = m('div', { class: 'show-more top-divider', onclick: showHideMore }, 'Show More');
+var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, 'Show More');
 var player = VideoPlayer();
 var sourceSelectorId = getRandomId();
 
@@ -26,17 +26,12 @@ var SeriesInfo = {
                 m("h6", { class: "subtitle" }, series.japanese_title)
             );
 
-        return m.fragment({}, [
-            m("h2", { class: "list-header animated fadeInUp" }, [
-                m("span", { class: "label none full-700" }, "Info")
+        return m('div', { class: 'fadeInRight animated none full-700' }, [
+            m("article", { class: "card series-info-card" }, [
+                m("header", headerElements),
+                m("section", { class: "content" }, [m("p", series.description)])
             ]),
-            m('div', { class: 'fadeInRight animated none full-700' }, [
-                m("article", { class: "card series-info-card" }, [
-                    m("header", headerElements),
-                    m("section", { class: "content" }, [m("p", series.description)])
-                ]),
-                showMoreButton
-            ])
+            showMoreButton
         ]);
     }
 };

@@ -73,7 +73,7 @@ th {
 
 .card,
 .modal .overlay ~ * {
-  background-color: #181818;
+  background-color: transparent;
   color: #bdbdbd;
   border: none;
 }

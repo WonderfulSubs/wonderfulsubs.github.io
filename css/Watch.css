@@ -11,7 +11,7 @@
 }
 
 .series-info-card {
-    height: 316px;
+    height: 341px;
     margin-bottom: 0;
 }
 
@@ -29,8 +29,9 @@
     height: 40px;
     padding-top: 5px;
     margin-bottom: .6em;
-    background-color: #181818;
+    background-color: #212121;
     text-align: center;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
