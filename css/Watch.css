@@ -19,9 +19,8 @@
     margin-bottom: 0;
 }
 
-.series-info-card {
-    height: 341px;
-    margin-bottom: 0;
+.episode-info-card header h3 {
+    padding-left: 0.2em;
 }
 
 .episode-info-card h4 {
@@ -30,14 +29,25 @@
 
 .episode-info-card p, .episode-info-card h4 {
     margin-top: -6px;
-    padding: 0;
+    padding: 0 0 4px 0;
 }
 
-.episode-info-card section .three-fifth {
-    float: right;
+.episode-info-card section > img {
+    float: left;
+    margin-right: .3em;
+    padding-bottom: 0;
+    max-width: 50%;
 }
 
-.episode-info-card .subtitle, .series-info-card .subtitle {
+.episode-info-card section > div {
+    margin-top: -6px;
+}
+
+.episode-info-card section > div {
+    line-height: 1.4;
+}
+
+.episode-info-card .subtitle {
     display: block;
 }
 

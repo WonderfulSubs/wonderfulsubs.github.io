@@ -17,23 +17,6 @@ var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', o
 var player = VideoPlayer();
 var sourceSelectorId = getRandomId();
 
-var SeriesInfo = {
-    series: {},
-    view: function () {
-        var series = SeriesInfo.series;
-        var headerElements = [m("h3", series.title)];
-        if (series.japanese_title && series.japanese_title != series.title) headerElements.push(m("h6", { class: "subtitle" }, series.japanese_title));
-
-        return m('div', { class: 'fadeInRight animated none full-700' }, [
-            m("article", { class: "card series-info-card" }, [
-                m("header", headerElements),
-                m("section", { class: "content" }, [m("p", series.description)])
-            ]),
-            showMoreButton
-        ]);
-    }
-};
-
 var RecommendedList = {
     list: SeriesList(),
     getList: function (series) {
@@ -81,8 +64,8 @@ var EpisodeInfo = {
         var season = EpisodeInfo.season;
         var series = EpisodeInfo.series;
 
-        var headerElements = [m("h3", series.title)];
-        if (series.japanese_title && series.japanese_title != series.title) headerElements.push(m("h6", { class: "subtitle" }, series.japanese_title));
+        var headerElements = [m("h3", season.title || series.title)];
+        if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
 
         var sectionElements = [m("p", episode.description || season.description || series.description)];
         if (episode.title) sectionElements.unshift(m("h4", episode.title));
@@ -91,11 +74,8 @@ var EpisodeInfo = {
             m("article", { class: "card episode-info-card" }, [
                 m("header", headerElements),
                 m("section", { class: "content flex" }, [
-                    m("img", {
-                        class: "two-fifth",
-                        src: episode.poster || getPosterWide(episode.thumbnail || series.poster_wide, undefined, 320).poster
-                    }),
-                    m('div', { class: "three-fifth" }, sectionElements)
+                    m("img", { src: episode.poster || getPosterWide(episode.thumbnail || series.poster_wide, undefined, 320).poster }),
+                    m('div', sectionElements)
                 ])
             ]),
             showMoreButton
@@ -129,7 +109,7 @@ var SeasonsList = {
 
         return m(
             "div",
-            { class: "animated fadeInRight" },
+            { class: "animated fadeInUpBig" },
             list.map(function (season, index) {
                 season.index = index;
                 return m("div", { key: season.id || season.type + String(index) }, [
@@ -485,13 +465,8 @@ var Watch = {
         return m("div", { class: 'flex-margin-reset' }, [
             darkThemeStyles,
             m("div", { class: "watch-content-container flex one two-700" }, [
-                m("div", { class: "two-third-700 flex-padding-reset" }, [
-                    m(player),
-                    // m(EpisodeInfo),
-                    // m(SeasonsList)
-                ]),
+                m("div", { class: "two-third-700 flex-padding-reset" }, m(player)),
                 m("div", { class: "third-700" }, [
-                    // m(SeriesInfo),
                     m(EpisodeInfo),
                     m(SeasonsList),
                     m(RecommendedList)
@@ -519,7 +494,6 @@ var Watch = {
                 var series = result.json;
                 if (series) {
                     setTitle(series.title);
-                    SeriesInfo.series = series;
                     EpisodeInfo.series = series;
                     player.poster(
                         getPosterWide(series.poster_wide, undefined, /*800*/1080).poster
