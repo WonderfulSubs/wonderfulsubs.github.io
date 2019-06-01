@@ -7,3 +7,18 @@
 .vjs-quality-selector .vjs-icon-placeholder:before {
     content: '\f110'
 }
+
+.vjs-paused:not(.vjs-has-started) video[poster], .vjs-waiting video[poster] {
+    object-fit: cover;
+}
+
+.video-js .vjs-poster {
+    background-size: cover;
+    background-position: center;
+}
+
+@media only screen and (min-width:700px) {
+    #video-player {
+        height: calc(100vh - 110px);
+    }
+}
