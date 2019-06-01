@@ -1,18 +1,19 @@
 function showHideMore(e) {
     var button = e.target;
+    if (button.tagName.toLowerCase() === 'i') button = button.parentElement;
     var previousElemSibling = button.previousElementSibling;
     if (previousElemSibling.style['overflow-y'] === 'scroll') {
         previousElemSibling.style['overflow-y'] = '';
         previousElemSibling.scrollTo(0, 0);
-        button.innerText = 'Show More';
+        button.firstElementChild.className = 'icon-down-dir';
     } else {
         previousElemSibling.style['overflow-y'] = 'scroll';
         previousElemSibling.scrollTo(0, 30);
-        button.innerText = 'Show Less';
+        button.firstElementChild.className = 'icon-up-dir';
     }
 }
 
-var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, 'Show More');
+var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
 var player = VideoPlayer();
 var sourceSelectorId = getRandomId();
 
@@ -21,10 +22,7 @@ var SeriesInfo = {
     view: function () {
         var series = SeriesInfo.series;
         var headerElements = [m("h3", series.title)];
-        if (series.japanese_title && series.japanese_title != series.title)
-            headerElements.push(
-                m("h6", { class: "subtitle" }, series.japanese_title)
-            );
+        if (series.japanese_title && series.japanese_title != series.title) headerElements.push(m("h6", { class: "subtitle" }, series.japanese_title));
 
         return m('div', { class: 'fadeInRight animated none full-700' }, [
             m("article", { class: "card series-info-card" }, [
@@ -83,28 +81,21 @@ var EpisodeInfo = {
         var season = EpisodeInfo.season;
         var series = EpisodeInfo.series;
 
+        var headerElements = [m("h3", series.title)];
+        if (series.japanese_title && series.japanese_title != series.title) headerElements.push(m("h6", { class: "subtitle" }, series.japanese_title));
+
+        var sectionElements = [m("p", episode.description || season.description || series.description)];
+        if (episode.title) sectionElements.unshift(m("h4", episode.title));
+
         return m('div', { class: 'animated fadeInLeft' }, [
             m("article", { class: "card episode-info-card" }, [
-                m("header", [
-                    m("h3", { class: (episode.sources || episode.retrieve_url) ? undefined : 'flash animated infinite slower' }, (episode.sources || episode.retrieve_url) ? episode.title : 'Select An Episode Below'),
-                    m("h6", { class: "subtitle" }, season.title || series.title)
-                ]),
+                m("header", headerElements),
                 m("section", { class: "content flex" }, [
                     m("img", {
                         class: "two-fifth",
-                        src:
-                            episode.poster ||
-                            getPosterWide(
-                                episode.thumbnail || series.poster_wide,
-                                undefined,
-                                320
-                            ).poster
+                        src: episode.poster || getPosterWide(episode.thumbnail || series.poster_wide, undefined, 320).poster
                     }),
-                    m(
-                        "p",
-                        { class: "three-fifth" },
-                        episode.description || season.description || series.description
-                    )
+                    m('div', { class: "three-fifth" }, sectionElements)
                 ])
             ]),
             showMoreButton
@@ -116,15 +107,12 @@ var SeasonsList = {
     list: [],
     view: function () {
         var list = SeasonsList.list;
-        var episodeListInstance;
 
         function openCloseEpisodeList(vnode) {
             vnode.dom.onclick = function (e) {
                 var listElem = e.target.nextElementSibling;
                 if (listElem.classList.contains("none")) {
                     listElem.classList.remove("none");
-                    console.log(episodeListInstance);
-                    if (episodeListInstance.firstEpisodeTab) episodeListInstance.setListHeight(0, episodeListInstance.firstEpisodeTab);
                 } else {
                     listElem.classList.add("none");
                 }
@@ -141,15 +129,14 @@ var SeasonsList = {
 
         return m(
             "div",
-            { class: "animated fadeInUp" },
+            { class: "animated fadeInRight" },
             list.map(function (season, index) {
                 season.index = index;
-                episodeListInstance = EpisodeList(season.episodes, season);
                 return m("div", { key: season.id || season.type + String(index) }, [
                     m(
                         "span",
                         {
-                            class: "button full season-list-button",
+                            class: "button full season-list-button" + (index !== (list.length - 1) ? ' bottom-divider' : ''),
                             oncreate: openCloseEpisodeList
                         },
                         [
@@ -158,7 +145,7 @@ var SeasonsList = {
                             m("i", { class: "icon-up-dir right" })
                         ]
                     ),
-                    m(episodeListInstance)
+                    m(EpisodeList(season.episodes, season))
                 ]);
             })
         );
@@ -172,17 +159,15 @@ function EpisodeList(list, season) {
     var pages = getEpisodePages(list, 50);
     var tabsStyle = getEpisodePagesCSS(pages.length);
 
-
-    var _this = {
-        setListHeight: function (index, e) {
-            e.redraw = false;
-            console.log(e.target);
-            var tabs = e.target.parentElement;
-            tabs.style.height = '';
-            var row = tabs.querySelector('.row');
-            var table = tabs.querySelectorAll('.table-container table')[index];
-            tabs.style.height = (table.clientHeight + tabs.clientHeight - row.clientHeight) + 'px';
-        },
+    function setListHeight(index, e) {
+        e.redraw = false;
+        var tabs = e.target.parentElement;
+        tabs.style.height = '';
+        var row = tabs.querySelector('.row');
+        var table = tabs.querySelectorAll('.table-container table')[index];
+        tabs.style.height = (table.clientHeight + tabs.clientHeight - row.clientHeight) + 'px';
+    }
+    return {
         view: function () {
             function tabs(check) {
                 var randomPrefix = getRandomId();
@@ -197,7 +182,7 @@ function EpisodeList(list, season) {
                             name: name,
                             checked: check && index === 0 ? true : undefined
                         }),
-                        m("label", { class: "pseudo button toggle", for: id, onclick: _this.setListHeight.bind(this, index), oncreate: function (vom) { if (index === 0) _this.firstEpisodeTab = { target: vom.dom }; } }, page.title)
+                        m("label", { class: "pseudo button toggle", for: id, onclick: setListHeight.bind(this, index) }, page.title)
                     ]);
                 });
             }
@@ -265,8 +250,6 @@ function EpisodeList(list, season) {
             ]);
         }
     };
-
-    return _this;
 }
 
 var SourceSelectModal = {
@@ -426,6 +409,29 @@ var SourceSelectModal = {
 var Watch = {
     oninit: function (vnode) {
         Watch.currentId = vnode.attrs.id;
+        Watch.initialOverflowY = document.body.style.overflowY;
+        Watch.initialOverflowX = document.body.style.overflowX;
+        var footer = document.querySelector('.footer');
+        Watch.initialFooterDisplay = footer.style.overflowX;
+        Watch.setOverflowY();
+        document.body.style.overflowX = 'hidden';
+        footer.style.display = 'none';
+        window.addEventListener("resize", Watch.setOverflowY);
+    },
+    onremove: function() {
+        window.removeEventListener("resize", Watch.setOverflowY);
+        document.body.style.overflowY = Watch.initialOverflowY;
+        document.body.style.overflowX = Watch.initialOverflowX;
+        var footer = document.querySelector('.footer');
+        footer.style.display = Watch.initialFooterDisplay;
+    },
+    setOverflowY: function() {
+        if (window.innerWidth < 768 && document.body.style.overflowY !== Watch.initialOverflowY) {
+            document.body.style.overflowY = Watch.initialOverflowY;
+        } else if (window.innerWidth > 767 && document.body.style.overflowY !== 'hidden') {
+            document.body.style.overflowY = 'hidden';
+            if (window.pageYOffset !== 0) scrollToTop();
+        }
     },
     onupdate: function (vnode) {
         var id = vnode.attrs.id;
@@ -440,9 +446,7 @@ var Watch = {
                     root.classList.add(className);
                 });
 
-                root.addEventListener("animationend", function removeOutAnimationClass(
-                    e
-                ) {
+                root.addEventListener("animationend", function removeOutAnimationClass(e) {
                     if (outAnimationClasses.indexOf(e.animationName) !== -1) {
                         this.removeEventListener("animationend", removeOutAnimationClass);
 
@@ -478,15 +482,20 @@ var Watch = {
     view: function () {
         if (!AuthUser.data._id) return m.route.set('/');
 
-        return m("div", [
+        return m("div", { class: 'flex-margin-reset' }, [
             darkThemeStyles,
             m("div", { class: "watch-content-container flex one two-700" }, [
-                m("div", { class: "two-third-700" }, [
+                m("div", { class: "two-third-700 flex-padding-reset" }, [
                     m(player),
-                    m(EpisodeInfo),
-                    m(SeasonsList)
+                    // m(EpisodeInfo),
+                    // m(SeasonsList)
                 ]),
-                m("div", { class: "third-700" }, [m(SeriesInfo), m(RecommendedList)])
+                m("div", { class: "third-700" }, [
+                    // m(SeriesInfo),
+                    m(EpisodeInfo),
+                    m(SeasonsList),
+                    m(RecommendedList)
+                ])
             ]),
             m(SourceSelectModal),
             hideSidebarStyles
@@ -513,7 +522,7 @@ var Watch = {
                     SeriesInfo.series = series;
                     EpisodeInfo.series = series;
                     player.poster(
-                        getPosterWide(series.poster_wide, undefined, 800).poster
+                        getPosterWide(series.poster_wide, undefined, /*800*/1080).poster
                     );
                     RecommendedList.getList(series);
 
