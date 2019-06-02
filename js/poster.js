@@ -29,7 +29,7 @@ var Poster = {
                                 isInWatchList ? ' In Watch List' : ' Watch Later'
                             ])
                         ]),
-                        m('div', { class: 'poster-watch-favorite fourth animated faster' + (isFavoritesList ? ' active fadeIn' : ''), onclick: function (e) { listAction('Favorites', e); } }, [
+                        m('div', { class: 'poster-favorite fourth animated faster' + (isFavoritesList ? ' active fadeIn' : ''), onclick: function (e) { listAction('Favorites', e); } }, [
                             m('i', { class: 'icon-heart' })
                         ])
                     ]),
