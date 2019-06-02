@@ -14,8 +14,7 @@
 }
 
 .episode-info-card {
-    max-height: 35vh;
-    height: 253px;
+    height: 248px;
     margin-bottom: 0;
 }
 
@@ -25,6 +24,10 @@
 
 .episode-info-card header, .episode-info-card header > div {
     display: flex;
+}
+
+.episode-info-card header > span {
+    padding-left: 4px;
 }
 
 .episode-info-card header > span > * {
@@ -52,6 +55,7 @@
     margin-right: .3em;
     padding-bottom: 0;
     max-width: 50%;
+    max-height: 132px;
 }
 
 .episode-info-card section > div {
