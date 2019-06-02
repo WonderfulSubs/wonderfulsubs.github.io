@@ -84,7 +84,7 @@ var EpisodeInfo = {
                     ]),
                 ]),
                 m("section", { class: "content flex" }, [
-                    m("img", { src: episode.poster || getPosterWide(episode.thumbnail || series.poster_wide, undefined, 320).poster }),
+                    m("img", { src: episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
                     m('div', sectionElements)
                 ])
             ]),
@@ -312,8 +312,7 @@ var SourceSelectModal = {
             if (captions) window.player.captions(captions);
 
             var poster = result.poster;
-            if (poster && !EpisodeInfo.episode.thumbnail)
-                EpisodeInfo.episode.poster = poster;
+            if (poster && !EpisodeInfo.episode.thumbnail) EpisodeInfo.episode.poster = poster;
         });
     },
     view: function () {
@@ -378,10 +377,7 @@ var SourceSelectModal = {
                 ]),
                 m("section", { class: "content" }, [
                     m("h5", episode.title),
-                    m("img", {
-                        class: "full",
-                        src: getPosterWide(episode.thumbnail, undefined, 800).poster
-                    }),
+                    m("img", { class: "full", src: getPosterWide(episode.thumbnail, undefined, 800).poster }),
                     m("p", episode.description)
                 ])
             ])
@@ -407,6 +403,7 @@ var Watch = {
         document.body.style.overflowX = Watch.initialOverflowX;
         var footer = document.querySelector('.footer');
         footer.style.display = Watch.initialFooterDisplay;
+        player.player.el_.removeEventListener("click", Watch.setPlayerClick);
     },
     setOverflowY: function() {
         if (window.innerWidth < 768 && document.body.style.overflowY !== Watch.initialOverflowY) {
@@ -414,6 +411,14 @@ var Watch = {
         } else if (window.innerWidth > 767 && document.body.style.overflowY !== 'hidden') {
             document.body.style.overflowY = 'hidden';
             if (window.pageYOffset !== 0) scrollToTop();
+        }
+    },
+    setPlayerClick: function() {
+        if (!player.player.currentSources().length) {
+            var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
+            var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
+            SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
+            window.m.redraw();
         }
     },
     onupdate: function (vnode) {
@@ -527,14 +532,7 @@ var Watch = {
                         SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
                     }
 
-                    player.player.el_.onclick = function() {
-                        if (!player.player.currentSources().length) {
-                            var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
-                            var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
-                            SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
-                            window.m.redraw();
-                        }
-                    };
+                    player.player.el_.addEventListener("click", Watch.setPlayerClick);
                 }
             } catch (error) { }
         });
