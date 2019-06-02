@@ -66,9 +66,10 @@ var AuthUser = {
                     }
                     if (callback) callback();
                 } catch (error) {
-                    nativeToast.error({
+                    nativeToast({
                         message: result.error || defaultErrMsg,
-                        position: 'north-east'
+                        position: 'north-east',
+                        type: 'error'
                     });
                     if (callback) callback(error);
                 }
@@ -114,9 +115,10 @@ var AuthUser = {
                 throw new Error(defaultErrMsg);
             }
         } catch (error) {
-            nativeToast.error({
+            nativeToast({
                 message: result.error || defaultErrMsg,
-                position: 'north-east'
+                position: 'north-east',
+                type: 'error'
             });
         }
     },
@@ -124,6 +126,7 @@ var AuthUser = {
         if (!options) options = {};
         var preventUpdate = options.preventUpdate;
         var element = options.element;
+        var showToast = options.showToast;
         var alreadySet = AuthUser.isInList(listName, series);
         var seriesData = {
             title: series.title,
@@ -157,6 +160,14 @@ var AuthUser = {
                     });
                 }
                 if (!preventUpdate) userPanelInstance.refreshList();
+                if (showToast) {
+                    nativeToast({
+                        message: (!alreadySet ? 'Added to ' : 'Removed from ') + listName,
+                        position: 'north-east',
+                        type: 'success',
+                        closeOnClick: true
+                    });
+                }
             });
     }
 };
