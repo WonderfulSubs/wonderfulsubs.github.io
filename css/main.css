@@ -71,6 +71,10 @@ body {
   max-width: 100vw;
 }
 
+.result-switch.flex {
+  margin-top: -6px;
+}
+
 .result-switch button {
   margin: 6px 9px;
   background-color: #ff9900;
