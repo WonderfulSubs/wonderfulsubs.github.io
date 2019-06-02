@@ -19,6 +19,25 @@
     margin-bottom: 0;
 }
 
+.episode-info-card header {
+    justify-content: space-between;
+}
+
+.episode-info-card header, .episode-info-card header > div {
+    display: flex;
+}
+
+.episode-info-card header > span > * {
+    margin: 0;
+}
+
+.episode-info-card header > div > * {
+    padding: 0 12px;
+    margin-right: -6px;
+    cursor: pointer;
+    transition: color 1s;
+}
+
 .episode-info-card h4 {
     color: #ffffff;
 }
@@ -49,6 +68,18 @@
 
 .modal.source-select-modal article {
     background-color: #212121;
+}
+
+.info-watch-later, .info-favorite {
+    transition: color 1s;
+}
+
+.info-watch-later.active {
+    color: #4caf50;
+}
+
+.info-favorite.active {
+    color: #f44336;
 }
 
 .show-more {

@@ -63,6 +63,10 @@ var EpisodeInfo = {
         var episode = EpisodeInfo.episode;
         var season = EpisodeInfo.season;
         var series = EpisodeInfo.series;
+        series.url = location.pathname;
+
+        var isInWatchList = AuthUser.isInList('Watch List', series);
+        var isFavoritesList = AuthUser.isInList('Favorites', series);
 
         var headerElements = [m("h3", season.title || series.title)];
         if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
@@ -72,7 +76,13 @@ var EpisodeInfo = {
 
         return m('div', { class: 'animated fadeInLeft' }, [
             m("article", { class: "card episode-info-card" }, [
-                m("header", headerElements),
+                m("header", [
+                    m('span', headerElements),
+                    m('div', [
+                        m('i', {class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
+                        m('i', {class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
+                    ]),
+                ]),
                 m("section", { class: "content flex" }, [
                     m("img", { src: episode.poster || getPosterWide(episode.thumbnail || series.poster_wide, undefined, 320).poster }),
                     m('div', sectionElements)
