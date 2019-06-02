@@ -213,14 +213,9 @@ function EpisodeList(list, season) {
                                             return m(
                                                 "tr",
                                                 {
-                                                    key:
-                                                        episode.title +
-                                                        String(episode.episode_number || episode.ova_number),
+                                                    key: episode.title + String(episode.episode_number || episode.ova_number),
                                                     onclick: function () {
-                                                        SourceSelectModal.openEpisode(
-                                                            episode,
-                                                            season
-                                                        );
+                                                        SourceSelectModal.openEpisode(episode, season);
                                                     }
                                                 },
                                                 [
@@ -260,9 +255,7 @@ var SourceSelectModal = {
     openEpisode: function (episode, season, setInfo) {
         SourceSelectModal.episode = episode;
         SourceSelectModal.season = season;
-        SourceSelectModal.sources = episode.sources || [
-            { retrieve_url: episode.retrieve_url }
-        ];
+        SourceSelectModal.sources = episode.sources || [{ retrieve_url: episode.retrieve_url }];
         SourceSelectModal.open();
 
         if (setInfo) {
@@ -533,6 +526,15 @@ var Watch = {
                             chosenSeason.episodes[chosenSeason.episodes.length - 1];
                         SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
                     }
+
+                    player.player.el_.onclick = function() {
+                        if (!player.player.currentSources().length) {
+                            var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
+                            var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
+                            SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
+                            window.m.redraw();
+                        }
+                    };
                 }
             } catch (error) { }
         });
