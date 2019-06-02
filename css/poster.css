@@ -47,7 +47,7 @@
     height: 24px;
 }
 
-.poster-item .poster-watch-later, .poster-item .poster-watch-favorite {
+.poster-item .poster-watch-later, .poster-item .poster-favorite {
     line-height: 24px;
     height: 24px;
     font-size: 11px;
@@ -65,12 +65,12 @@
     background-color: #4caf50;
 }
 
-.poster-item .poster-watch-favorite {
+.poster-item .poster-favorite {
     background-color: #ff8400;
     transition: background-color 1s;
 }
 
-.poster-item .poster-watch-favorite.active {
+.poster-item .poster-favorite.active {
     background-color: #f44336;
 }
 
