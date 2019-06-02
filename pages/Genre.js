@@ -48,6 +48,7 @@ var Genre = {
         return m('div', { class: 'main-container' }, [
             m('div', [
                 m('div', [
+                    m('h4', { class: 'poster-header' }, 'Genres'),
                     buttons,
                     m(Genre.results),
                     Genre.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined

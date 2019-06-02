@@ -48,6 +48,7 @@ var Series = {
         return m('div', { class: 'main-container' }, [
             m('div', [
                 m('div', [
+                    m('h4', { class: 'poster-header' }, 'A-Z'),
                     buttons,
                     m(Series.results),
                     Series.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined
