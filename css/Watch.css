@@ -22,6 +22,15 @@
     justify-content: space-between;
 }
 
+.episode-info-card section .episode-number {
+    margin: 0 0 0 5.5px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    padding: 0 3px;
+    line-height: 1.1;
+}
+
 .episode-info-card header, .episode-info-card header > div {
     display: flex;
 }
@@ -74,7 +83,7 @@
     background-color: #212121;
 }
 
-.info-watch-later, .info-favorite {
+.info-watch-later, .info-favorite, .icon-info-circled {
     transition: color 1s;
 }
 
@@ -84,6 +93,10 @@
 
 .info-favorite.active {
     color: #f44336;
+}
+
+.icon-info-circled.active {
+    color: #ff9900;
 }
 
 .show-more {

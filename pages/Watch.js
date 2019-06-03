@@ -56,10 +56,12 @@ var RecommendedList = {
 };
 
 var EpisodeInfo = {
+    showInfo: false,
     episode: {},
     season: {},
     series: {},
     view: function () {
+        var showInfo = EpisodeInfo.showInfo;
         var episode = EpisodeInfo.episode;
         var season = EpisodeInfo.season;
         var series = EpisodeInfo.series;
@@ -68,23 +70,26 @@ var EpisodeInfo = {
         var isInWatchList = AuthUser.isInList('Watch List', series);
         var isFavoritesList = AuthUser.isInList('Favorites', series);
 
-        var headerElements = [m("h3", season.title || series.title)];
+        var headerElements = [m("h3", showInfo && season.type !== 'episodes' ? series.title : season.title || series.title)];
         if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
 
-        var sectionElements = [m("p", episode.description || season.description || series.description)];
-        if (episode.title) sectionElements.unshift(m("h4", episode.title));
+        var description = season.description || series.description;
+        var sectionElements = [m("p", showInfo ? description : episode.description || description)];
+        if (!showInfo && episode.title) sectionElements.unshift(m("h4", episode.title));
 
         return m('div', { class: 'animated fadeInLeft' }, [
             m("article", { class: "card episode-info-card" }, [
                 m("header", [
                     m('span', headerElements),
                     m('div', [
+                        m('i', {class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function() { EpisodeInfo.showInfo = !showInfo; } }),
                         m('i', {class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
                         m('i', {class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
                     ]),
                 ]),
                 m("section", { class: "content flex" }, [
-                    m("img", { src: episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
+                    !showInfo && (episode.episode_number || episode.ova_number) ? m('div', { class: 'episode-number' }, (episode.episode_number ? 'EP ' : 'OVA ') + (episode.episode_number || episode.ova_number)) : undefined,
+                    m("img", { src: showInfo ? getPosterTall(series.poster_tall, 180).poster : episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
                     m('div', sectionElements)
                 ])
             ]),
