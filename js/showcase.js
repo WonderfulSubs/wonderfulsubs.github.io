@@ -1,7 +1,7 @@
 var ShowcaseItem = {
     view: function (vnode) {
         var item = vnode.attrs.item;
-        if (item.poster) item.poster = item.poster.replace('\/s1600\/', '\/w114-h60-c\/');
+        if (item.poster) item.poster = item.poster.replace('\/s1600\/', '\/w203-h107-c\/');
         var numOfItems = vnode.attrs.numOfItems;
         var index = vnode.attrs.index;
         return m('a', { href: item.url }, [
