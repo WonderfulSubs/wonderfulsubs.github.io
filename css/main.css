@@ -16,10 +16,14 @@ body {
   height: 10px;
   background-color: #151515;
   color: #ffffff;
-  padding: 0 .6em 150px;
+  padding: 0 .6em 190px;
   margin-top: 60vh;
   position: static;
   transition: background-color 1s;
+}
+
+.footer a {
+  color: #ffffff;
 }
 
 ::-webkit-scrollbar {
