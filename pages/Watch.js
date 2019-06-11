@@ -55,48 +55,51 @@ var RecommendedList = {
     }
 };
 
-var EpisodeInfo = {
-    showInfo: false,
-    episode: {},
-    season: {},
-    series: {},
-    view: function () {
-        var showInfo = EpisodeInfo.showInfo;
-        var episode = EpisodeInfo.episode;
-        var season = EpisodeInfo.season;
-        var series = EpisodeInfo.series;
-        series.url = location.pathname;
+function EpisodeInfo() {
+    var _this = {
+        showInfo: false,
+        episode: {},
+        season: {},
+        series: {},
+        view: function () {
+            var showInfo = _this.showInfo;
+            var episode = _this.episode;
+            var season = _this.season;
+            var series = _this.series;
+            series.url = location.pathname;
 
-        var isInWatchList = AuthUser.isInList('Watch List', series);
-        var isFavoritesList = AuthUser.isInList('Favorites', series);
+            var isInWatchList = AuthUser.isInList('Watch List', series);
+            var isFavoritesList = AuthUser.isInList('Favorites', series);
 
-        var headerElements = [m("h3", showInfo && season.type !== 'episodes' ? series.title : season.title || series.title)];
-        if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
+            var headerElements = [m("h3", showInfo && season.type !== 'episodes' ? series.title : season.title || series.title)];
+            if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
 
-        var description = season.description || series.description;
-        var sectionElements = [m("p", showInfo ? description : episode.description || description)];
-        if (!showInfo && episode.title) sectionElements.unshift(m("h4", episode.title));
+            var description = season.description || series.description;
+            var sectionElements = [m("p", showInfo ? description : episode.description || description)];
+            if (!showInfo && episode.title) sectionElements.unshift(m("h4", episode.title));
 
-        return m('div', { class: 'animated fadeInLeft' }, [
-            m("article", { class: "card episode-info-card" }, [
-                m("header", [
-                    m('span', headerElements),
-                    m('div', [
-                        m('i', {class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function() { EpisodeInfo.showInfo = !showInfo; } }),
-                        m('i', {class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
-                        m('i', {class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
+            return m('div', { class: 'animated fadeInLeft' }, [
+                m("article", { class: "card episode-info-card" }, [
+                    m("header", [
+                        m('span', headerElements),
+                        m('div', [
+                            m('i', { class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function () { _this.showInfo = !showInfo; } }),
+                            m('i', { class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
+                            m('i', { class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
+                        ]),
                     ]),
+                    m("section", { class: "content flex" }, [
+                        !showInfo && (episode.episode_number || episode.ova_number) ? m('div', { class: 'episode-number' }, (episode.episode_number ? 'EP ' : 'OVA ') + (episode.episode_number || episode.ova_number)) : undefined,
+                        m("img", { src: showInfo ? getPosterTall(series.poster_tall, 180).poster : episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
+                        m('div', sectionElements)
+                    ])
                 ]),
-                m("section", { class: "content flex" }, [
-                    !showInfo && (episode.episode_number || episode.ova_number) ? m('div', { class: 'episode-number' }, (episode.episode_number ? 'EP ' : 'OVA ') + (episode.episode_number || episode.ova_number)) : undefined,
-                    m("img", { src: showInfo ? getPosterTall(series.poster_tall, 180).poster : episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
-                    m('div', sectionElements)
-                ])
-            ]),
-            showMoreButton
-        ]);
-    }
-};
+                showMoreButton
+            ]);
+        }
+    };
+    return _this;
+}
 
 var SeasonsList = {
     list: [],
@@ -264,8 +267,8 @@ var SourceSelectModal = {
         SourceSelectModal.open();
 
         if (setInfo) {
-            EpisodeInfo.episode = episode;
-            EpisodeInfo.season = season;
+            Watch.InfoBox.episode = episode;
+            Watch.InfoBox.season = season;
         }
     },
     getSource: function (source) {
@@ -280,8 +283,9 @@ var SourceSelectModal = {
         );
         SourceSelectModal.close();
 
-        EpisodeInfo.episode = episode;
-        EpisodeInfo.season = season;
+        Watch.InfoBox.episode = episode;
+        Watch.InfoBox.season = season;
+        player.player.hasStarted(false);
 
         scrollToTop(2000);
 
@@ -317,7 +321,7 @@ var SourceSelectModal = {
             if (captions) window.player.captions(captions);
 
             var poster = result.poster;
-            if (poster && !EpisodeInfo.episode.thumbnail) EpisodeInfo.episode.poster = poster;
+            if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
         });
     },
     view: function () {
@@ -393,6 +397,7 @@ var SourceSelectModal = {
 var Watch = {
     oninit: function (vnode) {
         Watch.currentId = vnode.attrs.id;
+        Watch.InfoBox = EpisodeInfo();
         Watch.initialOverflowY = document.body.style.overflowY;
         Watch.initialOverflowX = document.body.style.overflowX;
         var footer = document.querySelector('.footer');
@@ -402,15 +407,15 @@ var Watch = {
         footer.style.display = 'none';
         window.addEventListener("resize", Watch.setOverflowY);
     },
-    onremove: function() {
+    onremove: function () {
         window.removeEventListener("resize", Watch.setOverflowY);
         document.body.style.overflowY = Watch.initialOverflowY;
         document.body.style.overflowX = Watch.initialOverflowX;
         var footer = document.querySelector('.footer');
         footer.style.display = Watch.initialFooterDisplay;
-        player.player.el_.removeEventListener("click", Watch.setPlayerClick);
+        if (player.player.el_) player.player.el_.removeEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
     },
-    setOverflowY: function() {
+    setOverflowY: function () {
         if (window.innerWidth < 768 && document.body.style.overflowY !== Watch.initialOverflowY) {
             document.body.style.overflowY = Watch.initialOverflowY;
         } else if (window.innerWidth > 767 && document.body.style.overflowY !== 'hidden') {
@@ -418,7 +423,7 @@ var Watch = {
             if (window.pageYOffset !== 0) scrollToTop();
         }
     },
-    setPlayerClick: function() {
+    setPlayerClick: function () {
         if (!player.player.currentSources().length) {
             var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
             var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
@@ -452,20 +457,14 @@ var Watch = {
                                 root.classList.add(className);
                             });
 
-                            root.addEventListener(
-                                "animationend",
-                                function removeInAnimationClass(e) {
-                                    if (inAnimationClasses.indexOf(e.animationName) !== -1) {
-                                        this.removeEventListener(
-                                            "animationend",
-                                            removeInAnimationClass
-                                        );
-                                        inAnimationClasses.forEach(function (className) {
-                                            root.classList.remove(className);
-                                        });
-                                    }
+                            root.addEventListener("animationend", function removeInAnimationClass(e) {
+                                if (inAnimationClasses.indexOf(e.animationName) !== -1) {
+                                    this.removeEventListener("animationend", removeInAnimationClass);
+                                    inAnimationClasses.forEach(function (className) {
+                                        root.classList.remove(className);
+                                    });
                                 }
-                            );
+                            });
                         });
                     }
                 });
@@ -475,12 +474,13 @@ var Watch = {
     view: function () {
         if (!AuthUser.data._id) return m.route.set('/');
 
+
         return m("div", { class: 'flex-margin-reset' }, [
             darkThemeStyles,
             m("div", { class: "watch-content-container flex one two-700" }, [
                 m("div", { class: "two-third-700 flex-padding-reset" }, m(player)),
                 m("div", { class: "third-700" }, [
-                    m(EpisodeInfo),
+                    m(Watch.InfoBox),
                     m(SeasonsList),
                     m(RecommendedList)
                 ])
@@ -507,10 +507,10 @@ var Watch = {
                 var series = result.json;
                 if (series) {
                     setTitle(series.title);
-                    EpisodeInfo.series = series;
-                    player.poster(
-                        getPosterWide(series.poster_wide, undefined, /*800*/1080).poster
-                    );
+                    Watch.InfoBox = EpisodeInfo();
+                    Watch.InfoBox.series = series;
+                    player.player.hasStarted(false);
+                    player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
                     var seasons = series.seasons.ws.media;
@@ -532,12 +532,11 @@ var Watch = {
                             return season.type !== "specials";
                         });
                         chosenSeason = nonSpecialSeasons[nonSpecialSeasons.length - 1];
-                        chosenEpisode =
-                            chosenSeason.episodes[chosenSeason.episodes.length - 1];
+                        chosenEpisode = chosenSeason.episodes[chosenSeason.episodes.length - 1];
                         SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
                     }
 
-                    player.player.el_.addEventListener("click", Watch.setPlayerClick);
+                    if (player.player.el_) player.player.el_.addEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
                 }
             } catch (error) { }
         });
