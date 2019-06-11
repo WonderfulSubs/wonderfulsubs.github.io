@@ -29,7 +29,6 @@ function MediaPlayer(src) {
         player: {},
         oncreate: function (vnode) {
             player = videojs(vnode.dom, {
-                'plays-inline': true,
                 controls: true,
                 fluid: true,
                 autoplay: true
@@ -64,7 +63,7 @@ function MediaPlayer(src) {
             player.addRemoteTextTrack(captions, false);
         },
         view: function () {
-            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' });
+            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown', playsinline: 'playsinline' });
         }
     };
 
