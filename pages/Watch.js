@@ -285,7 +285,7 @@ var SourceSelectModal = {
 
         Watch.InfoBox.episode = episode;
         Watch.InfoBox.season = season;
-        player.player.hasStarted(false);
+        player.stop();
 
         scrollToTop(2000);
 
@@ -509,7 +509,7 @@ var Watch = {
                     setTitle(series.title);
                     Watch.InfoBox = EpisodeInfo();
                     Watch.InfoBox.series = series;
-                    player.player.hasStarted(false);
+                    player.stop();
                     player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
