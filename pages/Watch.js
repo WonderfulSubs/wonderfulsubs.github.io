@@ -293,33 +293,41 @@ var SourceSelectModal = {
             method: "GET",
             url: domain + "/api/v1/media/stream?code=" + encodeURIComponent(source.retrieve_url)
         }).then(function (result) {
-            var sources = result.urls;
-            window.player.src(
-                sources.filter(function (source) {
-                    return source.type !== "application/dash+xml";
-                })
-            );
+            try {
+                var sources = result.urls;
+                window.player.src(
+                    sources.filter(function (source) {
+                        return source.type !== "application/dash+xml";
+                    })
+                );
 
-            var captions = err(function () {
-                var c;
-                function getC(source) {
-                    if (!c && source.captions) c = source.captions;
-                    delete source.captions;
-                }
-                if (Array.isArray(sources)) {
-                    sources.forEach(function (source) {
-                        getC(source);
-                    });
-                } else {
-                    getC(sources);
-                }
-                return c;
-            }, true);
+                var captions = err(function () {
+                    var c;
+                    function getC(source) {
+                        if (!c && source.captions) c = source.captions;
+                        delete source.captions;
+                    }
+                    if (Array.isArray(sources)) {
+                        sources.forEach(function (source) {
+                            getC(source);
+                        });
+                    } else {
+                        getC(sources);
+                    }
+                    return c;
+                }, true);
 
-            if (captions) window.player.captions(captions);
+                if (captions) window.player.captions(captions);
 
-            var poster = result.poster;
-            if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
+                var poster = result.poster;
+                if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
+            } catch(error) {
+                nativeToast({
+                    message: 'An error occured. Please try another source.',
+                    position: 'north-east',
+                    type: 'error'
+                });
+            }
         });
     },
     view: function () {
