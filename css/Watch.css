@@ -88,7 +88,7 @@
 }
 
 .modal.source-select-modal section h5 {
-    padding-left: 4px;
+    padding-left: 5px;
     color: #ffffff;
 }
 
@@ -205,6 +205,10 @@
     text-align: center;
     text-transform: capitalize;
     cursor: pointer;
+}
+
+.source-select-options:hover {
+    border: 1.5px solid;
 }
 
 .source-select-options.uncensored {
