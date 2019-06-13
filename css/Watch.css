@@ -83,6 +83,35 @@
     background-color: #212121;
 }
 
+.modal.source-select-modal section .flex p {
+    margin-top: -6px;
+}
+
+.modal.source-select-modal section h5 {
+    padding-left: 4px;
+    color: #ffffff;
+}
+
+.modal header .key-note {
+    display: flex;
+    font-size: 14px;
+}
+
+.modal header .key-note > div {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+    border: 1.5px solid #000000;
+}
+
+.modal header .key-note > div.uncensored {
+    background-color: #e70000;
+}
+
+.modal header .key-note > div.fan {
+    background-color: #670090;
+}
+
 .info-watch-later, .info-favorite, .icon-info-circled {
     transition: color 1s;
 }
@@ -130,10 +159,6 @@
     height: 68px;
 }
 
-.source-table-body {
-    text-transform: capitalize;
-}
-
 .table-container {
     overflow-x: scroll;
 }
@@ -160,4 +185,47 @@
 
 .list-header span {
     margin: 0;
+}
+
+.source-select-options-container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+}
+
+.source-select-options {
+    background-color: #424242;
+    width: 80px;
+    max-width: 80px;
+    height: 80px;
+    line-height: 70px;
+    margin-bottom: 0.3em;
+    font-size: 2em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.source-select-options.uncensored {
+    background-color: #e70000;
+    color: #ff7f50;
+}
+
+.source-select-options.fan {
+    background-color: #670090;
+    color: #d876ff;
+}
+
+.source-select-options.subs {
+    color: #ff7f50;
+}
+
+.source-select-options.dubs {
+    color: #d876ff;
+}
+
+.source-language {
+    font-size: 12px;
+    line-height: 0;
 }

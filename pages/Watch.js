@@ -291,9 +291,7 @@ var SourceSelectModal = {
 
         m.request({
             method: "GET",
-            url:
-                domain + "/api/v1/media/stream?code=" +
-                encodeURIComponent(source.retrieve_url)
+            url: domain + "/api/v1/media/stream?code=" + encodeURIComponent(source.retrieve_url)
         }).then(function (result) {
             var sources = result.urls;
             window.player.src(
@@ -336,10 +334,13 @@ var SourceSelectModal = {
             return source.fan;
         });
 
-        var theadElems = [m("th", "Server"), m("th", "Language")];
+        function getSourceLanguageClass(source) {
+            return source.language === "subs" || source.is_subbed ? " subs" : source.language === "dubs" || source.is_dubbed ? " dubs" : "";
+        }
 
-        if (hasUncensored) theadElems.push(m("th", "Uncensored"));
-        if (hasFanDub) theadElems.push(m("th", "Fan Dub"));
+        function getSourceOptionClass(source) {
+            return source.fan ? " fan" : source.uncensored ? " uncensored" : "";
+        }
 
         return m("div", { class: "modal source-select-modal" }, [
             m("input", { id: sourceSelectorId, type: "checkbox" }),
@@ -347,47 +348,27 @@ var SourceSelectModal = {
             m("article", [
                 m("header", [
                     m("h4", "Select Source"),
-                    m(
-                        "label",
-                        { class: "close", for: sourceSelectorId },
-                        m.trust("&times;")
-                    )
+                    m("label", { class: "close", for: sourceSelectorId }, m.trust("&times;")),
+                    hasFanDub ? m('div', { class: 'key-note' }, [m('div', { class: 'fan' }), 'Fan Dub']) : undefined,
+                    hasUncensored ? m('div', { class: 'key-note' }, [m('div', { class: 'uncensored' }), 'Uncensored']) : undefined
                 ]),
                 m("section", { class: "content" }, [
-                    m("div", [
-                        m("table", { class: "primary full" }, [
-                            m("thead", [m("tr", theadElems)]),
-                            m("tbody", { class: "source-table-body table-selectable" }, [
-                                (Array.isArray(sources) ? sources : [episode]).map(function (
-                                    source
-                                ) {
-                                    var tbodyElems = [
-                                        m("td", source.source),
-                                        m("td", source.language === "subs" || source.is_subbed ? "Subtitled" : source.language === "dubs" || source.is_dubbed ? "Dubbed" : "Original")
-                                    ];
-
-                                    if (hasUncensored)
-                                        tbodyElems.push(m("td", source.uncensored ? "Yes" : "No"));
-                                    if (hasFanDub)
-                                        tbodyElems.push(m("td", source.fan ? "Yes" : "No"));
-
-                                    return m(
-                                        "tr",
-                                        {
-                                            key: source.source,
-                                            onclick: SourceSelectModal.getSource.bind(this, source)
-                                        },
-                                        tbodyElems
-                                    );
-                                })
-                            ])
-                        ])
+                    m("div", { class: 'source-select-options-container' }, [
+                        (Array.isArray(sources) ? sources : [episode]).map(function (source) {
+                            var tbodyElems = [
+                                m("div", source.source),
+                                m("div", { class: 'source-language' }, source.language === "subs" || source.is_subbed ? "Subtitled" : source.language === "dubs" || source.is_dubbed ? "Dubbed" : "Original")
+                            ];
+                            return m("div", { class: 'source-select-options' + getSourceLanguageClass(source) + getSourceOptionClass(source), key: source.source, onclick: SourceSelectModal.getSource.bind(this, source) }, tbodyElems);
+                        })
                     ])
                 ]),
                 m("section", { class: "content" }, [
                     m("h5", episode.title),
-                    m("img", { class: "full", src: getPosterWide(episode.thumbnail, undefined, 800).poster }),
-                    m("p", episode.description)
+                    m('div', { class: 'flex two-600' }, [
+                        m('div', m("img", { class: "full", src: getPosterWide(episode.thumbnail, undefined, 800).poster })),
+                        m("p", episode.description)
+                    ])
                 ])
             ])
         ]);
@@ -400,6 +381,9 @@ var Watch = {
         Watch.InfoBox = EpisodeInfo();
         Watch.initialOverflowY = document.body.style.overflowY;
         Watch.initialOverflowX = document.body.style.overflowX;
+        var themeColor = document.querySelector('meta[name=theme-color]');
+        Watch.initialThemeColor = themeColor.content;
+        themeColor.content = '#171717';
         var footer = document.querySelector('.footer');
         Watch.initialFooterDisplay = footer.style.overflowX;
         Watch.setOverflowY();
@@ -411,6 +395,8 @@ var Watch = {
         window.removeEventListener("resize", Watch.setOverflowY);
         document.body.style.overflowY = Watch.initialOverflowY;
         document.body.style.overflowX = Watch.initialOverflowX;
+        var themeColor = document.querySelector('meta[name=theme-color]');
+        themeColor.content = Watch.initialThemeColor;
         var footer = document.querySelector('.footer');
         footer.style.display = Watch.initialFooterDisplay;
         if (player.player.el_) player.player.el_.removeEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
@@ -509,7 +495,7 @@ var Watch = {
                     setTitle(series.title);
                     Watch.InfoBox = EpisodeInfo();
                     Watch.InfoBox.series = series;
-                    player.stop();
+                    player.stop(true);
                     player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
