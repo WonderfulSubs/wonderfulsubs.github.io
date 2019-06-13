@@ -355,11 +355,11 @@ var SourceSelectModal = {
                 m("section", { class: "content" }, [
                     m("div", { class: 'source-select-options-container' }, [
                         (Array.isArray(sources) ? sources : [episode]).map(function (source) {
-                            var tbodyElems = [
-                                m("div", source.source),
+                            var optionElems = [
+                                m("div", source.source || '?'),
                                 m("div", { class: 'source-language' }, source.language === "subs" || source.is_subbed ? "Subtitled" : source.language === "dubs" || source.is_dubbed ? "Dubbed" : "Original")
                             ];
-                            return m("div", { class: 'source-select-options' + getSourceLanguageClass(source) + getSourceOptionClass(source), key: source.source, onclick: SourceSelectModal.getSource.bind(this, source) }, tbodyElems);
+                            return m("div", { class: 'source-select-options' + getSourceLanguageClass(source) + getSourceOptionClass(source), key: source.source, onclick: SourceSelectModal.getSource.bind(this, source) }, optionElems);
                         })
                     ])
                 ]),
