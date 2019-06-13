@@ -56,10 +56,12 @@ function MediaPlayer(src) {
         src: function (src) {
             player.src(src);
         },
-        stop: function () {
-            player.pause();
-            player.hasStarted(false);
-            player.el_.classList.add('vjs-waiting');
+        stop: function (hideSpinner) {
+            if (player.currentSrc()) {
+                player.pause();
+                player.hasStarted(false);
+                if (!hideSpinner) player.el_.classList.add('vjs-waiting');
+            }
         },
         poster: function (poster) {
             player.poster(poster);
