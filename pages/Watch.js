@@ -389,6 +389,9 @@ var Watch = {
         Watch.InfoBox = EpisodeInfo();
         Watch.initialOverflowY = document.body.style.overflowY;
         Watch.initialOverflowX = document.body.style.overflowX;
+        var bottomBar = document.querySelector('.bottom-bar');
+        Watch.initialBottomBarClassName =  bottomBar.className;
+        bottomBar.classList.add('third-700');
         var themeColor = document.querySelector('meta[name=theme-color]');
         Watch.initialThemeColor = themeColor.content;
         themeColor.content = '#171717';
@@ -403,6 +406,8 @@ var Watch = {
         window.removeEventListener("resize", Watch.setOverflowY);
         document.body.style.overflowY = Watch.initialOverflowY;
         document.body.style.overflowX = Watch.initialOverflowX;
+        var bottomBar = document.querySelector('.bottom-bar');
+        bottomBar.className = Watch.initialBottomBarClassName;
         var themeColor = document.querySelector('meta[name=theme-color]');
         themeColor.content = Watch.initialThemeColor;
         var footer = document.querySelector('.footer');
