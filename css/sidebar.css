@@ -26,7 +26,7 @@
     }
     
     .sidebar-container > *:first-child {
-        margin-top: 65px;
+        margin-top: 0;
     }
     
     .sidebar-container > *:not(:first-child) {

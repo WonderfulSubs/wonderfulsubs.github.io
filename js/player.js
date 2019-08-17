@@ -1,7 +1,7 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
-function VideoPlayer(src) {
-    return MediaPlayer(src);
+function VideoPlayer(src, options, ready) {
+    return MediaPlayer(src, options, ready);
     var _this = {
         embed: false,
         player: {},
@@ -23,16 +23,24 @@ function VideoPlayer(src) {
     return _this;
 }
 
-function MediaPlayer(src) {
-    var player;
+function MediaPlayer(src, options, ready) {
+    var player, showTheaterToggle;
     var _this = {
         player: {},
         oncreate: function (vnode) {
-            player = videojs(vnode.dom, {
+            var opts = {
                 controls: true,
                 fluid: true,
                 autoplay: true
-            });
+            };
+            if (options) {
+                showTheaterToggle = options.showTheaterToggle;
+                ['showTheaterToggle'].forEach(function(key) {
+                    delete options[key];
+                });
+                for (var key in options) opts[key] = options[key];
+            }
+            player = videojs(vnode.dom, opts);
             _this.player = player;
             player.qualityLevels();
             player.hlsQualitySelector();
@@ -44,12 +52,29 @@ function MediaPlayer(src) {
                     enableVolumeScroll: false,
                     alwaysCaptureHotkeys: true
                 });
+                if (ready) ready(this);
             });
 
             player.poster(posterWidePlaceholder);
             if (src) player.src(src);
 
-            player.on('loadstart', function() {
+            if (showTheaterToggle) {
+                var Button = videojs.getComponent('Button');
+                var theaterButton = videojs.extend(Button, {
+                    constructor: function () {
+                        Button.apply(this, arguments);
+                        /* initialize your button */
+                    },
+                    handleClick: Watch.toggleTheater,
+                    buildCSSClass: function () {
+                        return "vjs-icon-theatermode vjs-control vjs-button";
+                    }
+                });
+                videojs.registerComponent('MyButton', theaterButton);
+                player.getChild('controlBar').addChild('myButton', {});
+            }
+
+            player.on('loadstart', function () {
                 this.play();
             });
         },
@@ -69,8 +94,12 @@ function MediaPlayer(src) {
         captions: function (captions) {
             player.addRemoteTextTrack(captions, false);
         },
+        toggleTheater: function () {
+            player.toggleClass('theater-player');
+            player.el_.querySelector('video').className = 'vjs-tech';
+        },
         view: function () {
-            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown', playsinline: 'playsinline' });
+            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' + (showTheaterToggle && theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
         }
     };
 

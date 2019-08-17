@@ -68,7 +68,7 @@ var AuthUser = {
                 } catch (error) {
                     nativeToast({
                         message: result.error || defaultErrMsg,
-                        position: 'north-east',
+                        position: 'north-west',
                         type: 'error'
                     });
                     if (callback) callback(error);
@@ -117,12 +117,19 @@ var AuthUser = {
         } catch (error) {
             nativeToast({
                 message: result.error || defaultErrMsg,
-                position: 'north-east',
+                position: 'north',
                 type: 'error'
             });
         }
     },
     addToRemoveFromList: function (listName, series, options) {
+        if (!AuthUser.data._id) {
+            return nativeToast({
+                message: loginErrMsg,
+                position: 'north-west',
+                type: 'error'
+            });
+        }
         if (!options) options = {};
         var preventUpdate = options.preventUpdate;
         var element = options.element;
@@ -163,7 +170,7 @@ var AuthUser = {
                 if (showToast) {
                     nativeToast({
                         message: (!alreadySet ? 'Added to ' : 'Removed from ') + listName,
-                        position: 'north-east',
+                        position: 'north-west',
                         type: 'success',
                         closeOnClick: true
                     });

@@ -80,25 +80,27 @@
     <link rel="stylesheet" href="/css/showcase.css" />
     <link rel="stylesheet" href="/css/player.css" />
     <link rel="stylesheet" href="/css/user.css" />
-    <link href="https://vjs.zencdn.net/7.4.1/video-js.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/settings.css" />
+    <link href="https://vjs.zencdn.net/7.6.0/video-js.min.css" rel="stylesheet" />
     <link href="/css/videojs-hls-quality-selector.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/vsg-skin.css" />
     <link rel="stylesheet" href="/css/icons.css" />
     <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed&display=swap" rel="stylesheet"/>
 
-    <script src="https://vjs.zencdn.net/7.4.1/video.min.js"></script>
+    <script src="https://vjs.zencdn.net/7.6.0/video.min.js"></script>
     <script src="/js/videojs-contrib-quality-levels.min.js"></script>
     <script src="/js/videojs-hls-quality-selector.min.js"></script>
     <script src="//cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
     <script src="https://unpkg.com/native-toast@2.0.0/dist/native-toast.min.js"></script>
     <script src="https://unpkg.com/mithril@1.1.6/mithril.min.js"></script>
     <script src="/js/helpers.js"></script>
-    <script src="/js/sidebar.js"></script>
     <script src="/js/poster.js"></script>
     <script src="/js/showcase.js"></script>
     <script src="/js/lists.js"></script>
+    <script src="/js/sidebar.js"></script>
     <script src="/js/player.js"></script>
     <script src="/js/user.js"></script>
+    <script src="/js/settings.js"></script>
     <script src="/pages/Home.js"></script>
     <script src="/pages/Login.js"></script>
     <script src="/pages/Welcome.js"></script>
@@ -140,12 +142,17 @@
         <div class="content-wrapper animated three-fourth-1000" id="root"></div>
         <div id="sidebar" class="fourth-1000"></div>
     </div>
-    <div id="user-panel" class="animated faster lists slideInUp none"></div>
+    <div id="settings-panel" class="panel-body animated faster lists slideInUp none"></div>
+    <div id="user-panel" class="panel-body animated faster lists slideInUp none"></div>
     <div class="bottom-bar top-divider full">
         <div class="flex">
             <div class="bottom-bar-button">
                 <i class="icon-help-circled"></i>
                 <div>Help</div>
+            </div>
+            <div class="bottom-bar-button" onclick="showHideSettingsPanel()">
+                <i class="icon-cog"></i>
+                <div>Settings</div>
             </div>
             <div class="bottom-bar-button">
                 <i class="icon-comment"></i>

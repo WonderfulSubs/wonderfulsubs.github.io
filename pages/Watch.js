@@ -14,7 +14,7 @@ function showHideMore(e) {
 }
 
 var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
-var player = VideoPlayer();
+var player = VideoPlayer(undefined, { showTheaterToggle: true });
 var sourceSelectorId = getRandomId();
 
 var RecommendedList = {
@@ -321,10 +321,10 @@ var SourceSelectModal = {
 
                 var poster = result.poster;
                 if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
-            } catch(error) {
+            } catch (error) {
                 nativeToast({
                     message: 'An error occured. Please try another source.',
-                    position: 'north-east',
+                    position: 'north-west',
                     type: 'error'
                 });
             }
@@ -390,17 +390,19 @@ var Watch = {
         Watch.initialOverflowY = document.body.style.overflowY;
         Watch.initialOverflowX = document.body.style.overflowX;
         var bottomBar = document.querySelector('.bottom-bar');
-        Watch.initialBottomBarClassName =  bottomBar.className;
-        bottomBar.classList.add('third-700');
+        Watch.initialBottomBarClassName = bottomBar.className;
+        if (theaterModeEnabled) bottomBar.classList.add('third-700');
         var themeColor = document.querySelector('meta[name=theme-color]');
         Watch.initialThemeColor = themeColor.content;
         themeColor.content = '#171717';
         var footer = document.querySelector('.footer');
         Watch.initialFooterDisplay = footer.style.overflowX;
-        Watch.setOverflowY();
-        document.body.style.overflowX = 'hidden';
-        footer.style.display = 'none';
-        window.addEventListener("resize", Watch.setOverflowY);
+        if (theaterModeEnabled) {
+            Watch.setOverflowY();
+            document.body.style.overflowX = 'hidden';
+            footer.style.display = 'none';
+            window.addEventListener("resize", Watch.setOverflowY);
+        }
     },
     onremove: function () {
         window.removeEventListener("resize", Watch.setOverflowY);
@@ -428,6 +430,22 @@ var Watch = {
             var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
             SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
             window.m.redraw();
+        }
+    },
+    toggleTheater: function () {
+        if (m.route.get().indexOf('/watch/') === 0) {
+            theaterModeEnabled = !theaterModeEnabled;
+            var bottomBar = document.querySelector('.bottom-bar');
+            bottomBar.classList.toggle('third-700');
+            m.redraw();
+            player.toggleTheater();
+            setStorage('theater', theaterModeEnabled);
+            nativeToast({
+                message: 'Theater Mode ' + (theaterModeEnabled ? 'Enabled' : 'Disabled'),
+                position: 'north-west',
+                type: 'info',
+                closeOnClick: true
+            });
         }
     },
     onupdate: function (vnode) {
@@ -471,15 +489,24 @@ var Watch = {
         }
     },
     view: function () {
-        if (!AuthUser.data._id) return m.route.set('/');
+        if (!AuthUser.data._id) {
+            nativeToast({
+                message: loginErrMsg,
+                position: 'north-west',
+                type: 'error'
+            });
+            return m.route.set('/login');
+        }
 
-
-        return m("div", { class: 'flex-margin-reset' }, [
+        return m("div", { class: 'flex-margin-reset' + (theaterModeEnabled ? ' desktop' : '') }, [
             darkThemeStyles,
             m("div", { class: "watch-content-container flex one two-700" }, [
-                m("div", { class: "two-third-700 flex-padding-reset" }, m(player)),
+                m("div", { class: "two-third-700 flex-padding-reset" }, [
+                    m(player),
+                    !theaterModeEnabled ? m(Watch.InfoBox) : undefined,
+                ]),
                 m("div", { class: "third-700" }, [
-                    m(Watch.InfoBox),
+                    theaterModeEnabled ? m(Watch.InfoBox) : undefined,
                     m(SeasonsList),
                     m(RecommendedList)
                 ])

@@ -29,8 +29,6 @@ var Genre = {
     },
     results: SeriesList(),
     view: function () {
-        if (!AuthUser.data._id) return m.route.set('/');
-
         setTitle(Genre.title);
 
         function loadResults(category) {
