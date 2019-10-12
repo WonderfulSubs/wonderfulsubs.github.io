@@ -1,0 +1,25 @@
+.settings-option-container {
+    padding: 10px 10px;
+}
+
+.settings-option {
+    width: 100%;
+    line-height: 50px;
+    background-color: #ffffff;
+    border: 1.5px solid #000000;
+    color: #000000;
+    cursor: pointer;
+    padding-left: 10px;
+    transition: none;
+    box-shadow: none;
+}
+
+.settings-option:hover, .settings-option:focus {
+    color: #ffffff;
+    background-color: #000000;
+    border: 1.5px solid #ffffff;
+}
+
+.settings-option i {
+    padding-right: 7px;
+}

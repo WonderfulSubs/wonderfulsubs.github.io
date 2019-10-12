@@ -123,6 +123,16 @@ var AuthUser = {
         }
     },
     addToRemoveFromList: function (listName, series, options) {
+<<<<<<< Updated upstream
+=======
+        if (!AuthUser.data._id) {
+            return nativeToast({
+                message: loginErrMsg,
+                position: 'north-east',
+                type: 'error'
+            });
+        }
+>>>>>>> Stashed changes
         if (!options) options = {};
         var preventUpdate = options.preventUpdate;
         var element = options.element;

@@ -33,6 +33,7 @@
 
 .user-panel-list-buttons button.active {
     background-color: #ffffff;
+    box-shadow: none;
     color: #000000;
 }
 

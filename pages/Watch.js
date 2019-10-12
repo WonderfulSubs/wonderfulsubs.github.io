@@ -430,6 +430,25 @@ var Watch = {
             window.m.redraw();
         }
     },
+<<<<<<< Updated upstream
+=======
+    toggleTheater: function () {
+        if (m.route.get().indexOf('/watch/') === 0) {
+            theaterModeEnabled = !theaterModeEnabled;
+            var bottomBar = document.querySelector('.bottom-bar');
+            bottomBar.classList.toggle('third-700');
+            m.redraw();
+            player.toggleTheater();
+            setStorage('theater', theaterModeEnabled);
+            nativeToast({
+                message: 'Theater Mode ' + (theaterModeEnabled ? 'Enabled' : 'Disabled'),
+                position: 'north-east',
+                type: 'info',
+                closeOnClick: true
+            });
+        }
+    },
+>>>>>>> Stashed changes
     onupdate: function (vnode) {
         var id = vnode.attrs.id;
         if (id !== Watch.currentId) {
@@ -471,7 +490,18 @@ var Watch = {
         }
     },
     view: function () {
+<<<<<<< Updated upstream
         if (!AuthUser.data._id) return m.route.set('/');
+=======
+        if (!AuthUser.data._id) {
+            nativeToast({
+                message: loginErrMsg,
+                position: 'north-east',
+                type: 'error'
+            });
+            return m.route.set('/login');
+        }
+>>>>>>> Stashed changes
 
 
         return m("div", { class: 'flex-margin-reset' }, [
@@ -512,7 +542,7 @@ var Watch = {
                     player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
-                    var seasons = series.seasons.ws.media;
+                    var seasons = Array.isArray(series.seasons) ? series.seasons : series.seasons.ws.media;
                     SeasonsList.list = seasons;
 
                     if (callback) callback();

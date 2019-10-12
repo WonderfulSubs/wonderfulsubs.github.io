@@ -5,7 +5,12 @@ var siteShortname = 'ws';
 var recaptchaKey = true ? '6LcC9ncUAAAAAGClorUQbnX9jl331yMXu_RZGtnx' : '6Ldb-XcUAAAAABImcnwvx1EeOEs73hVn2ecXaaKL';
 var recaptchaUrl = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
 var defaultErrMsg = 'Something went wrong. Please try again later.';
+<<<<<<< Updated upstream
 var darkThemeStyles = m('style', 'nav .brand{filter:brightness(0) invert(1)}.nav-menu,.nav-menu-content{background-color:#171717}body{background-color:#212121;color:#fff}.nav-buttons a,.nav-buttons button{color:#fff}.nav-search input{background-color:rgba(255,255,255,.15);color:#fff}.nav-search i{color:#fff}.poster-header{color:#fff}.poster-item{box-shadow:none}.poster-item .poster-title{background-color:#424242;color:#fff}.poster-item .poster-language{background-color:#717171}.poster-item .poster-watch-later{background-color:#000}.poster-item .poster-favorite{background-color:#151515}.bottom-bar{background-color:#212121}.bottom-bar-button{color:#b0b0b0}.footer{background-color:#000}#user-panel{background-color:rgba(0,0,0,.75)}.button,.label,.select select:focus,[data-tooltip]:after,[type=checkbox]+.checkable:hover:before,[type=checkbox]:focus+.checkable:before,[type=radio]+.checkable:hover:before,[type=radio]:focus+.checkable:before,[type=submit],button,select:active,select:focus,th{background-color:#424242}@media only screen and (max-width:767px){.dropdown-content a{color:#000}}');
+=======
+var loginErrMsg = 'You must log in to do that.';
+var darkThemeStyles = m('style', '.main-container{background-color:transparent}.result-switch button{background-color:#000000}nav .brand{filter:brightness(0) invert(1)}.nav-menu,.nav-menu-content{background-color:#171717}body{background-color:#212121;color:#fff}.nav-buttons a,.nav-buttons button{color:#fff}.nav-search input{background-color:rgba(255,255,255,.15);color:#fff}.nav-search i{color:#fff}.poster-header{color:#fff}.poster-item{box-shadow:none}.poster-item .poster-title{background-color:#424242;color:#fff}.poster-item .poster-language{background-color:#717171}.poster-item .poster-watch-later{background-color:#000}.poster-item .poster-favorite{background-color:#151515}.bottom-bar{background-color:#212121}.bottom-bar-button{color:#b0b0b0}.footer{background-color:#000}.panel-body{background-color:rgba(0,0,0,.75)}.button,.label,.select select:focus,[data-tooltip]:after,[type=checkbox]+.checkable:hover:before,[type=checkbox]:focus+.checkable:before,[type=radio]+.checkable:hover:before,[type=radio]:focus+.checkable:before,[type=submit],button,select:active,select:focus,th{background-color:#424242}@media only screen and (max-width:767px){.dropdown-content a{color:#000}}');
+>>>>>>> Stashed changes
 var hideSidebarStyles = m('style', '#sidebar{display:none}');
 
 var supportsTouch = 'ontouchend' in document.documentElement;
@@ -19,14 +24,14 @@ function err(func, returnFuncValue) {
     }
 }
 
-function routeAnchor(e, path, data, options) {
-    e.preventDefault();
+function routeAnchor(e, path, data, options, isTarget) {
+    if (!isTarget) e.preventDefault();
     m.route.set(path, data, options);
 }
 
-function getSearchResults(event) {
-    var input = event.target.querySelector('input');
-    routeAnchor(event, '/search', { q: input.value });
+function getSearchResults(event, isTarget) {
+    var input = (isTarget ? event : event.target).querySelector('input');
+    routeAnchor(event, '/search', { q: input.value, }, undefined, isTarget);
     input.blur();
 }
 
@@ -170,7 +175,7 @@ function scrollToTop(scrollDuration, callback) {
 function preventAndStop(e, callback) {
     e.preventDefault();
     e.stopPropagation();
-    callback();
+    callback(e);
 }
 
 function getEpisodePages(episodes, maxPerPage, maxPageCount) {
@@ -209,6 +214,29 @@ function getEpisodePagesCSS(length) {
     };
 }
 
+<<<<<<< Updated upstream
+=======
+var themeStyleElem;
+function switchTheme(e) {
+    if (location.pathname.indexOf('/watch/') === -1) {
+        if (e && e.target) e.target.blur();
+        if (!themeStyleElem) {
+            themeStyleElem = document.createElement('style');
+            themeStyleElem.innerHTML = darkThemeStyles.text;
+            document.head.appendChild(themeStyleElem);
+            setStorage('dark_theme', true);
+        } else {
+            themeStyleElem.parentElement.removeChild(themeStyleElem);
+            themeStyleElem = undefined;
+            setStorage('dark_theme', false);
+        }
+    }
+}
+if (getStorage('dark_theme') === true) switchTheme();
+
+var theaterModeEnabled = getStorage('theater');
+
+>>>>>>> Stashed changes
 // Use ESC key to dismiss Picnic modals
 document.addEventListener('keydown', function (e) {
     if (!(document.activeElement instanceof HTMLInputElement)) {
@@ -217,6 +245,18 @@ document.addEventListener('keydown', function (e) {
                 var mods = document.querySelectorAll('.modal > [type=checkbox]');
                 [].forEach.call(mods, function (mod) { mod.checked = false; });
                 break;
+<<<<<<< Updated upstream
+=======
+            case "t":
+                Watch.toggleTheater();
+                break;
+            case "q":
+                switchTheme();
+                break;
+            case "c":
+                showHideChatPanel();
+                break;
+>>>>>>> Stashed changes
         }
     }
 });
