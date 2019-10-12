@@ -14,7 +14,7 @@ function showHideMore(e) {
 }
 
 var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
-var player = VideoPlayer(undefined, { showTheaterToggle: true });
+var player = VideoPlayer(undefined, { showTheaterToggle: false });
 var sourceSelectorId = getRandomId();
 
 var RecommendedList = {

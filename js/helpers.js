@@ -1,8 +1,8 @@
-var domain = false ? 'https://www.wonderfulsubs.com' : '';
+var domain = true ? 'https://www.wonderfulsubs.com' : '';
 var posterTallPlaceholder = /*domain +*/ '/img/poster_placeholder_tall.png';
 var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
 var siteShortname = 'ws';
-var recaptchaKey = false ? '6LcC9ncUAAAAAGClorUQbnX9jl331yMXu_RZGtnx' : '6Ldb-XcUAAAAABImcnwvx1EeOEs73hVn2ecXaaKL';
+var recaptchaKey = true ? '6LcC9ncUAAAAAGClorUQbnX9jl331yMXu_RZGtnx' : '6Ldb-XcUAAAAABImcnwvx1EeOEs73hVn2ecXaaKL';
 var recaptchaUrl = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
@@ -228,7 +228,7 @@ function switchTheme(e) {
 }
 if (getStorage('dark_theme') === true) switchTheme();
 
-var theaterModeEnabled = getStorage('theater');
+var theaterModeEnabled = true; //getStorage('theater');
 
 // Use ESC key to dismiss Picnic modals
 document.addEventListener('keydown', function (e) {
