@@ -100,7 +100,7 @@ function MediaPlayer(src, options, ready) {
             player.el_.querySelector('video').className = 'vjs-tech';
         },
         view: function () {
-            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' + (/*showTheaterToggle &&*/ !dontDoTheater && theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
+            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' + (/*showTheaterToggle &&*/ (options && !options.dontDoTheater) && theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
         }
     };
 
