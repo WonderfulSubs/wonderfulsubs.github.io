@@ -20,7 +20,7 @@ var Genre = {
         Genre.results = SeriesList(
             domain + (category ? "/api/media/search?options=summary" + '&q=' + category : "/api/media/all?options=summary"),
             {
-                header: Genre.category ? 'Genre - ' + Genre.category : 'All Genre',
+                header: Genre.category ? 'Genre - ' + Genre.category : 'All Genres',
                 callback: function (count) {
                     Genre.count = count;
                 }

@@ -71,6 +71,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/native-toast@2.0.0/dist/native-toast.css" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/Home.css" />
     <link rel="stylesheet" href="/css/overrides.css" />
     <link rel="stylesheet" href="/css/Login.css" />
     <link rel="stylesheet" href="/css/Welcome.css" />
@@ -100,6 +101,7 @@
     <script src="/js/sidebar.js"></script>
     <script src="/js/player.js"></script>
     <script src="/js/user.js"></script>
+    <script src="/js/chatbox.js"></script>
     <script src="/js/settings.js"></script>
     <script src="/pages/Home.js"></script>
     <script src="/pages/Login.js"></script>
@@ -123,7 +125,7 @@
                             <input type="search" name="q" placeholder="Search..." autoComplete="off"
                                 onsubmit="dismissKeyboard(event)" onclick="event.target.form.style['z-index'] = '2'"
                                 onblur="event.target.form.style['z-index'] = ''">
-                            <i class="icon-search"></i>
+                            <i class="icon-search" onclick="getSearchResults(event.target.parentElement, true)"></i>
                         </label>
                     </form>
                     <div class="nav-buttons dropdown">
@@ -154,7 +156,7 @@
                 <i class="icon-cog"></i>
                 <div>Settings</div>
             </div>
-            <div class="bottom-bar-button">
+            <div class="bottom-bar-button" onclick="showHideChatPanel()">
                 <i class="icon-comment"></i>
                 <div>Chat</div>
             </div>

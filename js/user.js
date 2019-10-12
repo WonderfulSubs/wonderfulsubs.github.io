@@ -68,7 +68,7 @@ var AuthUser = {
                 } catch (error) {
                     nativeToast({
                         message: result.error || defaultErrMsg,
-                        position: 'north-west',
+                        position: 'north-east',
                         type: 'error'
                     });
                     if (callback) callback(error);
@@ -126,7 +126,7 @@ var AuthUser = {
         if (!AuthUser.data._id) {
             return nativeToast({
                 message: loginErrMsg,
-                position: 'north-west',
+                position: 'north-east',
                 type: 'error'
             });
         }
@@ -170,7 +170,7 @@ var AuthUser = {
                 if (showToast) {
                     nativeToast({
                         message: (!alreadySet ? 'Added to ' : 'Removed from ') + listName,
-                        position: 'north-west',
+                        position: 'north-east',
                         type: 'success',
                         closeOnClick: true
                     });

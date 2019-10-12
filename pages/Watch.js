@@ -324,7 +324,7 @@ var SourceSelectModal = {
             } catch (error) {
                 nativeToast({
                     message: 'An error occured. Please try another source.',
-                    position: 'north-west',
+                    position: 'north-east',
                     type: 'error'
                 });
             }
@@ -442,7 +442,7 @@ var Watch = {
             setStorage('theater', theaterModeEnabled);
             nativeToast({
                 message: 'Theater Mode ' + (theaterModeEnabled ? 'Enabled' : 'Disabled'),
-                position: 'north-west',
+                position: 'north-east',
                 type: 'info',
                 closeOnClick: true
             });
@@ -492,7 +492,7 @@ var Watch = {
         if (!AuthUser.data._id) {
             nativeToast({
                 message: loginErrMsg,
-                position: 'north-west',
+                position: 'north-east',
                 type: 'error'
             });
             return m.route.set('/login');
@@ -539,7 +539,7 @@ var Watch = {
                     player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
-                    var seasons = series.seasons.ws.media;
+                    var seasons = Array.isArray(series.seasons) ? series.seasons : series.seasons.ws.media;
                     SeasonsList.list = seasons;
 
                     if (callback) callback();
