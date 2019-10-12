@@ -1,9 +1,5 @@
 var popularSeries = SeriesList(domain + '/api/media/popular?count=24', { header: 'Popular' });
 var updatedSeries = SeriesList(domain + '/api/media/latest?count=24', { header: 'Recently Updated' });
-<<<<<<< Updated upstream
-var randomSeries = SeriesList(domain + '/api/media/random?options=summary&count=5', { header: 'Random', sideScroll: true });
-var featured = BloggerList('https://blog.wonderfulsubs.com/feeds/posts/summary?alt=json&max-results=5');
-=======
 //var randomSeries = SeriesList(domain + '/api/media/random?options=summary&count=5', { header: 'Random', sideScroll: true });
 
 function HomeToggleChatbox(options) {
@@ -31,7 +27,6 @@ function HomeToggleChatbox(options) {
         }
     }
 }
->>>>>>> Stashed changes
 
 var Home = {
     oninit: function () {
@@ -48,8 +43,6 @@ var Home = {
             });
         }
     },
-<<<<<<< Updated upstream
-=======
     onremove: function () {
         Home.player.player.dispose();
     },
@@ -66,26 +59,17 @@ var Home = {
         m('i', { class: 'icon-comment' }),
         'Turn Chat On'
     ])),
->>>>>>> Stashed changes
     view: function () {
-        if (!AuthUser.data._id) return m(Welcome);
-
         setTitle('WonderfulSubs', true);
 
         return m.fragment({}, [
             m('div', { class: 'main-container' }, [
-<<<<<<< Updated upstream
-                m('div', { class: 'flex two-700' }, [
-                    m('div', { class: 'flex-padding-reset' }, m(featured)),
-                    m('div', { class: 'none half-700' }, m(randomSeries))
-=======
                 m('div', { class: 'flex one two-700' }, [
                     m('div', { class: 'flex-padding-reset two-third-700' }, m(Home.player)),
                     m('div', { class: 'home-chat-container none third-700 flex-padding-reset animated fadeIn slow', oncreate: function (vnode) { Home.chatContainer = vnode.dom; } }, [
                         Home.chatEnabled ? undefined : Home.chatboxOverlay,
                         Home.chatIframeLoaded ? Home.chatbox : undefined
                     ])
->>>>>>> Stashed changes
                 ]),
                 m('div', { class: 'flex two' }, [
                     m('div', m(popularSeries)),

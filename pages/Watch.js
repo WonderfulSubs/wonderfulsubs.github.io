@@ -14,7 +14,7 @@ function showHideMore(e) {
 }
 
 var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
-var player = VideoPlayer();
+var player = VideoPlayer(undefined, { showTheaterToggle: false });
 var sourceSelectorId = getRandomId();
 
 var RecommendedList = {
@@ -321,7 +321,7 @@ var SourceSelectModal = {
 
                 var poster = result.poster;
                 if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
-            } catch(error) {
+            } catch (error) {
                 nativeToast({
                     message: 'An error occured. Please try another source.',
                     position: 'north-east',
@@ -390,17 +390,19 @@ var Watch = {
         Watch.initialOverflowY = document.body.style.overflowY;
         Watch.initialOverflowX = document.body.style.overflowX;
         var bottomBar = document.querySelector('.bottom-bar');
-        Watch.initialBottomBarClassName =  bottomBar.className;
-        bottomBar.classList.add('third-700');
+        Watch.initialBottomBarClassName = bottomBar.className;
+        if (theaterModeEnabled) bottomBar.classList.add('third-700');
         var themeColor = document.querySelector('meta[name=theme-color]');
         Watch.initialThemeColor = themeColor.content;
         themeColor.content = '#171717';
         var footer = document.querySelector('.footer');
         Watch.initialFooterDisplay = footer.style.overflowX;
-        Watch.setOverflowY();
-        document.body.style.overflowX = 'hidden';
-        footer.style.display = 'none';
-        window.addEventListener("resize", Watch.setOverflowY);
+        if (theaterModeEnabled) {
+            Watch.setOverflowY();
+            document.body.style.overflowX = 'hidden';
+            footer.style.display = 'none';
+            window.addEventListener("resize", Watch.setOverflowY);
+        }
     },
     onremove: function () {
         window.removeEventListener("resize", Watch.setOverflowY);
@@ -430,8 +432,6 @@ var Watch = {
             window.m.redraw();
         }
     },
-<<<<<<< Updated upstream
-=======
     toggleTheater: function () {
         if (m.route.get().indexOf('/watch/') === 0) {
             theaterModeEnabled = !theaterModeEnabled;
@@ -448,7 +448,6 @@ var Watch = {
             });
         }
     },
->>>>>>> Stashed changes
     onupdate: function (vnode) {
         var id = vnode.attrs.id;
         if (id !== Watch.currentId) {
@@ -490,9 +489,6 @@ var Watch = {
         }
     },
     view: function () {
-<<<<<<< Updated upstream
-        if (!AuthUser.data._id) return m.route.set('/');
-=======
         if (!AuthUser.data._id) {
             nativeToast({
                 message: loginErrMsg,
@@ -501,15 +497,16 @@ var Watch = {
             });
             return m.route.set('/login');
         }
->>>>>>> Stashed changes
 
-
-        return m("div", { class: 'flex-margin-reset' }, [
+        return m("div", { class: 'flex-margin-reset' + (theaterModeEnabled ? ' desktop' : '') }, [
             darkThemeStyles,
             m("div", { class: "watch-content-container flex one two-700" }, [
-                m("div", { class: "two-third-700 flex-padding-reset" }, m(player)),
+                m("div", { class: "two-third-700 flex-padding-reset" }, [
+                    m(player),
+                    !theaterModeEnabled ? m(Watch.InfoBox) : undefined,
+                ]),
                 m("div", { class: "third-700" }, [
-                    m(Watch.InfoBox),
+                    theaterModeEnabled ? m(Watch.InfoBox) : undefined,
                     m(SeasonsList),
                     m(RecommendedList)
                 ])

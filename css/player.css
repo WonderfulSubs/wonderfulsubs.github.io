@@ -8,7 +8,8 @@
     content: '\f110'
 }
 
-.vjs-paused:not(.vjs-has-started) video[poster], .vjs-waiting video[poster] {
+.vjs-paused:not(.vjs-has-started) video[poster],
+.vjs-waiting video[poster] {
     object-fit: cover;
 }
 
@@ -17,8 +18,19 @@
     background-position: center;
 }
 
+.vjs-icon-theatermode {
+    font-family: VideoJS;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.vjs-icon-theatermode:before {
+    content: "\f10b";
+    font-size: 1.4em
+}
+
 @media only screen and (min-width:700px) {
-    #video-player {
+    div.video-js.theater-player {
         height: calc(100vh - 50px);
         padding: 0;
     }

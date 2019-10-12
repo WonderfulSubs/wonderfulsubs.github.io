@@ -255,7 +255,23 @@ body {
   padding-bottom: 0;
 }
 
-.flex-margin-reset {
+@media only screen and (max-width:699px) {
+  .flex-margin-reset {
+    position: absolute;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+  }
+}
+
+@media only screen and (min-width:700px) and (max-width:999px) {
+  .flex-margin-reset {
+    padding-top: 0.3em;
+  }
+}
+
+.flex-margin-reset.desktop {
+  padding-top: 0;
+  margin-top: -0.3em;
   position: absolute;
   width: 100vw;
   left: calc(-50vw + 50%);
@@ -292,4 +308,15 @@ body {
   position: absolute;
   top: 0;
   z-index: -1;
+}
+
+.panel-body {
+  z-index: 10001;
+  height: 100%;
+  width: 100%;
+  background-color:rgba(255, 255, 255, 0.75);
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  transition: background-color 1s;
 }

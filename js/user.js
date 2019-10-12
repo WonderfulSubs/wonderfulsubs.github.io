@@ -117,14 +117,12 @@ var AuthUser = {
         } catch (error) {
             nativeToast({
                 message: result.error || defaultErrMsg,
-                position: 'north-east',
+                position: 'north',
                 type: 'error'
             });
         }
     },
     addToRemoveFromList: function (listName, series, options) {
-<<<<<<< Updated upstream
-=======
         if (!AuthUser.data._id) {
             return nativeToast({
                 message: loginErrMsg,
@@ -132,7 +130,6 @@ var AuthUser = {
                 type: 'error'
             });
         }
->>>>>>> Stashed changes
         if (!options) options = {};
         var preventUpdate = options.preventUpdate;
         var element = options.element;
