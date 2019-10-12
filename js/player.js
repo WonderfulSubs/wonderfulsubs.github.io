@@ -24,7 +24,7 @@ function VideoPlayer(src, options, ready) {
 }
 
 function MediaPlayer(src, options, ready) {
-    var player, showTheaterToggle;
+    var player, showTheaterToggle, dontDoTheater;
     var _this = {
         player: {},
         oncreate: function (vnode) {
@@ -35,7 +35,8 @@ function MediaPlayer(src, options, ready) {
             };
             if (options) {
                 showTheaterToggle = options.showTheaterToggle;
-                ['showTheaterToggle'].forEach(function(key) {
+                dontDoTheater = options.dontDoTheater;
+                ['showTheaterToggle', 'dontDoTheater'].forEach(function(key) {
                     delete options[key];
                 });
                 for (var key in options) opts[key] = options[key];
@@ -99,7 +100,7 @@ function MediaPlayer(src, options, ready) {
             player.el_.querySelector('video').className = 'vjs-tech';
         },
         view: function () {
-            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' + (/*showTheaterToggle &&*/ theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
+            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' + (/*showTheaterToggle &&*/ !dontDoTheater && theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
         }
     };
 

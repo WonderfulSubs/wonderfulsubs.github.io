@@ -49,7 +49,7 @@ var Home = {
     player: VideoPlayer({
         src: "https://stream.wonderfulsubs.com/live/stream/index.m3u8",
         type: "application/x-mpegURL"
-    }, { muted: true }, function (player) {
+    }, { muted: true, dontDoTheater: true }, function (player) {
         player.on('playerresize', function (e) {
             if (Home.chatContainer) Home.chatContainer.style.height = e.target.clientHeight + 'px';
         });
