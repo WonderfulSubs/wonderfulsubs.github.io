@@ -31,13 +31,18 @@ function MediaPlayer(src, options, ready) {
             var opts = {
                 controls: true,
                 fluid: true,
-                autoplay: true
+                autoplay: true,
+                html5: {
+                    hls: {
+                        overrideNative: !videojs.browser.IS_SAFARI,
+                    }
+                }
             };
             if (options) {
                 opts.id = options.playerId;
                 disableHotkeys = options.disableHotkeys;
                 showTheaterToggle = options.showTheaterToggle;
-                ['playerId', 'disableHotkeys', 'showTheaterToggle'].forEach(function(key) {
+                ['playerId', 'disableHotkeys', 'showTheaterToggle'].forEach(function (key) {
                     delete options[key];
                 });
                 for (var key in options) opts[key] = options[key];
