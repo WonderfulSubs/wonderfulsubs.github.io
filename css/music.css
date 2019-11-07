@@ -1,0 +1,21 @@
+#vjs-music-player.hide-music-video video, #vjs-music-player.hide-music-video .vjs-text-track-display, #vjs-music-.hide-music-video .vjs-control-bar > :not(.vjs-progress-control) {
+    display: none !important;
+}
+
+#vjs-music-player.hide-music-video .vjs-control-bar {
+    transform: translateY(0em) !important;
+}
+
+#vjs-music-player.hide-music-video .vjs-progress-control {
+    opacity: 1 !important;
+    height: .5em !important;
+    top: 0em !important;
+}
+
+#vjs-music-player.hide-music-video {
+    padding: 3px !important;
+}
+
+#vjs-music-player.hide-music-video > :not(.vjs-control-bar) {
+    opacity: 0 !important;
+}

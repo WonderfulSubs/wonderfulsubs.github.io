@@ -231,22 +231,78 @@ body {
   transition: background-color 1s;
 }
 
-.bottom-bar {
+.bottom-bar, .music-player {
   right: 0;
   height: 60px;
   background-color: #ffffff;
   position: fixed;
   bottom: 0;
   text-align: center;
-  padding-top: .2em;
+  margin-top: .2em;
   transition: background-color 1s;
 }
 
-.bottom-bar-button {
+.bottom-bar-button, .music-player-button {
   text-align: center;
   color: #ff9900;
   transition: color 1s;
   cursor: pointer;
+}
+
+.bottom-bar-button:hover, .music-player-button:hover {
+  background-color: #d6d6d6;
+}
+
+.music-player {
+  height: 120px;
+  padding-top: 0;
+}
+
+.music-player.show-music-video {
+  height: 280px;
+}
+
+.music-player.show-music-video .music-player-info img {
+  display: none;
+}
+
+.music-player-info img {
+  float: left;
+  padding: 0;
+  margin-right: 3px;
+}
+
+.music-player-contents {
+  height: calc(100% - 66px);
+  margin: 0;
+}
+
+.music-player-contents * {
+  max-height: 100%;
+}
+
+.music-player-contents .flex > *, .music-player-contents.flex > * {
+  padding: 0;
+}
+
+.music-player-info, .music-player-info * {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0;
+}
+
+.music-player-info.half, .music-player-controls.half {
+  padding: 0 5px;
+}
+
+.music-player-info h6 {
+  opacity: 0.7;
+}
+
+.music-player-button {
+  line-height: 53px;
 }
 
 .flex .flex-padding-reset {

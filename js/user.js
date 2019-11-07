@@ -54,7 +54,7 @@ var AuthUser = {
         Object.keys(data).forEach(function (key) {
             if (data[key] === undefined || data[key] === "") delete data[key];
         });
-        m.request({ method: 'POST', url: url, data: data })
+        m.request({ method: 'POST', url: url, body: data })
             .then(function (result) {
                 try {
                     if (result.data._id && result.token) {
@@ -152,7 +152,7 @@ var AuthUser = {
         m.request({
             method: 'POST',
             url: domain + '/api/v1/' + listName.toLowerCase().replace(/ /g, '') + '/' + (!alreadySet ? 'add' : 'remove'),
-            data: data,
+            body: data,
             headers: {
                 Authorization: 'Bearer ' + AuthUser.data.token
             }

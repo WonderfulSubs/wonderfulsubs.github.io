@@ -42,22 +42,22 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US">
-	<meta property="og:site_name" content="WonderfulSubs">
-	<meta property="fb:app_id" content="2103300303228684">
-	<meta property="fb:pages" content="523463611175809">
+    <meta property="og:site_name" content="WonderfulSubs">
+    <meta property="fb:app_id" content="2103300303228684">
+    <meta property="fb:pages" content="523463611175809">
     <meta name="twitter:site" content="WonderfulSubs">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="WonderfulSubs | Anime Entertainment Paradise">
     <meta name="twitter:creator" content="@WonderfulSubs">
-	<meta property="og:image" content="https://beta.wonderfulsubs.com/img/header.png">
-	<meta property="og:title" content="WonderfulSubs - Anime Entertainment Paradise">
-	<meta property="og:description" content="The best place on the web for all things Anime!">
-	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://beta.wonderfulsubs.com">
-	<meta name="author" content="WonderfulSubs LLC">
-	<meta name="keywords" content="anime, manga, japan, otaku, japanese culture, weeaboo">
+    <meta property="og:image" content="https://beta.wonderfulsubs.com/img/header.png">
+    <meta property="og:title" content="WonderfulSubs - Anime Entertainment Paradise">
+    <meta property="og:description" content="The best place on the web for all things Anime!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beta.wonderfulsubs.com">
+    <meta name="author" content="WonderfulSubs LLC">
+    <meta name="keywords" content="anime, manga, japan, otaku, japanese culture, weeaboo">
     <meta name="description" content="The best place on the web for all things Anime!">
-    
+
     <meta name="theme-color" content="#ff9900">
     <meta name="msapplication-TileColor" content="#ffffff">
 
@@ -66,7 +66,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff9900">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.0/picnic.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/native-toast@2.0.0/dist/native-toast.css" />
@@ -81,19 +81,22 @@
     <link rel="stylesheet" href="/css/showcase.css" />
     <link rel="stylesheet" href="/css/player.css" />
     <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/music.css" />
     <link rel="stylesheet" href="/css/settings.css" />
     <link href="https://vjs.zencdn.net/7.6.0/video-js.min.css" rel="stylesheet" />
     <link href="/css/videojs-hls-quality-selector.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/vsg-skin.css" />
     <link rel="stylesheet" href="/css/icons.css" />
-    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed&display=swap" rel="stylesheet" />
 
-    <script src="https://vjs.zencdn.net/7.6.0/video.min.js"></script>
+    <script src="https://vjs.zencdn.net/7.6.5/video.min.js"></script>
+    <!-- <script src="/js/videojs-middleware.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.0/Youtube.min.js"></script>
     <script src="/js/videojs-contrib-quality-levels.min.js"></script>
     <script src="/js/videojs-hls-quality-selector.min.js"></script>
     <script src="//cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
     <script src="https://unpkg.com/native-toast@2.0.0/dist/native-toast.min.js"></script>
-    <script src="https://unpkg.com/mithril@1.1.6/mithril.min.js"></script>
+    <script src="https://unpkg.com/mithril@2.0.4/mithril.min.js"></script>
     <script src="/js/helpers.js"></script>
     <script src="/js/poster.js"></script>
     <script src="/js/showcase.js"></script>
@@ -102,6 +105,7 @@
     <script src="/js/player.js"></script>
     <script src="/js/user.js"></script>
     <script src="/js/chatbox.js"></script>
+    <script src="/js/music.js"></script>
     <script src="/js/settings.js"></script>
     <script src="/pages/Home.js"></script>
     <script src="/pages/Login.js"></script>
@@ -146,6 +150,9 @@
     </div>
     <div id="settings-panel" class="panel-body animated faster lists slideInUp none"></div>
     <div id="user-panel" class="panel-body animated faster lists slideInUp none"></div>
+    <div class="music-player full top-divider animated slideInUp faster none">
+        <div id="music-panel" class="music-player-contents flex grow"></div>
+    </div>
     <div class="bottom-bar top-divider full">
         <div class="flex">
             <div class="bottom-bar-button">
@@ -155,6 +162,10 @@
             <div class="bottom-bar-button" onclick="showHideSettingsPanel()">
                 <i class="icon-cog"></i>
                 <div>Settings</div>
+            </div>
+            <div class="bottom-bar-button" onclick="showHideMusicPlayer()">
+                <i class="icon-music"></i>
+                <div>Music</div>
             </div>
             <div class="bottom-bar-button" onclick="showHideChatPanel()">
                 <i class="icon-comment"></i>
@@ -171,14 +182,17 @@
             <div class="left">
                 ©<span id="footer-year"> </span>WonderfulSubs LLC
                 <br>
-                Wikipe-tan: © 2006 Kasuga~jawiki / Wikimedia Commons / <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="nofollow"><u>CC-BY-SA-3.0</u></a> / <a href="https://www.gnu.org/licenses/fdl-1.3.html" target="_blank" rel="nofollow"><u>GFDL</u></a>. Eye color changed to yellow and/or mouth added
+                Wikipe-tan: © 2006 Kasuga~jawiki / Wikimedia Commons / <a
+                    href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank"
+                    rel="nofollow"><u>CC-BY-SA-3.0</u></a> / <a href="https://www.gnu.org/licenses/fdl-1.3.html"
+                    target="_blank" rel="nofollow"><u>GFDL</u></a>. Eye color changed to yellow and/or mouth added
             </div>
         </div>
     </div>
     <script>
         var root = document.getElementById('root');
 
-        m.route.prefix('');
+        m.route.prefix = '';
         m.route(root, '/', {
             '/': Home,
             '/login': Login,

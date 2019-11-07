@@ -16,7 +16,7 @@ function VideoPlayer(src, options, ready) {
                 player.dispose();
                 return m('iframe', { frameborder: '0' });
             }
-            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered' });
+            return m('video', { id: getRandomId(), class: 'video-js vjs-big-play-centered' });
         }
     };
 
@@ -24,7 +24,7 @@ function VideoPlayer(src, options, ready) {
 }
 
 function MediaPlayer(src, options, ready) {
-    var player, showTheaterToggle;
+    var player, disableHotkeys, showTheaterToggle;
     var _this = {
         player: {},
         oncreate: function (vnode) {
@@ -34,8 +34,10 @@ function MediaPlayer(src, options, ready) {
                 autoplay: true
             };
             if (options) {
+                opts.id = options.playerId;
+                disableHotkeys = options.disableHotkeys;
                 showTheaterToggle = options.showTheaterToggle;
-                ['showTheaterToggle'].forEach(function(key) {
+                ['playerId', 'disableHotkeys', 'showTheaterToggle'].forEach(function(key) {
                     delete options[key];
                 });
                 for (var key in options) opts[key] = options[key];
@@ -45,13 +47,15 @@ function MediaPlayer(src, options, ready) {
             player.qualityLevels();
             player.hlsQualitySelector();
             player.ready(function () {
-                this.hotkeys({
-                    volumeStep: 0.1,
-                    seekStep: 5,
-                    enableModifiersForNumbers: false,
-                    enableVolumeScroll: false,
-                    alwaysCaptureHotkeys: true
-                });
+                if (!disableHotkeys) {
+                    this.hotkeys({
+                        volumeStep: 0.1,
+                        seekStep: 5,
+                        enableModifiersForNumbers: false,
+                        enableVolumeScroll: false,
+                        alwaysCaptureHotkeys: true
+                    });
+                }
                 if (ready) ready(this);
             });
 
@@ -99,7 +103,7 @@ function MediaPlayer(src, options, ready) {
             player.el_.querySelector('video').className = 'vjs-tech';
         },
         view: function () {
-            return m('video', { id: 'video-player', class: 'video-js vjs-big-play-centered animated fadeInDown' + (showTheaterToggle && theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
+            return m('video', { class: 'video-js vjs-big-play-centered animated fadeInDown' + (showTheaterToggle && theaterModeEnabled ? ' theater-player' : ''), playsinline: 'playsinline' });
         }
     };
 

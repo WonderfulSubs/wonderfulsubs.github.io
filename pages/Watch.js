@@ -14,7 +14,14 @@ function showHideMore(e) {
 }
 
 var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
-var player = VideoPlayer(undefined, { showTheaterToggle: false });
+var player = VideoPlayer(undefined, { showTheaterToggle: true }, function(player) {
+    player.on('play', function() {
+        try {
+            var musicPlayer = MusicPlayerInstance.player.player;
+            if (!musicPlayer.paused()) musicPlayer.pause();
+        } catch (error) {}
+    });
+});
 var sourceSelectorId = getRandomId();
 
 var RecommendedList = {
@@ -390,8 +397,13 @@ var Watch = {
         Watch.initialOverflowY = document.body.style.overflowY;
         Watch.initialOverflowX = document.body.style.overflowX;
         var bottomBar = document.querySelector('.bottom-bar');
+        var musicPlayerBar = document.querySelector('.music-player');
         Watch.initialBottomBarClassName = bottomBar.className;
-        if (theaterModeEnabled) bottomBar.classList.add('third-700');
+        Watch.initialMusicPlayerBarClassName = musicPlayerBar.className;
+        if (theaterModeEnabled) {
+            bottomBar.classList.add('third-700');
+            musicPlayerBar.classList.add('third-700');
+        }
         var themeColor = document.querySelector('meta[name=theme-color]');
         Watch.initialThemeColor = themeColor.content;
         themeColor.content = '#171717';
@@ -409,7 +421,9 @@ var Watch = {
         document.body.style.overflowY = Watch.initialOverflowY;
         document.body.style.overflowX = Watch.initialOverflowX;
         var bottomBar = document.querySelector('.bottom-bar');
+        var musicPlayerBar = document.querySelector('.music-player');
         bottomBar.className = Watch.initialBottomBarClassName;
+        musicPlayerBar.className = Watch.initialMusicPlayerBarClassName;
         var themeColor = document.querySelector('meta[name=theme-color]');
         themeColor.content = Watch.initialThemeColor;
         var footer = document.querySelector('.footer');
@@ -436,7 +450,9 @@ var Watch = {
         if (m.route.get().indexOf('/watch/') === 0) {
             theaterModeEnabled = !theaterModeEnabled;
             var bottomBar = document.querySelector('.bottom-bar');
+            var musicPlayerBar = document.querySelector('.music-player');
             bottomBar.classList.toggle('third-700');
+            musicPlayerBar.classList.toggle('third-700');
             m.redraw();
             player.toggleTheater();
             setStorage('theater', theaterModeEnabled);
