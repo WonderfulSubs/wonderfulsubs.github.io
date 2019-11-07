@@ -31,7 +31,12 @@ function MediaPlayer(src, options, ready) {
             var opts = {
                 controls: true,
                 fluid: true,
-                autoplay: true
+                autoplay: true,
+                html5: {
+                    hls: {
+                        overrideNative: !videojs.browser.IS_SAFARI,
+                    }
+                }
             };
             if (options) {
                 showTheaterToggle = options.showTheaterToggle;
