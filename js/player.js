@@ -23,6 +23,15 @@ function VideoPlayer(src, options, ready) {
     return _this;
 }
 
+function EmbedPlayer(src, options) {
+    var _this = {
+        view: function () {
+            return m('iframe', { src: src });
+        }
+    };
+    return _this;
+}
+
 function MediaPlayer(src, options, ready) {
     var player, disableHotkeys, showTheaterToggle;
     var _this = {
@@ -34,7 +43,7 @@ function MediaPlayer(src, options, ready) {
                 autoplay: true,
                 html5: {
                     hls: {
-                        overrideNative: !videojs.browser.IS_SAFARI,
+                        overrideNative: videojs.browser.IS_ANDROID && videojs.browser.CHROME_VERSION === 78
                     }
                 }
             };
@@ -88,6 +97,7 @@ function MediaPlayer(src, options, ready) {
             });
         },
         src: function (src) {
+            typeof src === 'string' ? m.redraw: undefined;
             player.src(src);
         },
         stop: function (hideSpinner) {
@@ -112,5 +122,5 @@ function MediaPlayer(src, options, ready) {
         }
     };
 
-    return _this;
+    return typeof src === 'string' ? EmbedPlayer(src) : _this;
 }
