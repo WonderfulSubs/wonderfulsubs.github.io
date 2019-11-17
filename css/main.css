@@ -327,10 +327,15 @@ body {
 
 .flex-margin-reset.desktop {
   padding-top: 0;
-  margin-top: -0.3em;
   position: absolute;
   width: 100vw;
   left: calc(-50vw + 50%);
+}
+
+@media only screen and (min-width:1000px) {
+  .flex-margin-reset.desktop {
+    margin-top: -0.3em;
+  }
 }
 
 .center-element {
