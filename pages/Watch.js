@@ -302,11 +302,7 @@ var SourceSelectModal = {
         }).then(function (result) {
             try {
                 var sources = result.urls;
-                window.player.src(
-                    sources.filter(function (source) {
-                        return source.type !== "application/dash+xml";
-                    })
-                );
+                window.player.src(sources);
 
                 var captions = err(function () {
                     var c;
