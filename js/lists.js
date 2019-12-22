@@ -29,21 +29,21 @@ function SeriesList(url, options) {
             method: 'GET',
             url: u
         })
-            .then(function (result) {
-                var series = result.json.series;
-                nextPage = result.json.next_page;
+        .then(function (result) {
+            var series = result.json.series;
+            nextPage = result.json.next_page;
 
-                if (filter) series = series.filter(filter);
+            if (filter) series = series.filter(filter);
 
-                if (append) {
-                    _this.list.push.apply(_this.list, series);
-                } else {
-                    _this.list = series;
-                }
-                _this.full_list = _this.list;
-                if (onloaded) onloaded();
-                if (callback) callback(_this.full_list.length);
-            });
+            if (append) {
+                _this.list.push.apply(_this.list, series);
+            } else {
+                _this.list = series;
+            }
+            _this.full_list = _this.list;
+            if (onloaded) onloaded();
+            if (callback) callback(_this.full_list.length);
+        });
     }
 
     var _this = {
@@ -68,7 +68,7 @@ function SeriesList(url, options) {
             });
         },
         view: function (vnode) {
-            var elements = [m(PosterGrid, { items: _this.list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeOnRemove: changeOnRemove })];
+            var elements = [m(PosterGrid, { items: _this.list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeonremove: changeOnRemove })];
             if (header) elements.unshift(m('h4', { class: 'poster-header' }, header));
             if (nextPage || (isObject && currentCount < url.length)) elements.push(m('button', { class: 'center-element', onclick: _this.push.bind(this, nextPage, vnode) }, 'View More'));
             return m('div', { class: className }, elements);
@@ -78,30 +78,24 @@ function SeriesList(url, options) {
     return _this;
 }
 
-function BloggerList(url) {
-    var list = [];
-
-    function loadList(u, options) {
-        var append = options && options.push === true;
-        return m.jsonp({
-            url: u
-        })
+var BloggerList = {
+    oninit: function (vnode) {
+        this.list = [];
+        this.loadList = function(u) {
+            return m.jsonp({
+                url: u
+            })
             .then(function (result) {
                 var entry = convertBloggerJson(result.feed.entry);
-                if (append) {
-                    list.push.apply(list, entry);
-                } else {
-                    list = entry;
-                }
+                vnode.state.list.push.apply(vnode.state.list, entry);
             });
+        };
+        this.loadList(vnode.attrs.url, this.list);
+    },
+    push: function (u) {
+        this.loadList(u, this.list);
+    },
+    view: function () {
+        return m(ShowcaseGrid, { items: this.list });
     }
-
-    return {
-        oninit: loadList.bind(this, url),
-        load: loadList,
-        push: function (u) { loadList(u, { push: true }); },
-        view: function () {
-            return m(ShowcaseGrid, { items: list });
-        }
-    };
-}
+};

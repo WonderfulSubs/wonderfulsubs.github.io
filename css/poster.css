@@ -18,6 +18,7 @@
 .poster-item {
     width: 140px;
     margin: 0 auto;
+    background-color: #424242;
     box-shadow: -1px 1px 4px #b6b6b6;
 }
 
@@ -25,22 +26,28 @@
     width: 100%;
     height: 210px;
     display: block;
-    border-radius: .2em .2em 0 0;
+    /* border-radius: .2em .2em 0 0; */
 }
 
-.poster-item .poster-title {
+.post-item, .post-actions > *, .post-show-more-less, .poster-item .poster-title {
     background-color: #e7e7e7;
     color: #686868;
+}
+
+.post-item, .poster-item .poster-title {
     height: 88px;
     overflow: hidden;
     padding: 5px 8px;
     text-align: center;
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
     line-height: 1.5;
     font-size: 13.5px;
     transition: background-color 1s, color 1s;
+}
+
+.poster-item .poster-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
 }
 
 .poster-item .poster-list-button-container {
@@ -57,7 +64,7 @@
 }
 
 .poster-item .poster-watch-later {
-    background-color: #ff9900;
+    background-color: #575757;
     transition: background-color 1s;
 }
 
@@ -66,7 +73,7 @@
 }
 
 .poster-item .poster-favorite {
-    background-color: #ff8400;
+    background-color: #212121;
     transition: background-color 1s;
 }
 
@@ -87,6 +94,6 @@
     background-color: #9e9e9e;
     color: #ffffff;
     font-size: 12px;
-    border-radius: 0 0 .2em .2em;
+    /* border-radius: 0 0 .2em .2em; */
     transition: background-color 1s;
 }

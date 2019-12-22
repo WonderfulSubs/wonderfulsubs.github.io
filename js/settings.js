@@ -5,7 +5,7 @@ function showHideSettingsPanel() {
     if (settingsPanelElem.classList.contains('none')) {
         settingsPanelElem.classList.remove('none');
     } else if (settingsPanelElem.classList.contains(outAnimation)) {
-        m.redraw();
+        // m.redraw();
         settingsPanelElem.classList.remove(outAnimation);
     } else {
         settingsPanelElem.classList.add(outAnimation);
@@ -37,7 +37,7 @@ function SettingsPanel() {
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                 ]),
                 m('div', { class: 'settings-option-container' }, [
-                    m('button', { class: 'settings-option', onclick: function (e) { preventAndStop(e, switchTheme); } }, [
+                    m('button', { class: 'settings-option', onclick: function (e) { preventAndStop(e).then(switchTheme); } }, [
                         m('i', { class: 'icon-color-adjust' }),
                         'Change Theme'
                     ])

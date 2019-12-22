@@ -10,7 +10,7 @@ var Genre = {
         Genre.count = '';
         Genre.title = category ? '"' + category + '" - Genres' : 'Genres';
         Genre.getResults(Genre.category ? Genre.category.trim() : undefined);
-        m.redraw();
+        // m.redraw();
     },
     onupdate: function (vnode) {
         var category = vnode.attrs.q;

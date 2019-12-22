@@ -10,7 +10,7 @@ var Series = {
         Series.count = '';
         Series.title = letter ? '"' + (letter === 'none' ? '#' : letter.toUpperCase()) + '" - A-Z List' : 'A-Z List';
         Series.getResults(Series.letter ? Series.letter.trim() : undefined);
-        m.redraw();
+        // m.redraw();
     },
     onupdate: function (vnode) {
         var letter = vnode.attrs.letter;

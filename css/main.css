@@ -11,6 +11,10 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+a {
+  color: #575757;
+}
+
 .footer {
   width: 100%;
   height: 10px;
@@ -82,8 +86,28 @@ body {
 
 .result-switch button {
   margin: 6px 9px;
-  background-color: #ff9900;
+  background-color: #575757;
   transition: background-color 1s;
+}
+
+.list-switch-buttons {
+  text-align: center;
+}
+
+.list-switch-buttons button {
+  min-width: 100px;
+  border: solid 1px #151515;
+  transition: background-color 1s, border 1s;
+}
+
+.list-switch-buttons button.active {
+  background-color: #ffffff;
+  box-shadow: none;
+  color: #000000;
+}
+
+.list-switch-buttons button i {
+  padding-right: 5px;
 }
 
 .nav-menu-content > div, .bottom-bar > .flex, .footer > div {
@@ -135,7 +159,7 @@ body {
 
 .nav-buttons a, .nav-buttons button {
   background-color: transparent;
-  color: #ff9900;
+  color: #575757;
   transition: color 1s;
 }
 
@@ -174,7 +198,7 @@ body {
 }
 
 .nav-search i {
-  color: #ff9900;
+  color: #575757;
   float: right;
   position: absolute;
   right: 10px;
@@ -244,12 +268,13 @@ body {
 
 .bottom-bar-button, .music-player-button {
   text-align: center;
-  color: #ff9900;
+  color: #575757;
+  padding-top: .17em;
   transition: color 1s;
   cursor: pointer;
 }
 
-.bottom-bar-button:hover, .music-player-button:hover {
+.post-actions > *:hover, .bottom-bar-button:hover, .music-player-button:hover {
   background-color: #d6d6d6;
 }
 
@@ -344,19 +369,23 @@ body {
 }
 
 .left-divider {
-  border-left: 1px solid rgba(189, 189, 189, 0.2);
+  border-left: 1px solid;
 }
 
 .right-divider {
-  border-right: 1px solid rgba(189, 189, 189, 0.2);
+  border-right: 1px solid;
 }
 
 .top-divider {
-  border-top: 1px solid rgba(189, 189, 189, 0.2);
+  border-top: 1px solid;
 }
 
 .bottom-divider {
-  border-bottom: 1px solid rgba(189, 189, 189, 0.2);
+  border-bottom: 1px solid;
+}
+
+.left-divider, .right-divider, .top-divider, .bottom-divider {
+  border-color: rgba(189, 189, 189, 0.5);
 }
 
 .pointer {

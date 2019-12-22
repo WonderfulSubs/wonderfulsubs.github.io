@@ -1,4 +1,4 @@
-var defaultUserListOptions = { className: 'user-panel-list', count: 14, preventUpdate: true, changeOnRemove: true };
+var defaultUserListOptions = { className: 'user-panel-list', count: 14, preventUpdate: true, changeonremove: true };
 
 var AuthUser = {
     init: function () {
@@ -9,16 +9,19 @@ var AuthUser = {
     },
     data: getStorage('auth_user') || {},
     login: function (data, callback) {
-        AuthUser._returnUserData(domain + '/api/v1/users/login', data, function (error) {
-            if (!error) {
-                AuthUser.fetchList('Watch List', function () {
-                    userPanelInstance.currentList = AuthUser.watch_list;
-                });
-                AuthUser.fetchList('Favorites');
-            }
-            if (callback) callback();
-            AuthUser.removeCaptchaBadge();
-        });
+        AuthUser._returnUserData(domain + '/api/v1/users/login', data)
+            .then(function (onFulfilled) {
+                if (onFulfilled) {
+                    AuthUser.fetchList('Watch List', function () {
+                        userPanelInstance.currentList = AuthUser.watch_list;
+                    });
+                    AuthUser.fetchList('Favorites');
+                    if (callback) callback();
+                    AuthUser.removeCaptchaBadge();
+                }
+                if (callback) callback();
+                AuthUser.removeCaptchaBadge();
+            });
     },
     signup: function (data, callback) {
         function getReCaptcha() {
@@ -26,10 +29,11 @@ var AuthUser = {
                 grecaptcha.execute(recaptchaKey, { action: 'signup' })
                     .then(function (g_response) {
                         data.g_response = g_response;
-                        AuthUser._returnUserData(domain + '/api/v1/users/create', data, function (error) {
-                            if (callback) callback();
-                            if (!error) AuthUser.removeCaptchaBadge();
-                        });
+                        AuthUser._returnUserData(domain + '/api/v1/users/create', data)
+                            .then(function (onFulfilled) {
+                                if (callback) callback();
+                                if (onFulfilled) AuthUser.removeCaptchaBadge();
+                            });
                     });
             });
         }
@@ -50,30 +54,32 @@ var AuthUser = {
         var elem = document.querySelector('.grecaptcha-badge');
         //if (elem) location.reload();
     },
-    _returnUserData: function (url, data, callback) {
-        Object.keys(data).forEach(function (key) {
-            if (data[key] === undefined || data[key] === "") delete data[key];
-        });
-        m.request({ method: 'POST', url: url, body: data })
-            .then(function (result) {
-                try {
-                    if (result.data._id && result.token) {
-                        AuthUser.data = result.data;
-                        AuthUser.data.token = result.token;
-                        setStorage('auth_user', AuthUser.data);
-                    } else {
-                        throw new Error(defaultErrMsg);
-                    }
-                    if (callback) callback();
-                } catch (error) {
-                    nativeToast({
-                        message: result.error || defaultErrMsg,
-                        position: 'north-east',
-                        type: 'error'
-                    });
-                    if (callback) callback(error);
-                }
+    _returnUserData: function (url, data) {
+        return new Promise(function (resolve, reject) {
+            Object.keys(data).forEach(function (key) {
+                if (data[key] === undefined || data[key] === "") delete data[key];
             });
+            m.request({ method: 'POST', url: url, body: data })
+                .then(function (result) {
+                    try {
+                        if (result.data._id && result.token) {
+                            AuthUser.data = result.data;
+                            AuthUser.data.token = result.token;
+                            setStorage('auth_user', AuthUser.data);
+                        } else {
+                            throw new Error(defaultErrMsg);
+                        }
+                        resolve();
+                    } catch (error) {
+                        nativeToast({
+                            message: result.error || defaultErrMsg,
+                            position: 'north-east',
+                            type: 'error'
+                        });
+                        reject(error);
+                    }
+                });
+        })
     },
     logout: function () {
         AuthUser.data = {};
@@ -83,7 +89,7 @@ var AuthUser = {
             removeStorage(key);
         });
         userPanelElem.classList.add('none');
-        m.redraw();
+        // m.redraw();
     },
     fetchList: function (listName, callback) {
         m.request({
@@ -212,17 +218,18 @@ function UserPanel() {
     }
 
     function switchList(e) {
-        preventAndStop(e, function () {
-            var elem = e.target;
-            var listKey = elem.innerText.toLowerCase().replace(/ /g, '_');
-            _this.currentList = AuthUser[listKey];
-            _this.currentListName = listKey;
-            var buttons = elem.parentElement.querySelectorAll('button');
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove('active');
-            }
-            elem.classList.add('active');
-        });
+        preventAndStop(e)
+            .then(function () {
+                var elem = e.target;
+                var listKey = elem.innerText.toLowerCase().replace(/ /g, '_');
+                _this.currentList = AuthUser[listKey];
+                _this.currentListName = listKey;
+                var buttons = elem.parentElement.querySelectorAll('button');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].classList.remove('active');
+                }
+                elem.classList.add('active');
+            });
     }
 
     var _this = {
@@ -242,7 +249,7 @@ function UserPanel() {
         view: function () {
             return m('div', [
                 m('div', { class: 'user-panel-profile' }, [
-                    m('img', { class: 'left', src: AuthUser.data.profile_pic }),
+                    llv('img', { class: 'left', src: AuthUser.data.profile_pic }),
                     m('span', { class: 'left' }, AuthUser.data.display_name || AuthUser.data.username),
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                     m('div', { class: 'pointer right', onclick: AuthUser.logout }, [
@@ -250,7 +257,7 @@ function UserPanel() {
                         m('span', 'Log Out')
                     ])
                 ]),
-                m('div', { class: 'user-panel-list-buttons' }, [
+                m('div', { class: 'list-switch-buttons' }, [
                     m('button', { class: 'active', onclick: switchList }, [m('i', { class: 'icon-clock' }), 'Watch List']),
                     m('button', { onclick: switchList }, [m('i', { class: 'icon-heart' }), 'Favorites'])
                 ]),

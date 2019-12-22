@@ -16,20 +16,6 @@
     margin-left: 20px;
 }
 
-.user-panel-list-buttons {
-    text-align: center;
-}
-
-.user-panel-list-buttons button.active {
-    background-color: #ffffff;
-    box-shadow: none;
-    color: #000000;
-}
-
-.user-panel-list-buttons button i {
-    padding-right: 5px;
-}
-
 @media only screen and (min-width: 610px) {
     .user-panel-list {
         max-width: 75%;

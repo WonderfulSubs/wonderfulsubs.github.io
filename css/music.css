@@ -19,3 +19,7 @@
 #vjs-music-player.hide-music-video > :not(.vjs-control-bar) {
     opacity: 0 !important;
 }
+
+.music-player.none {
+    display: none;
+}

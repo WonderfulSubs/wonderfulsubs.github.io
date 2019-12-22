@@ -40,7 +40,7 @@
     <script async src="https://www.google-analytics.com/analytics.js"></script>
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="WonderfulSubs">
     <meta property="fb:app_id" content="2103300303228684">
@@ -58,18 +58,18 @@
     <meta name="keywords" content="anime, manga, japan, otaku, japanese culture, weeaboo">
     <meta name="description" content="The best place on the web for all things Anime!">
 
-    <meta name="theme-color" content="#ff9900">
+    <meta name="theme-color" content="#171717">
     <meta name="msapplication-TileColor" content="#ffffff">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff9900">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#575757">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.0/picnic.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/native-toast@2.0.0/dist/native-toast.css" />
+    <link rel="stylesheet" href="/css/native-toast.css" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/Home.css" />
     <link rel="stylesheet" href="/css/overrides.css" />
@@ -80,22 +80,34 @@
     <link rel="stylesheet" href="/css/poster.css" />
     <link rel="stylesheet" href="/css/showcase.css" />
     <link rel="stylesheet" href="/css/player.css" />
+    <link rel="stylesheet" href="/css/posts.css" />
     <link rel="stylesheet" href="/css/user.css" />
     <link rel="stylesheet" href="/css/music.css" />
     <link rel="stylesheet" href="/css/settings.css" />
-    <link href="https://vjs.zencdn.net/7.6.0/video-js.min.css" rel="stylesheet" />
-    <link href="/css/videojs-hls-quality-selector.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://vjs.zencdn.net/7.6.6/video-js.min.css" />
     <link rel="stylesheet" href="/css/vsg-skin.css" />
     <link rel="stylesheet" href="/css/icons.css" />
-    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin+Condensed&display=swap" />
 
-    <script src="https://vjs.zencdn.net/7.6.5/video.min.js"></script>
+    <script>
+        var polyfills = [
+            { func: 'URL', url: '/js/ie-url-polyfill.js' },
+            { func: 'IntersectionObserver', url: '/js/intersection-observer.js' }
+        ];
+        polyfills.forEach(function (pf) {
+            if (typeof window[pf.func] !== 'function') {
+                document.write('<script type="text/javascript" src="' + pf.url + '"><\/script>');
+            }
+        });
+    </script>
+    <script src="https://vjs.zencdn.net/7.6.6/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.0/Youtube.min.js"></script>
     <script src="/js/videojs-contrib-quality-levels.min.js"></script>
     <script src="/js/videojs-hls-quality-selector.min.js"></script>
-    <script src="//cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
-    <script src="https://unpkg.com/native-toast@2.0.0/dist/native-toast.min.js"></script>
     <script src="https://unpkg.com/mithril@2.0.4/mithril.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/markedjs/marked/lib/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.0.7/dist/purify.min.js"></script>
+    <script src="/js/native-toast.js"></script>
     <script src="/js/helpers.js"></script>
     <script src="/js/poster.js"></script>
     <script src="/js/showcase.js"></script>
@@ -113,6 +125,7 @@
     <script src="/pages/Genre.js"></script>
     <script src="/pages/Watch.js"></script>
     <script src="/pages/Search.js"></script>
+    <script src="/js/darkthemecss.js" async></script>
 </head>
 
 <body>
@@ -144,7 +157,8 @@
         </div>
     </div>
     <div class="content-wrapper-container flex animated">
-        <div class="content-wrapper animated three-fourth-1000" id="root"></div>
+        <div id="root" class="content-wrapper animated three-fourth-1000"></div>
+        <div id="mini-player"></div>
         <div id="sidebar" class="fourth-1000"></div>
     </div>
     <div id="settings-panel" class="panel-body animated faster lists slideInUp none"></div>
@@ -154,10 +168,6 @@
     </div>
     <div class="bottom-bar top-divider full">
         <div class="flex">
-            <div class="bottom-bar-button">
-                <i class="icon-help-circled"></i>
-                <div>Help</div>
-            </div>
             <div class="bottom-bar-button" onclick="showHideSettingsPanel()">
                 <i class="icon-cog"></i>
                 <div>Settings</div>
@@ -169,6 +179,10 @@
             <div class="bottom-bar-button" onclick="showHideChatPanel()">
                 <i class="icon-comment"></i>
                 <div>Chat</div>
+            </div>
+            <div class="bottom-bar-button">
+                <i class="icon-bell-alt"></i>
+                <div>Notifications</div>
             </div>
             <div class="bottom-bar-button" onclick="showHideUserPanel()">
                 <i class="icon-user-circle"></i>
@@ -183,30 +197,43 @@
                 <br>
                 Wikipe-tan: © 2006 Kasuga~jawiki / Wikimedia Commons / <a
                     href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank"
-                    rel="nofollow"><u>CC-BY-SA-3.0</u></a> / <a href="https://www.gnu.org/licenses/fdl-1.3.html"
-                    target="_blank" rel="nofollow"><u>GFDL</u></a>. Eye color changed to yellow and/or mouth added
+                    rel="nofollow noreferrer"><u>CC-BY-SA-3.0</u></a> / <a
+                    href="https://www.gnu.org/licenses/fdl-1.3.html" target="_blank"
+                    rel="nofollow noreferrer"><u>GFDL</u></a>. Eye color changed to yellow and/or mouth added
             </div>
         </div>
     </div>
     <script>
+        var miniPlayerFrag = document.createDocumentFragment();
+        m.mount(miniPlayerFrag, {
+            view: function () {
+                this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true } });
+                return this.player;
+            }
+        });
+        var WatchPlayer = {
+            dom: miniPlayerFrag.vnodes[0].dom,
+            player: miniPlayerFrag.vnodes[0].state.player.state.player
+        };
+
         var root = document.getElementById('root');
 
         m.route.prefix = '';
         m.route(root, '/', {
             '/': Home,
             '/login': Login,
-            '/signup': Login,
+            '/signup': Welcome,
             '/series': Series,
             '/genre': Genre,
-            '/popular': popularSeries,
-            '/updated': updatedSeries,
+            // '/popular': SeriesFeed.popular,
+            // '/updated': SeriesFeed.updated,
             '/search': Search,
             '/watch/:id': Watch,
         });
 
         var sidebarExists = document.querySelector('.sidebar-container');
         if (!sidebarExists) {
-            m.render(document.getElementById('sidebar'), Sidebar);
+            m.mount(document.getElementById('sidebar'), Sidebar);
         }
 
         document.getElementById('footer-year').innerHTML = ' ' + (new Date()).getFullYear() + ' ';
