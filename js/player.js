@@ -70,6 +70,7 @@ function VideoPlayer(initialVnode) {
     if (opts.playsinline === undefined) opts.playsinline = true;
     if (opts.html5 === undefined) opts.html5 = {
         hls: {
+            // Note: probably should change for v79+ to only use for Server KA
             overrideNative: videojs.browser.IS_ANDROID && videojs.browser.CHROME_VERSION >= 78
         }
     };
