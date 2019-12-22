@@ -34,7 +34,7 @@ function MediaPlayer(src, options, ready) {
                 autoplay: true,
                 html5: {
                     hls: {
-                        overrideNative: !videojs.browser.IS_SAFARI,
+                        overrideNative: videojs.browser.IS_ANDROID && videojs.browser.CHROME_VERSION >= 78
                     }
                 }
             };
