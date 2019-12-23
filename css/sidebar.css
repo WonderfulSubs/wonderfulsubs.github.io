@@ -13,6 +13,8 @@
         position: fixed;
         max-width: 337px;
         margin-right: 5px;
+        height: calc(100% - 120px);
+        overflow-y: hidden;
         z-index: -1;
     }
 }
