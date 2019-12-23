@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'icons';
-  src: url('../font/icons.eot?48268758');
-  src: url('../font/icons.eot?48268758#iefix') format('embedded-opentype'),
-       url('../font/icons.woff2?48268758') format('woff2'),
-       url('../font/icons.woff?48268758') format('woff'),
-       url('../font/icons.ttf?48268758') format('truetype'),
-       url('../font/icons.svg?48268758#icons') format('svg');
+  src: url('../font/icons.eot?27893888');
+  src: url('../font/icons.eot?27893888#iefix') format('embedded-opentype'),
+       url('../font/icons.woff2?27893888') format('woff2'),
+       url('../font/icons.woff?27893888') format('woff'),
+       url('../font/icons.ttf?27893888') format('truetype'),
+       url('../font/icons.svg?27893888#icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'icons';
-    src: url('../font/icons.svg?48268758#icons') format('svg');
+    src: url('../font/icons.svg?27893888#icons') format('svg');
   }
 }
 */
@@ -68,11 +68,21 @@
 .icon-help-circled:before { content: '\e80a'; } /* '' */
 .icon-info-circled:before { content: '\e80b'; } /* '' */
 .icon-cog:before { content: '\e80c'; } /* '' */
+.icon-ok-circled:before { content: '\e80d'; } /* '' */
+.icon-star:before { content: '\e80e'; } /* '' */
+.icon-music:before { content: '\e80f'; } /* '' */
+.icon-to-start:before { content: '\e810'; } /* '' */
+.icon-pause:before { content: '\e811'; } /* '' */
+.icon-play:before { content: '\e812'; } /* '' */
+.icon-wrench:before { content: '\e813'; } /* '' */
 .icon-color-adjust:before { content: '\f020'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
+.icon-bell-alt:before { content: '\f0f3'; } /* '' */
 .icon-desktop:before { content: '\f108'; } /* '' */
+.icon-shield:before { content: '\f132'; } /* '' */
 .icon-youtube-play:before { content: '\f16a'; } /* '' */
 .icon-reddit:before { content: '\f1a1'; } /* '' */
+.icon-share:before { content: '\f1e0'; } /* '' */
 .icon-user-circle:before { content: '\f2bd'; } /* '' */
 .icon-twitter-squared:before { content: '\f304'; } /* '' */
 .icon-facebook-squared:before { content: '\f308'; } /* '' */

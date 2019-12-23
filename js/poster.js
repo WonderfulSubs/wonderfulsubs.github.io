@@ -12,13 +12,15 @@ var Poster = {
         var isFavoritesList = AuthUser.isInList('Favorites', item);
 
         function listAction(listName, e) {
-            preventAndStop(e, AuthUser.addToRemoveFromList.bind(this, listName, item, { preventUpdate: preventUpdate, element: changeOnRemove ? e.target.parentElement.parentElement.parentElement.parentElement : undefined }));
+            preventAndStop(e).then(AuthUser.addToRemoveFromList.bind(this, listName, item, { preventUpdate: preventUpdate, element: changeOnRemove ? e.target.parentElement.parentElement.parentElement.parentElement : undefined }));
         }
+
+        var imgSrc = item.poster || getPosterTall(item.poster_tall).poster;
 
         return m('div', { class: 'poster-item-container animated fadeInUp faster' }, [
             m('div', { class: 'poster-item' }, [
                 m('a', { href: item.url, oncreate: m.route.link, onclick: function (e) { e.preventDefault(); } }, [
-                    m('img', { class: 'animated fadeIn', src: item.poster || getPosterTall(item.poster_tall).poster, alt: item.title, onclick: goToUrl }),
+                    llv('img', { src: imgSrc, class: 'animated fadeIn', alt: item.title, onclick: goToUrl }),
                     m('div', { class: 'poster-title', onclick: goToUrl }, [
                         m('span', item.title)
                     ]),
@@ -50,7 +52,7 @@ var PosterGrid = {
         var sideScroll = vnode.attrs.sideScroll;
         return m('div', { class: 'flex' + (sideScroll ? ' side-scroll' : '') },
             items.map(function (item) {
-                return m(Poster, { key: item.url, item: item, preventUpdate: preventUpdate, changeOnRemove: changeOnRemove });
+                return m(Poster, { key: item.url, item: item, preventUpdate: preventUpdate, changeonremove: changeOnRemove });
             })
         );
     }

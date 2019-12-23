@@ -48,7 +48,12 @@ textarea,
 .select select,
 select,
 .card, .modal .overlay ~ * {
-  border-radius: 0;
+  border-radius: 0px;
+}
+
+input:not([type="radio"]):not([type="checkbox"]) {
+  -webkit-appearance: none;
+  -webkit-border-radius: 1px;
 }
 
 input, textarea, .select select {

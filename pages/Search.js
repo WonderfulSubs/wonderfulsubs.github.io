@@ -11,7 +11,7 @@ var Search = {
             Search.count = '';
             Search.title = query ? 'Search Results for "' + query + '"' : 'Search';
             Search.getResults(Search.query.trim());
-            m.redraw();
+            // m.redraw();
         }
     },
     onupdate: function (vnode) {

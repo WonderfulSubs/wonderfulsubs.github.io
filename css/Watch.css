@@ -4,8 +4,7 @@
 
 @media only screen and (min-width:700px) {
     .watch-content-container .third-700 {
-        overflow-y: scroll;
-        height: 100vh;
+        height: 100%;
     }
 }
 
@@ -81,6 +80,7 @@
 
 .modal.source-select-modal article {
     background-color: #212121;
+    max-width: 90%;
 }
 
 .modal.source-select-modal section .flex p {
@@ -125,7 +125,7 @@
 }
 
 .icon-info-circled.active {
-    color: #ff9900;
+    color: #575757;
 }
 
 .show-more {
@@ -232,4 +232,29 @@
 .source-language {
     font-size: 12px;
     line-height: 0;
+}
+
+.watch-body .footer {
+    display: none;
+}
+
+.theater-body {
+    overflow: hidden;
+}
+
+.watch-body.theater-body .video-js.vjs-fullscreen:not(#vjs-music-player), .video-js.vjs-fullscreen:not(#vjs-music-player) .vjs-tech{
+    width:100%!important;
+    height:100%!important
+}
+
+@media only screen and (min-width:700px) {
+    .watch-body.theater-body .video-js:not(#vjs-music-player) {
+        height: calc(100vh - 50px);
+        padding: 0;
+    }
+
+    .watch-body.theater-body .watch-content-container .third-700 {
+        overflow-y: scroll;
+        height: 100vh;
+    }
 }

@@ -14,7 +14,7 @@ function showHideMore(e) {
 }
 
 var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
-var player = VideoPlayer(undefined, { showTheaterToggle: false });
+
 var sourceSelectorId = getRandomId();
 
 var RecommendedList = {
@@ -125,9 +125,7 @@ var SeasonsList = {
             };
         }
 
-        return m(
-            "div",
-            { class: "animated fadeInUpBig" },
+        return m("div", { class: "animated fadeInUpBig" },
             list.map(function (season, index) {
                 season.index = index;
                 return m("div", { key: season.id || season.type + String(index) }, [
@@ -218,8 +216,7 @@ function EpisodeList(list, season) {
                                     ]),
                                     m("tbody", { class: "table-selectable" }, [
                                         page.episodes.map(function (episode) {
-                                            return m(
-                                                "tr",
+                                            return m("tr",
                                                 {
                                                     key: episode.title + String(episode.episode_number || episode.ova_number),
                                                     onclick: function () {
@@ -285,7 +282,7 @@ var SourceSelectModal = {
 
         Watch.InfoBox.episode = episode;
         Watch.InfoBox.season = season;
-        player.stop();
+        WatchPlayer.player.cs_stop();
 
         scrollToTop(2000);
 
@@ -295,7 +292,7 @@ var SourceSelectModal = {
         }).then(function (result) {
             try {
                 var sources = result.urls;
-                window.player.src(
+                WatchPlayer.player.src(
                     sources.filter(function (source) {
                         return source.type !== "application/dash+xml";
                     })
@@ -317,7 +314,7 @@ var SourceSelectModal = {
                     return c;
                 }, true);
 
-                if (captions) window.player.captions(captions);
+                if (captions) WatchPlayer.player.cs_captions(captions);
 
                 var poster = result.poster;
                 if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
@@ -387,105 +384,73 @@ var Watch = {
     oninit: function (vnode) {
         Watch.currentId = vnode.attrs.id;
         Watch.InfoBox = EpisodeInfo();
-        Watch.initialOverflowY = document.body.style.overflowY;
-        Watch.initialOverflowX = document.body.style.overflowX;
+        document.body.classList.add('watch-body');
         var bottomBar = document.querySelector('.bottom-bar');
+        var musicPlayerBar = document.querySelector('.music-player');
         Watch.initialBottomBarClassName = bottomBar.className;
-        if (theaterModeEnabled) bottomBar.classList.add('third-700');
-        var themeColor = document.querySelector('meta[name=theme-color]');
-        Watch.initialThemeColor = themeColor.content;
-        themeColor.content = '#171717';
-        var footer = document.querySelector('.footer');
-        Watch.initialFooterDisplay = footer.style.overflowX;
-        if (theaterModeEnabled) {
-            Watch.setOverflowY();
-            document.body.style.overflowX = 'hidden';
-            footer.style.display = 'none';
-            window.addEventListener("resize", Watch.setOverflowY);
-        }
+        Watch.initialMusicPlayerBarClassName = musicPlayerBar.className;
+        if (theaterModeEnabled) toggleTheater(theaterModeEnabled, false, false);
     },
     onremove: function () {
-        window.removeEventListener("resize", Watch.setOverflowY);
-        document.body.style.overflowY = Watch.initialOverflowY;
-        document.body.style.overflowX = Watch.initialOverflowX;
+        document.body.classList.remove('watch-body');
+        toggleTheater(false, false, false);
         var bottomBar = document.querySelector('.bottom-bar');
+        var musicPlayerBar = document.querySelector('.music-player');
         bottomBar.className = Watch.initialBottomBarClassName;
-        var themeColor = document.querySelector('meta[name=theme-color]');
-        themeColor.content = Watch.initialThemeColor;
-        var footer = document.querySelector('.footer');
-        footer.style.display = Watch.initialFooterDisplay;
-        if (player.player.el_) player.player.el_.removeEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
+        musicPlayerBar.className = Watch.initialMusicPlayerBarClassName;
+        if (WatchPlayer.player.el_) WatchPlayer.player.el_.removeEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
     },
-    setOverflowY: function () {
-        if (window.innerWidth < 768 && document.body.style.overflowY !== Watch.initialOverflowY) {
-            document.body.style.overflowY = Watch.initialOverflowY;
-        } else if (window.innerWidth > 767 && document.body.style.overflowY !== 'hidden') {
-            document.body.style.overflowY = 'hidden';
-            if (window.pageYOffset !== 0) scrollToTop();
+    onbeforeremove: function() {
+        if (!WatchPlayer.player.paused()) {
+            var miniPlayerContainer = document.getElementById('mini-player');
+            miniPlayerContainer.appendChild(WatchPlayer.dom);
         }
     },
     setPlayerClick: function () {
-        if (!player.player.currentSources().length) {
+        if (!WatchPlayer.player.currentSources().length) {
             var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
             var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
             SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
             window.m.redraw();
         }
     },
-    toggleTheater: function () {
-        if (m.route.get().indexOf('/watch/') === 0) {
-            theaterModeEnabled = !theaterModeEnabled;
-            var bottomBar = document.querySelector('.bottom-bar');
-            bottomBar.classList.toggle('third-700');
-            m.redraw();
-            player.toggleTheater();
-            setStorage('theater', theaterModeEnabled);
-            nativeToast({
-                message: 'Theater Mode ' + (theaterModeEnabled ? 'Enabled' : 'Disabled'),
-                position: 'north-east',
-                type: 'info',
-                closeOnClick: true
-            });
-        }
-    },
     onupdate: function (vnode) {
         var id = vnode.attrs.id;
         if (id !== Watch.currentId) {
             Watch.abort();
-            scrollToTop(500, function () {
-                Watch.currentId = id;
+            scrollToTop(500)
+                .then(function () {
+                    Watch.currentId = id;
+                    var outAnimationClasses = ["bounceOutDown", "faster"];
+                    var inAnimationClasses = ["bounceInUp", "fast"];
+                    outAnimationClasses.forEach(function (className) {
+                        root.classList.add(className);
+                    });
 
-                var outAnimationClasses = ["bounceOutDown", "faster"];
-                var inAnimationClasses = ["bounceInUp", "fast"];
-                outAnimationClasses.forEach(function (className) {
-                    root.classList.add(className);
+                    root.addEventListener("animationend", function removeOutAnimationClass(e) {
+                        if (outAnimationClasses.indexOf(e.animationName) !== -1) {
+                            this.removeEventListener("animationend", removeOutAnimationClass);
+                            Watch.oncreate(vnode, function () {
+                                outAnimationClasses.forEach(function (className) {
+                                    root.classList.remove(className);
+                                });
+
+                                inAnimationClasses.forEach(function (className) {
+                                    root.classList.add(className);
+                                });
+
+                                root.addEventListener("animationend", function removeInAnimationClass(e) {
+                                    if (inAnimationClasses.indexOf(e.animationName) !== -1) {
+                                        this.removeEventListener("animationend", removeInAnimationClass);
+                                        inAnimationClasses.forEach(function (className) {
+                                            root.classList.remove(className);
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                    });
                 });
-
-                root.addEventListener("animationend", function removeOutAnimationClass(e) {
-                    if (outAnimationClasses.indexOf(e.animationName) !== -1) {
-                        this.removeEventListener("animationend", removeOutAnimationClass);
-
-                        Watch.oncreate(vnode, function () {
-                            outAnimationClasses.forEach(function (className) {
-                                root.classList.remove(className);
-                            });
-
-                            inAnimationClasses.forEach(function (className) {
-                                root.classList.add(className);
-                            });
-
-                            root.addEventListener("animationend", function removeInAnimationClass(e) {
-                                if (inAnimationClasses.indexOf(e.animationName) !== -1) {
-                                    this.removeEventListener("animationend", removeInAnimationClass);
-                                    inAnimationClasses.forEach(function (className) {
-                                        root.classList.remove(className);
-                                    });
-                                }
-                            });
-                        });
-                    }
-                });
-            });
         }
     },
     view: function () {
@@ -499,10 +464,12 @@ var Watch = {
         }
 
         return m("div", { class: 'flex-margin-reset' + (theaterModeEnabled ? ' desktop' : '') }, [
-            darkThemeStyles,
+            window.DARK_THEME_STYLES,
             m("div", { class: "watch-content-container flex one two-700" }, [
                 m("div", { class: "two-third-700 flex-padding-reset" }, [
-                    m(player),
+                    m('div', { oncreate: function(vnode) {
+                        vnode.dom.appendChild(WatchPlayer.dom)
+                    }}),
                     !theaterModeEnabled ? m(Watch.InfoBox) : undefined,
                 ]),
                 m("div", { class: "third-700" }, [
@@ -518,7 +485,7 @@ var Watch = {
     oncreate: function (vnode, callback) {
         setTitle("WonderfulSubs", true);
         scrollToTop();
-
+        
         var slug = vnode.attrs.id;
         var params = m.route.param();
 
@@ -535,8 +502,8 @@ var Watch = {
                     setTitle(series.title);
                     Watch.InfoBox = EpisodeInfo();
                     Watch.InfoBox.series = series;
-                    player.stop(true);
-                    player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
+                    WatchPlayer.player.cs_stop(true);
+                    WatchPlayer.player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
                     var seasons = Array.isArray(series.seasons) ? series.seasons : series.seasons.ws.media;
@@ -562,7 +529,7 @@ var Watch = {
                         SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
                     }
 
-                    if (player.player.el_) player.player.el_.addEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
+                    if (WatchPlayer.player.el_) WatchPlayer.player.el_.addEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
                 }
             } catch (error) { }
         });

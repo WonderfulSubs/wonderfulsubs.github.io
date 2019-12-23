@@ -34,10 +34,6 @@
     color:inherit;
     line-height:inherit
 }
-.video-js.vjs-fullscreen,.video-js.vjs-fullscreen .vjs-tech{
-    width:100%!important;
-    height:100%!important
-}
 .video-js{
     font-size:14px;
     overflow:hidden

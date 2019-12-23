@@ -39,12 +39,8 @@
     color: #7289DA;
 }
 
-.welcome-message p a {
-    color: #616161;
-}
-
 .welcome-message i.icon-mail-alt, .welcome-message p a:hover {
-    color: #ff9900;
+    color: #575757;
 }
 
 @media only screen and (min-width: 700px) {

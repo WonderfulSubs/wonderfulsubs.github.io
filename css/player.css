@@ -29,9 +29,24 @@
     font-size: 1.4em
 }
 
-@media only screen and (min-width:700px) {
-    div.video-js.theater-player {
-        height: calc(100vh - 50px);
-        padding: 0;
-    }
+.video-js.vjs-hide-player {
+    display: none;
+}
+
+#mini-player {
+    width: 320px;
+    max-width: 60%;
+    top: 60px;
+    right: 10px;
+    padding: 0;
+    z-index: 1000001;
+    position: fixed;
+}
+
+#mini-player video-js, #mini-player iframe {
+    box-shadow: 0px 0px 6px;
+}
+
+#mini-player .video-js:not(.vjs-fullscreen) .vjs-control-bar > :not(.vjs-play-control):not(.vjs-custom-control-spacer):not(.vjs-volume-panel):not(.vjs-progress-control):not(.vjs-picture-in-picture-control):not(.vjs-fullscreen-control) {
+    display: none;
 }
