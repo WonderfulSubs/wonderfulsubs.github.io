@@ -1,4 +1,4 @@
-var domain = false ? 'https://www.wonderfulsubs.com' : '';
+var domain = true ? 'https://www.wonderfulsubs.com' : '';
 var posterTallPlaceholder = /*domain +*/ '/img/poster_placeholder_tall.png';
 var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
 var siteShortname = 'ws';
