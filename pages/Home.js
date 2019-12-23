@@ -41,7 +41,7 @@ var posts = [
                 mediaType: 'image'
             },
             {
-                mediaUrl: '/video/c01ace716b4721c5',
+                mediaUrl: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
                 mediaType: 'video'
             }
         ],
@@ -95,6 +95,21 @@ var posts = [
                 mediaType: 'image'
             }
         ]
+    },
+    {
+        id: '7sdfsd',
+        avatar: 'https://pbs.twimg.com/profile_images/2668854518/79fc3605e372a8e1e34693abcf7d7847.jpeg',
+        username: 'James Bond',
+        displayName: '007',
+        content: 'Sometimes the old ways are the best.',
+        datePublished: 1576093436993,
+        likes: 2,
+        shares: 3,
+        isEdited: false,
+        verified: false,
+        administrator: false,
+        moderator: false,
+        supporter: false,
     }
 ];
 
@@ -393,7 +408,7 @@ var Home = {
         m('i', { class: 'icon-comment' }),
         'Turn Chat On'
     ])),
-    currentListName: 'feed',
+    currentListName: 'series',
     switchList: function (e) {
         preventAndStop(e)
             .then(function () {
