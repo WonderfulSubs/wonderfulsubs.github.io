@@ -17,17 +17,16 @@ var Genre = {
         if ((category && category !== Genre.category) || !category && Genre.category || category && !Genre.category) Genre.oninit();
     },
     getResults: function (category) {
-        Genre.results = SeriesList(
-            domain + (category ? "/api/media/search?options=summary" + '&q=' + category : "/api/media/all?options=summary"),
-            {
+        Genre.results = {
+            url: domain + (category ? "/api/media/search?options=summary" + '&q=' + category : "/api/media/all?options=summary"),
+            options: {
                 header: Genre.category ? 'Genre - ' + Genre.category : 'All Genres',
                 callback: function (count) {
                     Genre.count = count;
                 }
             }
-        );
+        };
     },
-    results: SeriesList(),
     view: function () {
         setTitle(Genre.title);
 
@@ -48,7 +47,7 @@ var Genre = {
                 m('div', [
                     m('h4', { class: 'poster-header' }, 'Genres'),
                     buttons,
-                    m(Genre.results),
+                    m(SeriesList, Genre.results),
                     Genre.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined
                 ])
             ])

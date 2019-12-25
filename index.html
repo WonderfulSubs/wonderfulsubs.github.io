@@ -67,8 +67,8 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#575757">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.0/picnic.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.1/picnic.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
     <link rel="stylesheet" href="/css/native-toast.css" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/Home.css" />
@@ -141,7 +141,7 @@
                             <input type="search" name="q" placeholder="Search..." autoComplete="off"
                                 onsubmit="dismissKeyboard(event)" onclick="event.target.form.style['z-index'] = '2'"
                                 onblur="event.target.form.style['z-index'] = ''">
-                            <i class="icon-search" onclick="getSearchResults(event.target.parentElement, true)"></i>
+                            <i class="icon-search" onclick="if(window.innerWidth >= 768){getSearchResults(event.target.parentElement, true);}"></i>
                         </label>
                     </form>
                     <div class="nav-buttons dropdown">

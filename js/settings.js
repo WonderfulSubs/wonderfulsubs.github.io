@@ -1,5 +1,3 @@
-var settingsPanelElem;
-
 function showHideSettingsPanel() {
     var outAnimation = 'slideOutDown';
     if (settingsPanelElem.classList.contains('none')) {
@@ -23,7 +21,7 @@ function SettingsPanel() {
         }
     }
 
-    var _this = {
+    return {
         oncreate: function () {
             document.addEventListener('keydown', keyEvents);
         },
@@ -37,7 +35,7 @@ function SettingsPanel() {
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                 ]),
                 m('div', { class: 'settings-option-container' }, [
-                    m('button', { class: 'settings-option', onclick: function (e) { preventAndStop(e).then(switchTheme); } }, [
+                    m('button', { class: 'settings-option', onclick: function (e) { preventAndStop(e, switchTheme); } }, [
                         m('i', { class: 'icon-color-adjust' }),
                         'Change Theme'
                     ])
@@ -45,13 +43,11 @@ function SettingsPanel() {
             ]);
         }
     };
-    return _this;
 }
 
-var SettingsPanelInstance = SettingsPanel();
-
+var settingsPanelElem;
 document.addEventListener('DOMContentLoaded', function () {
     settingsPanelElem = document.getElementById('settings-panel');
     settingsPanelElem.onclick = showHideSettingsPanel;
-    m.mount(settingsPanelElem, SettingsPanelInstance);
+    m.mount(settingsPanelElem, SettingsPanel);
 });

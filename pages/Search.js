@@ -19,17 +19,16 @@ var Search = {
         if (query !== Search.query) Search.oninit();
     },
     getResults: function (query) {
-        Search.results = SeriesList(
-            domain + "/api/media/search?options=summary&q=" + query,
-            {
+        Search.results = {
+            url: domain + "/api/media/search?options=summary&q=" + query,
+            options: {
                 header: Search.title,
                 callback: function (count) {
                     Search.count = count;
                 }
             }
-        );
+        };
     },
-    results: SeriesList(),
     view: function () {
         setTitle(Search.title);
 
@@ -37,7 +36,7 @@ var Search = {
             m('div', { class: 'main-container' }, [
                 m('div', [
                     m('div', [
-                        m(Search.results),
+                        m(SeriesList, Search.results),
                         Search.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined
                     ])
                 ])

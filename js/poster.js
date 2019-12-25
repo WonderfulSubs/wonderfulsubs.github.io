@@ -12,7 +12,7 @@ var Poster = {
         var isFavoritesList = AuthUser.isInList('Favorites', item);
 
         function listAction(listName, e) {
-            preventAndStop(e).then(AuthUser.addToRemoveFromList.bind(this, listName, item, { preventUpdate: preventUpdate, element: changeOnRemove ? e.target.parentElement.parentElement.parentElement.parentElement : undefined }));
+            preventAndStop(e, AuthUser.addToRemoveFromList.bind(this, listName, item, { preventUpdate: preventUpdate, element: changeOnRemove ? e.target.parentElement.parentElement.parentElement.parentElement : undefined }));
         }
 
         var imgSrc = item.poster || getPosterTall(item.poster_tall).poster;

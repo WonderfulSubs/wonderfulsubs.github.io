@@ -6,7 +6,6 @@ var recaptchaKey = true ? '6LcC9ncUAAAAAGClorUQbnX9jl331yMXu_RZGtnx' : '6Ldb-XcU
 var recaptchaUrl = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
-var hideSidebarStyles = m('style', '#sidebar{display:none}');
 
 var supportsTouch = 'ontouchend' in document.documentElement;
 
@@ -146,41 +145,37 @@ function endsWith(str, ending) {
 	return str.slice(ending.length) === ending;
 }
 
-function scrollToTop(scrollDuration) {
+function scrollToTop(scrollDuration, elem) {
     return new Promise(function (resolve, reject) {
-        if (window.pageYOffset === 0) {
-            resolve();
-            return;
-        }
+        var target = elem || window;
+        if ((elem ? target.scrollTop : window.pageYOffset) === 0) return resolve();
         function step(newTimestamp) {
             scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
-            if (scrollCount >= Math.PI) window.scrollTo(0, 0);
-            if (window.pageYOffset === 0) {
+            if (scrollCount >= Math.PI) target.scrollTo(0, 0);
+            if ((elem ? target.scrollTop : window.pageYOffset) === 0) {
                 resolve();
                 return;
             }
-            window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+            target.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
             oldTimestamp = newTimestamp;
             window.requestAnimationFrame(step);
         }
 
         if (scrollDuration) {
-            var cosParameter = window.pageYOffset / 2;
+            var cosParameter = (elem ? target.scrollTop : window.pageYOffset) / 2;
             var scrollCount = 0, oldTimestamp = performance.now();
             window.requestAnimationFrame(step);
         } else {
-            window.scrollTo(0, 0);
+            target.scrollTo(0, 0);
             resolve();
         }
     });
 }
 
-function preventAndStop(e) {
-    return new Promise(function (resolve, reject) {
-        e.preventDefault();
-        e.stopPropagation();
-        resolve(e);
-    });
+function preventAndStop(e, callback) {
+    e.preventDefault();
+    e.stopPropagation();
+    callback(e);
 }
 
 function getEpisodePages(episodes, maxPerPage, maxPageCount) {

@@ -4,7 +4,7 @@ var AuthUser = {
     init: function () {
         ['Watch List', 'Favorites'].forEach(function (listName) {
             var listKey = listName.toLowerCase().replace(/ /g, '_');
-            AuthUser[listKey] = SeriesList((getStorage(listKey) || {}).list, defaultUserListOptions);
+            AuthUser[listKey] = { url: (getStorage(listKey) || {}).list, options: defaultUserListOptions };
         });
     },
     data: getStorage('auth_user') || {},
@@ -13,7 +13,7 @@ var AuthUser = {
             .then(function (onFulfilled) {
                 if (onFulfilled) {
                     AuthUser.fetchList('Watch List', function () {
-                        userPanelInstance.currentList = AuthUser.watch_list;
+                        CurrentUser.currentList = AuthUser.watch_list;
                     });
                     AuthUser.fetchList('Favorites');
                     if (callback) callback();
@@ -83,8 +83,8 @@ var AuthUser = {
     },
     logout: function () {
         AuthUser.data = {};
-        AuthUser.watch_list = SeriesList();
-        AuthUser.favorites = SeriesList();
+        AuthUser.watch_list = undefined;
+        AuthUser.favorites = undefined;
         ['auth_user', 'watch_list', 'favorites'].forEach(function (key) {
             removeStorage(key);
         });
@@ -106,16 +106,16 @@ var AuthUser = {
     },
     isInList: function (listName, series) {
         var listKey = listName.toLowerCase().replace(/ /g, '_');
-        var alreadySet = AuthUser[listKey].full_list.some(function (listedSeries) {
-            return listedSeries.url === series.url;
-        });
-        return alreadySet;
+        // var alreadySet = AuthUser[listKey].full_list.some(function (listedSeries) {
+        //     return listedSeries.url === series.url;
+        // });
+        // return alreadySet;
     },
     setList: function (listName, result, options) {
         try {
             var listKey = listName.toLowerCase().replace(/ /g, '_');
             if (result.data[listKey]) {
-                AuthUser[listKey] = SeriesList(result.data[listKey], options);
+                AuthUser[listKey] = { url: result.data[listKey], options: options };
                 setStorage(listKey, { list: result.data[listKey], last_modified: result.data.last_modified });
             } else {
                 throw new Error(defaultErrMsg);
@@ -166,13 +166,13 @@ var AuthUser = {
             .then(function (result) {
                 AuthUser.setList(listName, result, defaultUserListOptions);
                 var listKey = listName.toLowerCase().replace(/ /g, '_');
-                if (element && userPanelInstance.currentListName === listKey) {
+                if (element && CurrentUser.currentListName === listKey) {
                     var onChangeClasses = ['removed', 'pulse', 'animated', 'infinite', 'slow'];
                     onChangeClasses.forEach(function (className) {
                         element.classList[alreadySet ? 'add' : 'remove'](className);
                     });
                 }
-                if (!preventUpdate) userPanelInstance.refreshList();
+                if (!preventUpdate) refreshUserList();
                 if (showToast) {
                     nativeToast({
                         message: (!alreadySet ? 'Added to ' : 'Removed from ') + listName,
@@ -187,8 +187,6 @@ var AuthUser = {
 
 AuthUser.init();
 
-var userPanelElem;
-
 function showHideUserPanel() {
     if (!AuthUser.data._id) {
         m.route.set('/login');
@@ -198,12 +196,21 @@ function showHideUserPanel() {
     if (userPanelElem.classList.contains('none')) {
         userPanelElem.classList.remove('none');
     } else if (userPanelElem.classList.contains(outAnimation)) {
-        userPanelInstance.refreshList();
+        refreshUserList();
         m.redraw();
         userPanelElem.classList.remove(outAnimation);
     } else {
         userPanelElem.classList.add(outAnimation);
     }
+}
+
+var CurrentUser = {
+    currentList: AuthUser.watch_list,
+    currentListName: 'watch_list',
+};
+
+function refreshUserList() {
+    CurrentUser.currentList = AuthUser[CurrentUser.currentListName];
 }
 
 function UserPanel() {
@@ -218,33 +225,25 @@ function UserPanel() {
     }
 
     function switchList(e) {
-        preventAndStop(e)
-            .then(function () {
-                var elem = e.target;
-                var listKey = elem.innerText.toLowerCase().replace(/ /g, '_');
-                _this.currentList = AuthUser[listKey];
-                _this.currentListName = listKey;
-                var buttons = elem.parentElement.querySelectorAll('button');
-                for (var i = 0; i < buttons.length; i++) {
-                    buttons[i].classList.remove('active');
-                }
-                elem.classList.add('active');
-            });
+        preventAndStop(e, function () {
+            var elem = e.target;
+            var listKey = elem.innerText.toLowerCase().replace(/ /g, '_');
+            CurrentUser.currentList = AuthUser[listKey];
+            CurrentUser.currentListName = listKey;
+            var buttons = elem.parentElement.querySelectorAll('button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            elem.classList.add('active');
+        });
     }
 
-    var _this = {
-        is_logged: false,
-        is_signing_up: false,
+    return {
         oncreate: function () {
             document.addEventListener('keydown', keyEvents);
         },
         onremove: function () {
             document.removeEventListener('keydown', keyEvents);
-        },
-        currentList: AuthUser.watch_list,
-        currentListName: 'watch_list',
-        refreshList: function () {
-            _this.currentList = AuthUser[_this.currentListName];
         },
         view: function () {
             return m('div', [
@@ -261,17 +260,15 @@ function UserPanel() {
                     m('button', { class: 'active', onclick: switchList }, [m('i', { class: 'icon-clock' }), 'Watch List']),
                     m('button', { onclick: switchList }, [m('i', { class: 'icon-heart' }), 'Favorites'])
                 ]),
-                m(_this.currentList)
+                m(SeriesList, CurrentUser.currentList)
             ]);
         }
     };
-    return _this;
 }
 
-var userPanelInstance = UserPanel();
-
+var userPanelElem;
 document.addEventListener('DOMContentLoaded', function () {
     userPanelElem = document.getElementById('user-panel');
     userPanelElem.onclick = showHideUserPanel;
-    m.mount(userPanelElem, userPanelInstance);
+    m.mount(userPanelElem, UserPanel);
 });

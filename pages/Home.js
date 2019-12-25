@@ -1,12 +1,13 @@
+var ChatboxElem;
 function HomeToggleChatbox(options) {
     if (window.innerWidth >= 700) {
         Home.chatEnabled = !Home.chatEnabled;
         if (Home.chatEnabled && !Home.chatIframeLoaded) Home.chatIframeLoaded = true;
-        if (Home.chatbox.dom) {
-            if (!Home.chatbox.dom.style.display) {
-                Home.chatbox.dom.style.display = 'none';
+        if (ChatboxElem) {
+            if (!ChatboxElem.style.display) {
+                ChatboxElem.style.display = 'none';
             } else {
-                Home.chatbox.dom.style.display = '';
+                ChatboxElem.style.display = '';
             }
         }
         m.redraw();
@@ -99,8 +100,8 @@ var posts = [
     {
         id: '7sdfsd',
         avatar: 'https://pbs.twimg.com/profile_images/2668854518/79fc3605e372a8e1e34693abcf7d7847.jpeg',
-        username: 'James Bond',
-        displayName: '007',
+        username: '007',
+        displayName: 'James Bond',
         content: 'Sometimes the old ways are the best.',
         datePublished: 1576093436993,
         likes: 2,
@@ -168,7 +169,7 @@ function openMediaViewer(e) {
         }
 
         if (elem[sibling].nodeName === 'VIDEO' || elem[sibling].nodeName === 'IMG') {
-            preventAndStop(e).then(function() {setItem(elem[sibling]);});
+            preventAndStop(e, function() {setItem(elem[sibling]);});
         }
     }
 
@@ -370,20 +371,20 @@ var HomeFeed = {
 }
 
 var SeriesFeed = {
-    popular: SeriesList(domain + '/api/media/popular?count=24', { header: 'Popular' }),
-    updated: SeriesList(domain + '/api/media/latest?count=24', { header: 'Recently Updated' }),
+    popular: { url: domain + '/api/media/popular?count=24', options: { header: 'Popular' } },
+    updated: { url: domain + '/api/media/latest?count=24', options: { header: 'Recently Updated' } },
     view: function () {
         return m('div', { class: 'flex two' }, [
-            m('div', m(SeriesFeed.popular)),
-            m('div', { class: 'left-divider' }, m(SeriesFeed.updated))
+            m('div', m(SeriesList, SeriesFeed.popular)),
+            m('div', { class: 'left-divider' }, m(SeriesList, SeriesFeed.updated))
         ])
     }
 };
 
 var RandomFeed = {
-    feed: SeriesList(domain + '/api/media/random?options=summary&count=24', { header: 'Random' }),
+    feed: { url: domain + '/api/media/random?options=summary&count=24', options: { header: 'Random' } },
     view: function () {
-        return m('div', { class: 'flex one' }, m('div', m(RandomFeed.feed)))
+        return m('div', { class: 'flex one' }, m('div', m(SeriesList, RandomFeed.feed)))
     }
 };
 
@@ -393,45 +394,55 @@ var Home = {
 
         Home.chatEnabled = window.innerWidth < 700 ? false : getStorage('chat');
         Home.chatIframeLoaded = Home.chatEnabled;
-        if (window.innerWidth < 700 && getStorage('chat')) {
-            window.addEventListener('resize', function turnOnChatOnResize() {
-                if (window.innerWidth >= 700) {
-                    HomeToggleChatbox();
-                    window.removeEventListener('resize', turnOnChatOnResize)
-                }
-            });
-        }
     },
-    player: llc(VideoPlayer, { src: { src: "https://stream.wonderfulsubs.com/live/stream/index.m3u8", type: "application/x-mpegURL" }, options: { muted: true, disablePauseOnScroll: true } }),
-    chatbox: llv('iframe', { src: 'https://titan.wonderfulsubs.com/embed/386361030353354765?css=1&defaultchannel=386361187811459074&username=WS%20Guest', frameborder: '0' }),
-    chatboxOverlay: m('div', { class: 'home-chat-overlay' }, m('button', { onclick: function(){ HomeToggleChatbox(); } }, [
-        m('i', { class: 'icon-comment' }),
-        'Turn Chat On'
-    ])),
     currentListName: 'series',
     switchList: function (e) {
-        preventAndStop(e)
-            .then(function () {
-                var elem = e.target;
-                var listKey = elem.innerText.toLowerCase().replace(/ /g, '_');
-                Home.currentListName = listKey;
-                var buttons = elem.parentElement.querySelectorAll('button');
-                for (var i = 0; i < buttons.length; i++) {
-                    buttons[i].classList.remove('active');
-                }
-                elem.classList.add('active');
-            });
+        preventAndStop(e, function () {
+            var elem = e.target;
+            var listKey = elem.innerText.toLowerCase().replace(/ /g, '_');
+            Home.currentListName = listKey;
+            var buttons = elem.parentElement.querySelectorAll('button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            elem.classList.add('active');
+        });
     },
     view: function () {
         setTitle('WonderfulSubs', true);
 
+        function turnOnChatOnResize() {
+            if (window.innerWidth >= 700) {
+                HomeToggleChatbox();
+                window.removeEventListener('resize', turnOnChatOnResize);
+            }
+        }
+
+        var player = llc(VideoPlayer, { src: { src: "https://stream.wonderfulsubs.com/live/stream/index.m3u8", type: "application/x-mpegURL" }, options: { muted: true, disablePauseOnScroll: true } });
+
+        var chatbox = llv('iframe', {
+            src: 'https://titan.wonderfulsubs.com/embed/386361030353354765?css=1&defaultchannel=386361187811459074&username=WS%20Guest', frameborder: '0',
+            oncreate: function (vnode) {
+                ChatboxElem = vnode.dom;
+                if (window.innerWidth < 700 && getStorage('chat')) window.addEventListener('resize', turnOnChatOnResize);
+            },
+            onremove: function () {
+                window.removeEventListener('resize', turnOnChatOnResize);
+            }
+        });
+
+        var chatboxOverlay = m('div', { class: 'home-chat-overlay' }, m('button', { onclick: function(){ HomeToggleChatbox(); } }, [
+            m('i', { class: 'icon-comment' }),
+            'Turn Chat On'
+        ]));
+
         return m.fragment({}, [
             m('div', { class: 'main-container' }, [
                 m('div', { class: 'flex one two-700' }, [
-                    m('div', { class: 'flex-padding-reset two-third-700' }, Home.player),
+                    m('div', { class: 'flex-padding-reset two-third-700' }, player),
                     m('div', { class: 'home-chat-container none third-700 flex-padding-reset animated fadeIn slow', oncreate: function (vnode) { Home.chatContainer = vnode.dom; } }, [
-                        Home.chatEnabled ? undefined : Home.chatboxOverlay,
-                        Home.chatIframeLoaded ? Home.chatbox : undefined
+                        Home.chatEnabled ? undefined : chatboxOverlay,
+                        Home.chatIframeLoaded ? chatbox : undefined
                     ])
                 ]),
                 m('div', { class: 'list-switch-buttons animated fadeIn' }, [

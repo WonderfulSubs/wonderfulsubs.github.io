@@ -1,5 +1,3 @@
-var musicPlayerElem;
-
 function showHideMusicPlayer() {
     var outAnimation = 'slideOutDown';
     if (musicPlayerElem.parentElement.classList.contains('none')) {
@@ -23,58 +21,58 @@ function MusicPlayer() {
         }
     }
 
-    var _this = {
+    return {
         oncreate: function () {
             document.addEventListener('keydown', keyEvents);
         },
         onremove: function () {
             document.removeEventListener('keydown', keyEvents);
         },
-        player: llc(VideoPlayer, { options: { id: 'vjs-music-player', autoplay: false, disablePauseOnScroll: true }, ready: function (player) {
-            player.addClass('hide-music-video');
-
-            function hidePlayer() {
-                var hidePlayerStyle = document.createElement('style');
-                hidePlayerStyle.innerHTML = '#vjs-music-player.hide-music-video > :not(.vjs-control-bar){display:none !important}';
-                player.el_.parentElement.insertBefore(hidePlayerStyle, player.el_);
-                player.off('play', hidePlayer);
-            }
-
-            var playButton = document.querySelector('.music-player-button .icon-play');
-
-            player.on('play', hidePlayer);
-            player.on('pause', function () {
-                playButton.className = 'icon-play';
-            });
-            player.on('ended', function () {
-                playButton.className = 'icon-ccw';
-            });
-            player.on('volumechange', function () {
-                if (player.volume() !== 1) player.volume(1);
-                if (player.muted()) player.muted(false);
-            });
-        }}),
         view: function () {
             function playPauseMusic() {
-                var player = _this.player.state.player;
                 player[player.paused() ? 'play' : 'pause']();
             }
 
             function restartMusic() {
-                var player = _this.player.state.player;
                 player.currentTime(0);
             }
 
             function showHideMusicVideo() {
-                var player = _this.player.state.player;
                 player.toggleClass('hide-music-video');
                 player.toggleClass('vjs-fluid');
                 var musicPlayerBar = document.querySelector('.music-player');
                 musicPlayerBar.classList.toggle('show-music-video');
             }
 
+            var player = llc(VideoPlayer, {
+                options: { id: 'vjs-music-player', autoplay: false, disablePauseOnScroll: true }, ready: function (player) {
+                    player.addClass('hide-music-video');
+
+                    function hidePlayer() {
+                        var hidePlayerStyle = document.createElement('style');
+                        hidePlayerStyle.innerHTML = '#vjs-music-player.hide-music-video > :not(.vjs-control-bar){display:none !important}';
+                        player.el_.parentElement.insertBefore(hidePlayerStyle, player.el_);
+                        player.off('play', hidePlayer);
+                    }
+
+                    var playButton = document.querySelector('.music-player-button .icon-play');
+
+                    player.on('play', hidePlayer);
+                    player.on('pause', function () {
+                        playButton.className = 'icon-play';
+                    });
+                    player.on('ended', function () {
+                        playButton.className = 'icon-ccw';
+                    });
+                    player.on('volumechange', function () {
+                        if (player.volume() !== 1) player.volume(1);
+                        if (player.muted()) player.muted(false);
+                    });
+                }
+            });
+
             return m.fragment({}, [
-                _this.player,
+                player,
                 m('div', { class: 'flex two' },
                     m('div', { class: 'music-player-info' }, [
                         llv('img', { src: 'https://i.ytimg.com/vi/2MtOpB5LlUA/hq720.jpg?sqp=-oaymwEXCNUGEOADIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3mTLkA192pEplLZlI5YcSzkQR6wRw' }),
@@ -94,13 +92,11 @@ function MusicPlayer() {
             ]);
         }
     };
-    return _this;
 }
 
-var MusicPlayerInstance = MusicPlayer();
-
+var musicPlayerElem;
 document.addEventListener('DOMContentLoaded', function () {
     musicPlayerElem = document.getElementById('music-panel');
-    m.mount(musicPlayerElem, MusicPlayerInstance);
+    m.mount(musicPlayerElem, MusicPlayer);
     // MusicPlayerInstance.player.state.player.src({ src: 'https://www.youtube.com/watch?v=2MtOpB5LlUA', type: 'video/youtube' });
 });

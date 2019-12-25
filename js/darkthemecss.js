@@ -37,7 +37,7 @@ body{\n\
 .poster-item{\n\
     box-shadow:none\n\
 }\n\
-.post-item,.post-actions>*,.post-show-more-less,.poster-item .poster-title,.showcase-container div{\n\
+.post-item,.post-actions>*,.post-show-more-less,.poster-item .poster-title,.showcase-container>div>a>div{\n\
     background-color:#424242;\n\
     color:#fff\n\
 }\n\

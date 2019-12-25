@@ -17,17 +17,16 @@ var Series = {
         if ((letter && letter !== Series.letter) || !letter && Series.letter || letter && !Series.letter) Series.oninit();
     },
     getResults: function (letter) {
-        Series.results = SeriesList(
-            domain + "/api/media/all?options=summary" + (letter ? '&letter=' + letter : ''),
-            {
+        Series.results = {
+            url: domain + "/api/media/all?options=summary" + (letter ? '&letter=' + letter : ''),
+            options: {
                 header: Series.letter ? 'Series - ' + (Series.letter === 'none' ? '#' : Series.letter.toUpperCase()) : 'All Series',
                 callback: function (count) {
                     Series.count = count;
                 }
             }
-        );
+        };
     },
-    results: SeriesList(),
     view: function () {
         setTitle(Series.title);
 
@@ -48,7 +47,7 @@ var Series = {
                 m('div', [
                     m('h4', { class: 'poster-header' }, 'A-Z'),
                     buttons,
-                    m(Series.results),
+                    m(SeriesList, Series.results),
                     Series.count === 0 ? m('div', { class: 'fadeInUp fast animated center-align' }, 'No results') : undefined
                 ])
             ])

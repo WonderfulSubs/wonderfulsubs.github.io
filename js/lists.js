@@ -1,4 +1,6 @@
-function SeriesList(url, options) {
+function SeriesList(initialVnode) {
+    var url = initialVnode.attrs.url;
+    var options = initialVnode.attrs.options;
     var nextPage;
     if (!options) options = {};
     var count = options.count || 10;
@@ -13,16 +15,19 @@ function SeriesList(url, options) {
     var isObject = typeof url === 'object';
     var currentCount = count;
 
+    var list = isObject ? url : [];
+    var full_list = isObject ? url : [];
+
     function loadList(u, options) {
         if (!u && !isObject) return;
         var append = options && options.push === true;
         var onloaded = options.onloaded;
         if (isObject) {
             if (append) currentCount += count;
-            _this.list = url.slice(0, currentCount);
-            _this.full_list = url;
+            list = url.slice(0, currentCount);
+            full_list = url;
             if (onloaded) onloaded();
-            if (callback) callback(_this.full_list.length);
+            if (callback) callback(full_list.length);
             return;
         }
         return m.request({
@@ -36,46 +41,46 @@ function SeriesList(url, options) {
             if (filter) series = series.filter(filter);
 
             if (append) {
-                _this.list.push.apply(_this.list, series);
+                list.push.apply(list, series);
             } else {
-                _this.list = series;
+                list = series;
             }
-            _this.full_list = _this.list;
+            full_list = list;
             if (onloaded) onloaded();
-            if (callback) callback(_this.full_list.length);
+            if (callback) callback(full_list.length);
         });
     }
 
-    var _this = {
-        oninit: loadList.bind(this, url),
-        list: isObject ? url : [],
-        full_list: isObject ? url : [],
-        load: loadList,
-        push: function (u, vnode, e) {
-            e.stopPropagation();
-            if (!isObject && vnode) {
-                vnode.dom.style['pointer-events'] = 'none';
-                vnode.dom.style.opacity = 0.5;
-            }
-            loadList(u, {
-                push: true,
-                onloaded: function () {
-                    if (vnode) {
-                        vnode.dom.style['pointer-events'] = '';
-                        vnode.dom.style.opacity = '';
-                    }
+    function push(u, vnode, e) {
+        e.stopPropagation();
+        if (!isObject && vnode) {
+            vnode.dom.style['pointer-events'] = 'none';
+            vnode.dom.style.opacity = 0.5;
+        }
+        loadList(u, {
+            push: true,
+            onloaded: function () {
+                if (vnode) {
+                    vnode.dom.style['pointer-events'] = '';
+                    vnode.dom.style.opacity = '';
                 }
-            });
-        },
+            }
+        });
+    }
+
+    return {
+        oninit: loadList.bind(this, url),
+        list: list,
+        full_list: full_list,
+        load: loadList,
+        push: push,
         view: function (vnode) {
-            var elements = [m(PosterGrid, { items: _this.list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeonremove: changeOnRemove })];
+            var elements = [m(PosterGrid, { items: list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeonremove: changeOnRemove })];
             if (header) elements.unshift(m('h4', { class: 'poster-header' }, header));
-            if (nextPage || (isObject && currentCount < url.length)) elements.push(m('button', { class: 'center-element', onclick: _this.push.bind(this, nextPage, vnode) }, 'View More'));
+            if (nextPage || (isObject && currentCount < url.length)) elements.push(m('button', { class: 'center-element', onclick: push.bind(this, nextPage, vnode) }, 'View More'));
             return m('div', { class: className }, elements);
         }
     };
-
-    return _this;
 }
 
 var BloggerList = {

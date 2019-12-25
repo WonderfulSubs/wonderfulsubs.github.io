@@ -44,7 +44,7 @@
 }
 
 #mini-player video-js, #mini-player iframe {
-    box-shadow: 0px 0px 6px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.37);
 }
 
 #mini-player .video-js:not(.vjs-fullscreen) .vjs-control-bar > :not(.vjs-play-control):not(.vjs-custom-control-spacer):not(.vjs-volume-panel):not(.vjs-progress-control):not(.vjs-picture-in-picture-control):not(.vjs-fullscreen-control) {

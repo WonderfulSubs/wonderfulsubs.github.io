@@ -13,21 +13,17 @@ function showHideMore(e) {
     }
 }
 
-var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
-
 var sourceSelectorId = getRandomId();
 
 var RecommendedList = {
-    list: SeriesList(),
     getList: function (series) {
         function filterFunc(s) {
             return s.title !== series.title;
         }
 
-        RecommendedList.list = SeriesList(
-            domain + "/api/v1/media/search?options=summary&count=4&index=1&q=" +
-            series.title,
-            {
+        RecommendedList.list = {
+            url: domain + "/api/v1/media/search?options=summary&count=4&index=1&q=" + series.title,
+            options: {
                 filter: filterFunc,
                 callback: function (count) {
                     if (count === 0 && Array.isArray(series.keywords)) {
@@ -35,71 +31,65 @@ var RecommendedList = {
                             return x;
                         });
                         var keyword = keywords[Math.floor(Math.random() * keywords.length)];
-                        RecommendedList.list = SeriesList(
-                            domain + "/api/v1/media/random?options=summary&count=4&keyword=" +
-                            keyword,
-                            { filter: filterFunc }
-                        );
+                        RecommendedList.list = {
+                            url: domain + "/api/v1/media/random?options=summary&count=4&keyword=" + keyword,
+                            options: { filter: filterFunc }
+                        };
                     }
                 }
             }
-        );
+        };
     },
     view: function () {
         return m("div", [
             m("h2", { class: "list-header animated fadeInUp" }, [
                 m("span", { class: "label full" }, "Recommended")
             ]),
-            m(RecommendedList.list)
+            m(SeriesList, RecommendedList.list)
         ]);
     }
 };
 
-function EpisodeInfo() {
-    var _this = {
-        showInfo: false,
-        episode: {},
-        season: {},
-        series: {},
-        view: function () {
-            var showInfo = _this.showInfo;
-            var episode = _this.episode;
-            var season = _this.season;
-            var series = _this.series;
-            series.url = location.pathname;
+var EpisodeInfo = {
+    view: function () {
+        var showInfo = WatchInfo.showInfo;
+        var episode = WatchInfo.episode;
+        var season = WatchInfo.season;
+        var series = WatchInfo.series;
+        series.url = location.pathname;
 
-            var isInWatchList = AuthUser.isInList('Watch List', series);
-            var isFavoritesList = AuthUser.isInList('Favorites', series);
+        var isInWatchList = AuthUser.isInList('Watch List', series);
+        var isFavoritesList = AuthUser.isInList('Favorites', series);
 
-            var headerElements = [m("h3", showInfo && season.type !== 'episodes' ? series.title : season.title || series.title)];
-            if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
+        var headerElements = [m("h3", showInfo && season.type !== 'episodes' ? series.title : season.title || series.title)];
+        if ((season.japanese_title && season.japanese_title != season.title) || (series.japanese_title && series.japanese_title != series.title)) headerElements.push(m("h6", { class: "subtitle" }, season.japanese_title || series.japanese_title));
 
-            var description = season.description || series.description;
-            var sectionElements = [m("p", showInfo ? description : episode.description || description)];
-            if (!showInfo && episode.title) sectionElements.unshift(m("h4", episode.title));
+        var description = season.description || series.description;
+        var sectionElements = [m("p", showInfo ? description : episode.description || description)];
+        if (!showInfo && episode.title) sectionElements.unshift(m("h4", episode.title));
 
-            return m('div', { class: 'animated fadeInLeft' }, [
-                m("article", { class: "card episode-info-card" }, [
-                    m("header", [
-                        m('span', headerElements),
-                        m('div', [
-                            m('i', { class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function () { _this.showInfo = !showInfo; } }),
-                            m('i', { class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
-                            m('i', { class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
-                        ]),
+        var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
+
+        return m('div', { class: 'animated fadeInLeft' }, [
+            m("article", { class: "card episode-info-card" }, [
+                m("header", [
+                    m('span', headerElements),
+                    m('div', [
+                        m('i', { class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function () { WatchInfo.showInfo = !showInfo; } }),
+                        m('i', { class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
+                        m('i', { class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
                     ]),
-                    m("section", { class: "content flex" }, [
-                        !showInfo && (episode.episode_number || episode.ova_number) ? m('div', { class: 'episode-number' }, (episode.episode_number ? 'EP ' : 'OVA ') + (episode.episode_number || episode.ova_number)) : undefined,
-                        m("img", { src: showInfo ? getPosterTall(series.poster_tall, 180).poster : episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
-                        m('div', sectionElements)
-                    ])
                 ]),
-                showMoreButton
-            ]);
-        }
-    };
-    return _this;
-}
+                m("section", { class: "content flex" }, [
+                    !showInfo && (episode.episode_number || episode.ova_number) ? m('div', { class: 'episode-number' }, (episode.episode_number ? 'EP ' : 'OVA ') + (episode.episode_number || episode.ova_number)) : undefined,
+                    m("img", { src: showInfo ? getPosterTall(series.poster_tall, 180).poster : episode.poster || getPosterWide(episode.thumbnail, series.poster_tall, 320, 180).poster }),
+                    m('div', sectionElements)
+                ])
+            ]),
+            showMoreButton
+        ]);
+    }
+};
 
 var SeasonsList = {
     list: [],
@@ -107,14 +97,14 @@ var SeasonsList = {
         var list = SeasonsList.list;
 
         function openCloseEpisodeList(vnode) {
-            vnode.dom.onclick = function (e) {
-                var listElem = e.target.nextElementSibling;
+            vnode.dom.onclick = function () {
+                var listElem = vnode.dom.nextElementSibling;
                 if (listElem.classList.contains("none")) {
                     listElem.classList.remove("none");
                 } else {
                     listElem.classList.add("none");
                 }
-                var arrowElem = e.target.querySelector('i[class*="-dir"]');
+                var arrowElem = vnode.dom.querySelector('i[class*="-dir"]');
                 if (arrowElem.classList.contains("icon-up-dir")) {
                     arrowElem.classList.remove("icon-up-dir");
                     arrowElem.classList.add("icon-down-dir");
@@ -128,11 +118,11 @@ var SeasonsList = {
         return m("div", { class: "animated fadeInUpBig" },
             list.map(function (season, index) {
                 season.index = index;
+                var isSelected = season.index === WatchInfo.season.index;
                 return m("div", { key: season.id || season.type + String(index) }, [
-                    m(
-                        "span",
+                    m("span",
                         {
-                            class: "button full season-list-button" + (index !== (list.length - 1) ? ' bottom-divider' : ''),
+                            class: "button full season-list-button" + (index !== (list.length - 1) ? ' bottom-divider' : '') + (isSelected ? ' active' : ''),
                             oncreate: openCloseEpisodeList
                         },
                         [
@@ -141,19 +131,21 @@ var SeasonsList = {
                             m("i", { class: "icon-up-dir right" })
                         ]
                     ),
-                    m(EpisodeList(season.episodes, season))
+                    m(EpisodeList, { list: season.episodes, season: season })
                 ]);
             })
         );
     }
 };
 
-function EpisodeList(list, season) {
+function EpisodeList(initialVnode) {
+    var list = initialVnode.attrs.list;
+    var season = initialVnode.attrs.season;
     list.forEach(function (episode, index) {
         episode.index = index;
     });
+
     var pages = getEpisodePages(list, 50);
-    var tabsStyle = getEpisodePagesCSS(pages.length);
 
     function setListHeight(index, e) {
         e.redraw = false;
@@ -163,8 +155,11 @@ function EpisodeList(list, season) {
         var table = tabs.querySelectorAll('.table-container table')[index];
         tabs.style.height = (table.clientHeight + tabs.clientHeight - row.clientHeight) + 'px';
     }
+
     return {
         view: function () {
+            var tabsStyle = getEpisodePagesCSS(pages.length);
+
             function tabs(check) {
                 var randomPrefix = getRandomId();
 
@@ -199,10 +194,12 @@ function EpisodeList(list, season) {
                 return isSubbed && isDubbed ? "Subs | Dubs" : isSubbed ? "Subs" : isDubbed ? "Dubs" : "";
             }
 
+            var tabNums = tabs(true);
+
             return m("div", { class: "episode-list none" }, [
                 tabsStyle.html,
                 m("div", { class: "tabs " + tabsStyle.className }, [
-                    tabs(true),
+                    tabNums,
                     m("div", { class: "row" }, [
                         pages.map(function (page) {
                             return m("div", { key: page.title, class: "table-container" }, [
@@ -216,8 +213,10 @@ function EpisodeList(list, season) {
                                     ]),
                                     m("tbody", { class: "table-selectable" }, [
                                         page.episodes.map(function (episode) {
+                                            var isSelected = season.index === WatchInfo.season.index && episode.index === WatchInfo.episode.index;
                                             return m("tr",
                                                 {
+                                                    class: isSelected ? 'selected': undefined,
                                                     key: episode.title + String(episode.episode_number || episode.ova_number),
                                                     onclick: function () {
                                                         SourceSelectModal.openEpisode(episode, season);
@@ -235,12 +234,20 @@ function EpisodeList(list, season) {
                             ]);
                         })
                     ]),
-                    // tabs()
+                    // tabNums
                 ])
             ]);
         }
     };
 }
+
+var WatchInfo = {
+    currentSlug: undefined,
+    showInfo: false,
+    episode: {},
+    season: {},
+    series: {}
+};
 
 var SourceSelectModal = {
     element: {},
@@ -264,8 +271,8 @@ var SourceSelectModal = {
         SourceSelectModal.open();
 
         if (setInfo) {
-            Watch.InfoBox.episode = episode;
-            Watch.InfoBox.season = season;
+            WatchInfo.episode = episode;
+            WatchInfo.season = season;
         }
     },
     getSource: function (source) {
@@ -274,23 +281,32 @@ var SourceSelectModal = {
         var episode = SourceSelectModal.episode;
         var season = SourceSelectModal.season;
         m.route.set(
-            m.route.get(),
+            location.pathname,
             { ss: season.index, e: episode.index },
             { title: episode.title }
         );
         SourceSelectModal.close();
 
-        Watch.InfoBox.episode = episode;
-        Watch.InfoBox.season = season;
+        WatchInfo.episode = episode;
+        WatchInfo.season = season;
         WatchPlayer.player.cs_stop();
 
-        scrollToTop(2000);
+        if (theaterModeEnabled) {
+            var seasonListContainer = document.querySelector('.season-list-container');
+            scrollToTop(2000, seasonListContainer);
+        } else {
+            scrollToTop(2000);
+        }
 
         m.request({
             method: "GET",
-            url: domain + "/api/v1/media/stream?code=" + encodeURIComponent(source.retrieve_url)
+            url: domain + "/api/v1/media/stream?code=" + encodeURIComponent(source.retrieve_url),
+            config: function (xhr) {
+                SourceSelectModal.XHR = xhr;
+            }
         }).then(function (result) {
             try {
+                SourceSelectModal.XHR = null;
                 var sources = result.urls;
                 WatchPlayer.player.src(
                     sources.filter(function (source) {
@@ -317,7 +333,7 @@ var SourceSelectModal = {
                 if (captions) WatchPlayer.player.cs_captions(captions);
 
                 var poster = result.poster;
-                if (poster && !Watch.InfoBox.episode.thumbnail) Watch.InfoBox.episode.poster = poster;
+                if (poster && !WatchInfo.episode.thumbnail) WatchInfo.episode.poster = poster;
             } catch (error) {
                 nativeToast({
                     message: 'An error occured. Please try another source.',
@@ -326,6 +342,9 @@ var SourceSelectModal = {
                 });
             }
         });
+    },
+    onremove: function() {
+        if (SourceSelectModal.XHR) SourceSelectModal.XHR.abort();
     },
     view: function () {
         var episode = SourceSelectModal.episode;
@@ -383,7 +402,6 @@ var SourceSelectModal = {
 var Watch = {
     oninit: function (vnode) {
         Watch.currentId = vnode.attrs.id;
-        Watch.InfoBox = EpisodeInfo();
         document.body.classList.add('watch-body');
         var bottomBar = document.querySelector('.bottom-bar');
         var musicPlayerBar = document.querySelector('.music-player');
@@ -399,6 +417,7 @@ var Watch = {
         bottomBar.className = Watch.initialBottomBarClassName;
         musicPlayerBar.className = Watch.initialMusicPlayerBarClassName;
         if (WatchPlayer.player.el_) WatchPlayer.player.el_.removeEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
+        if (Watch.XHR) Watch.XHR.abort();
     },
     onbeforeremove: function() {
         if (!WatchPlayer.player.paused()) {
@@ -406,8 +425,10 @@ var Watch = {
             miniPlayerContainer.appendChild(WatchPlayer.dom);
         }
     },
-    setPlayerClick: function () {
+    setPlayerClick: function (e) {
         if (!WatchPlayer.player.currentSources().length) {
+            e.preventDefault();
+            e.stopPropagation();
             var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
             var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
             SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
@@ -417,7 +438,7 @@ var Watch = {
     onupdate: function (vnode) {
         var id = vnode.attrs.id;
         if (id !== Watch.currentId) {
-            Watch.abort();
+            if (Watch.XHR) Watch.XHR.abort();
             scrollToTop(500)
                 .then(function () {
                     Watch.currentId = id;
@@ -463,17 +484,19 @@ var Watch = {
             return m.route.set('/login');
         }
 
+        var hideSidebarStyles = m('style', '#sidebar{display:none}');
+
         return m("div", { class: 'flex-margin-reset' + (theaterModeEnabled ? ' desktop' : '') }, [
-            window.DARK_THEME_STYLES,
+            themeStyleElem ? undefined : window.DARK_THEME_STYLES,
             m("div", { class: "watch-content-container flex one two-700" }, [
                 m("div", { class: "two-third-700 flex-padding-reset" }, [
                     m('div', { oncreate: function(vnode) {
-                        vnode.dom.appendChild(WatchPlayer.dom)
+                        vnode.dom.appendChild(WatchPlayer.dom);
                     }}),
-                    !theaterModeEnabled ? m(Watch.InfoBox) : undefined,
+                    !theaterModeEnabled ? m(EpisodeInfo) : undefined,
                 ]),
-                m("div", { class: "third-700" }, [
-                    theaterModeEnabled ? m(Watch.InfoBox) : undefined,
+                m("div", { class: "season-list-container third-700" }, [
+                    theaterModeEnabled ? m(EpisodeInfo) : undefined,
                     m(SeasonsList),
                     m(RecommendedList)
                 ])
@@ -488,21 +511,28 @@ var Watch = {
         
         var slug = vnode.attrs.id;
         var params = m.route.param();
+        Watch.resumePlay = WatchInfo.currentSlug === slug;
+        WatchInfo.currentSlug = slug;
 
         m.request({
             method: "GET",
             url: domain + "/api/v1/media/series?series=" + slug,
             config: function (xhr) {
-                Watch.abort = xhr.abort;
+                Watch.XHR = xhr;
             }
         }).then(function (result) {
             try {
+                Watch.XHR = null;
                 var series = result.json;
                 if (series) {
                     setTitle(series.title);
-                    Watch.InfoBox = EpisodeInfo();
-                    Watch.InfoBox.series = series;
-                    WatchPlayer.player.cs_stop(true);
+                    WatchInfo.series = series;
+                    if (!Watch.resumePlay) {
+                        WatchPlayer.player.cs_stop(true);
+                        WatchInfo.showInfo = false;
+                        WatchInfo.episode = {};
+                        WatchInfo.season = {};
+                    }
                     WatchPlayer.player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
 
