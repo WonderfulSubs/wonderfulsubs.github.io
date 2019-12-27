@@ -33,6 +33,10 @@
     display: none;
 }
 
+.vjs-user-inactive {
+    cursor: none;
+}
+
 #mini-player {
     width: 320px;
     max-width: 60%;

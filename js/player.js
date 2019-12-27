@@ -3,9 +3,9 @@ window.HELP_IMPROVE_VIDEOJS = false;
 function setTheaterClass() {
     var body = document.body;
     var hasTheaterClass = body.classList.contains('theater-body');
-    if (window.innerWidth < 768 && hasTheaterClass) {
+    if (window.innerWidth < 700 && hasTheaterClass) {
         body.classList.remove('theater-body');
-    } else if (window.innerWidth > 767 && !hasTheaterClass) {
+    } else if (window.innerWidth > 699 && !hasTheaterClass) {
         body.classList.add('theater-body');
         if (window.pageYOffset !== 0) scrollToTop();
     }
@@ -34,7 +34,7 @@ function toggleTheater(on, store, showToast) {
         if (store !== false) setStorage('theater', doTurnOn);
         if (showToast !== false) {
             nativeToast({
-                message: 'Theater Mode ' + (doTurnOn ? 'Enabled' : 'Disabled'),
+                message: 'Theater Mode ' + (doTurnOn ? 'On' : 'Off'),
                 position: 'north-east',
                 type: 'info',
                 closeOnClick: true
@@ -57,10 +57,9 @@ function VideoPlayer(initialVnode) {
     var disablePauseOnScroll = opts.disablePauseOnScroll;
     var disableAnimation = opts.disableAnimation;
     var disableDefaultPoster = opts.disableDefaultPoster;
-    var showTheaterToggle = opts.showTheaterToggle;
     var popoutOnScroll = opts.popoutOnScroll;
     var classNames = opts.classNames ? (' ' + opts.classNames) : '';
-    ['disablePauseOnScroll', 'disableDefaultPoster', 'showTheaterToggle', 'disableAnimation'].forEach(function (key) {
+    ['disablePauseOnScroll', 'disableDefaultPoster', 'disableAnimation'].forEach(function (key) {
         delete opts[key];
     });
 
@@ -176,21 +175,21 @@ function VideoPlayer(initialVnode) {
 
             if (!disableDefaultPoster) player.poster(posterWidePlaceholder);
 
-            if (showTheaterToggle) {
-                var Button = videojs.getComponent('Button');
-                var theaterButton = videojs.extend(Button, {
-                    constructor: function () {
-                        Button.apply(this, arguments);
-                        /* initialize your button */
-                    },
-                    handleClick: toggleTheater,
-                    buildCSSClass: function () {
-                        return "vjs-icon-theatermode vjs-control vjs-button";
-                    }
-                });
-                videojs.registerComponent('MyButton', theaterButton);
-                player.getChild('controlBar').addChild('myButton', {});
-            }
+            // if (showTheaterToggle) {
+            //     var Button = videojs.getComponent('Button');
+            //     var theaterButton = videojs.extend(Button, {
+            //         constructor: function () {
+            //             Button.apply(this, arguments);
+            //             /* initialize your button */
+            //         },
+            //         handleClick: toggleTheater,
+            //         buildCSSClass: function () {
+            //             return "vjs-icon-theatermode vjs-control vjs-button";
+            //         }
+            //     });
+            //     videojs.registerComponent('MyButton', theaterButton);
+            //     player.getChild('controlBar').addChild('myButton', {});
+            // }
 
             if (opts.autoplay !== false) {
                 player.on('loadstart', function () {

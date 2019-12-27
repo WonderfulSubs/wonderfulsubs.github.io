@@ -13,8 +13,6 @@ function showHideMore(e) {
     }
 }
 
-var sourceSelectorId = getRandomId();
-
 var RecommendedList = {
     getList: function (series) {
         function filterFunc(s) {
@@ -70,14 +68,15 @@ var EpisodeInfo = {
 
         var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
 
-        return m('div', { class: 'animated fadeInLeft' }, [
+        return m('div', { class: 'episode-info-container animated fadeInLeft' }, [
             m("article", { class: "card episode-info-card" }, [
                 m("header", [
                     m('span', headerElements),
                     m('div', [
-                        m('i', { class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function () { WatchInfo.showInfo = !showInfo; } }),
-                        m('i', { class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }) }),
-                        m('i', { class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }) })
+                        m('i', { class: (theaterModeEnabled ? 'icon-monitor' : 'icon-video') + ' theater-toggle', onclick: toggleTheater, title: theaterModeEnabled ? 'Turn off Theater Mode' : 'Turn on Theater Mode' }),
+                        m('i', { class: 'icon-info-circled' + (showInfo ? ' active' : ''), onclick: function () { WatchInfo.showInfo = !showInfo; }, title: showInfo ? 'View Episode Info' : 'View Series Info' }),
+                        m('i', { class: 'icon-clock info-watch-later' + (isInWatchList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Watch List', series, { showToast: true }), title: isInWatchList ? 'Remove from Watch List' : 'Save to Watch List' }),
+                        m('i', { class: 'icon-heart info-favorite' + (isFavoritesList ? ' active' : ''), onclick: AuthUser.addToRemoveFromList.bind(this, 'Favorites', series, { showToast: true }), title: isInWatchList ? 'Remove from Favorites' : 'Save to Favorites' })
                     ]),
                 ]),
                 m("section", { class: "content flex" }, [
@@ -219,6 +218,7 @@ function EpisodeList(initialVnode) {
                                                     class: isSelected ? 'selected': undefined,
                                                     key: episode.title + String(episode.episode_number || episode.ova_number),
                                                     onclick: function () {
+                                                        console.log(episode, season);
                                                         SourceSelectModal.openEpisode(episode, season);
                                                     }
                                                 },
@@ -250,27 +250,29 @@ var WatchInfo = {
 };
 
 var SourceSelectModal = {
-    element: {},
     episode: {},
     season: {},
     source: {},
     sources: [],
     oncreate: function (vnode) {
-        SourceSelectModal.element = vnode.dom.firstChild;
-    },
-    open: function () {
-        SourceSelectModal.element.checked = true;
-    },
-    close: function () {
-        SourceSelectModal.element.checked = false;
+        SourceSelectModal.open = function() {
+            vnode.dom.firstChild.checked = true;
+        };
+        SourceSelectModal.close = function() {
+            vnode.dom.firstChild.checked = false;
+            WatchInfo._episode = undefined;
+            WatchInfo._season = undefined;
+        };
     },
     openEpisode: function (episode, season, setInfo) {
-        SourceSelectModal.episode = episode;
-        SourceSelectModal.season = season;
-        SourceSelectModal.sources = episode.sources || [{ retrieve_url: episode.retrieve_url }];
+        // SourceSelectModal.episode = episode;
+        // SourceSelectModal.season = season;
+        // SourceSelectModal.sources = episode.sources || [{ retrieve_url: episode.retrieve_url }];
         SourceSelectModal.open();
 
-        if (setInfo) {
+        if (episode && season) {
+            WatchInfo._episode = WatchInfo.episode;
+            WatchInfo._season = WatchInfo.season;
             WatchInfo.episode = episode;
             WatchInfo.season = season;
         }
@@ -278,8 +280,8 @@ var SourceSelectModal = {
     getSource: function (source) {
         SourceSelectModal.source = source;
 
-        var episode = SourceSelectModal.episode;
-        var season = SourceSelectModal.season;
+        var episode = WatchInfo.episode;
+        var season = WatchInfo.season;
         m.route.set(
             location.pathname,
             { ss: season.index, e: episode.index },
@@ -347,8 +349,8 @@ var SourceSelectModal = {
         if (SourceSelectModal.XHR) SourceSelectModal.XHR.abort();
     },
     view: function () {
-        var episode = SourceSelectModal.episode;
-        var sources = SourceSelectModal.sources;
+        var episode = WatchInfo.episode || {};
+        var sources = episode.sources || [{ retrieve_url: episode.retrieve_url }];
 
         var hasUncensored = sources.some(function (source) {
             return source.uncensored;
@@ -367,12 +369,12 @@ var SourceSelectModal = {
         }
 
         return m("div", { class: "modal source-select-modal" }, [
-            m("input", { id: sourceSelectorId, type: "checkbox" }),
-            m("label", { class: "overlay", for: sourceSelectorId }),
+            m("input", { id: 'source-selector', type: "checkbox" }),
+            m("label", { class: "overlay", for: 'source-selector' }),
             m("article", [
                 m("header", [
                     m("h4", "Select Source"),
-                    m("label", { class: "close", for: sourceSelectorId }, m.trust("&times;")),
+                    m("label", { class: "close", for: 'source-selector' }, m.trust("&times;")),
                     hasFanDub ? m('div', { class: 'key-note' }, [m('div', { class: 'fan' }), 'Fan Dub']) : undefined,
                     hasUncensored ? m('div', { class: 'key-note' }, [m('div', { class: 'uncensored' }), 'Uncensored']) : undefined
                 ]),
@@ -426,11 +428,9 @@ var Watch = {
         }
     },
     setPlayerClick: function (e) {
-        if (!WatchPlayer.player.currentSources().length) {
-            e.preventDefault();
-            e.stopPropagation();
-            var chosenSeason = SourceSelectModal.season.episodes ? SourceSelectModal.season : SeasonsList.list[0];
-            var chosenEpisode = (SourceSelectModal.episode.sources || SourceSelectModal.episode.retrieve_url) ? SourceSelectModal.episode : chosenSeason.episodes[0];
+        var chosenSeason = WatchInfo.season.episodes ? WatchInfo.season : SeasonsList.list[0];
+        var chosenEpisode = (WatchInfo.episode.sources || WatchInfo.episode.retrieve_url) ? WatchInfo.episode : chosenSeason.episodes[0];
+        if (!WatchPlayer.player.currentSources().length/* || (!Watch.resumePlay && chosenSeason.index !== WatchInfo.season.index && chosenEpisode.index !== WatchInfo.episode.index)*/) {
             SourceSelectModal.openEpisode(chosenEpisode, chosenSeason, true);
             window.m.redraw();
         }

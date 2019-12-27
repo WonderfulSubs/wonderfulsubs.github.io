@@ -8,8 +8,12 @@
     }
 }
 
-.watch-content-container .third-700 > * {
+.watch-content-container .third-700 > *:not(.episode-info-container) {
     margin-bottom: .6em;
+}
+
+.two-third-700 > .episode-info-container {
+    padding: 0 0.3em;
 }
 
 .episode-info-card {
@@ -125,7 +129,7 @@
 }
 
 .icon-info-circled.active {
-    color: #575757;
+    color: #ff9900;
 }
 
 .show-more {
@@ -242,6 +246,10 @@
     overflow: hidden;
 }
 
+.theater-toggle {
+    display: none;
+}
+
 .watch-body.theater-body .video-js.vjs-fullscreen:not(#vjs-music-player), .video-js.vjs-fullscreen:not(#vjs-music-player) .vjs-tech{
     width:100%!important;
     height:100%!important
@@ -256,5 +264,9 @@
     .watch-body.theater-body .watch-content-container .third-700 {
         overflow-y: scroll;
         height: 100vh;
+    }
+
+    .theater-toggle {
+        display: block;
     }
 }
