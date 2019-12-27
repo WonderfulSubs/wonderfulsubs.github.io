@@ -12,6 +12,7 @@ function setTheaterClass() {
 }
 
 function toggleTheater(on, store, showToast) {
+    if (window.innerWidth < 700) return;
     if (typeof on === 'boolean' || m.route.get().indexOf('/watch/') === 0) {
         var doTurnOn;
         if (typeof on === 'boolean') {

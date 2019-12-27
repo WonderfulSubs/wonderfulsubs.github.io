@@ -293,7 +293,7 @@ var SourceSelectModal = {
         WatchInfo.season = season;
         WatchPlayer.player.cs_stop();
 
-        if (theaterModeEnabled) {
+        if (theaterModeEnabled && window.innerWidth > 699) {
             var seasonListContainer = document.querySelector('.season-list-container');
             scrollToTop(2000, seasonListContainer);
         } else {
