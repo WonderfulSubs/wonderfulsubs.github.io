@@ -218,7 +218,6 @@ function EpisodeList(initialVnode) {
                                                     class: isSelected ? 'selected': undefined,
                                                     key: episode.title + String(episode.episode_number || episode.ova_number),
                                                     onclick: function () {
-                                                        console.log(episode, season);
                                                         SourceSelectModal.openEpisode(episode, season);
                                                     }
                                                 },
