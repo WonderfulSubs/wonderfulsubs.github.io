@@ -144,7 +144,8 @@
                             <input type="search" name="q" placeholder="Search..." autoComplete="off"
                                 onsubmit="dismissKeyboard(event)" onclick="event.target.form.style['z-index'] = '2'"
                                 onblur="event.target.form.style['z-index'] = ''">
-                            <i class="icon-search" onclick="if(window.innerWidth >= 768){getSearchResults(event.target.parentElement, true);}"></i>
+                            <i class="icon-search"
+                                onclick="if(window.innerWidth >= 768){getSearchResults(event.target.parentElement, true);}"></i>
                         </label>
                     </form>
                     <div class="nav-buttons dropdown">
@@ -219,6 +220,53 @@
             player: miniPlayerFrag.vnodes[0].state.player.state.player
         };
 
+        var miniPlayerContainer = document.getElementById('mini-player');
+        var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
+        var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
+        var miniPlayConfig = getStorage('mini_player_config');
+        if (miniPlayConfig &&
+            (parseFloat(miniPlayConfig.right) < (window.innerWidth - (miniPlayerWidthHalf * 2))) &&
+            (parseFloat(miniPlayConfig.top) < window.innerHeight - miniPlayerHeightHalf)) {
+            miniPlayerContainer.style.right = miniPlayConfig.right;
+            miniPlayerContainer.style.top = miniPlayConfig.top;
+        }
+
+        [{ type: 'mousemove', isMobile: false }, { type: 'touchmove', isMobile: true }].forEach(function (eventType) {
+            miniPlayerContainer.addEventListener(eventType.type, function (e) {
+                e.preventDefault();
+                if (eventType.isMobile) e = e.touches[0];
+                var buttonPressed = eventType.isMobile || ('which' in e ? e.which : e.buttons) === 1;
+                if (buttonPressed) {
+                    var elemWidthHalf = miniPlayerContainer.clientWidth / 2;
+                    var elemHeightHalf = miniPlayerContainer.clientHeight / 2;
+                    if (e.clientX <= elemWidthHalf) {
+                        miniPlayerContainer.style.right = (window.innerWidth - (elemWidthHalf * 2)) + 'px';
+                    } else if (e.clientX >= (window.innerWidth - elemWidthHalf)) {
+                        miniPlayerContainer.style.right = '0px';
+                    } else {
+                        miniPlayerContainer.style.right = (window.innerWidth - e.clientX - elemWidthHalf) + 'px';
+                    }
+                    if (e.clientY <= elemHeightHalf) {
+                        miniPlayerContainer.style.top = '0px';
+                    } else if (e.clientY >= (window.innerHeight - elemHeightHalf)) {
+                        miniPlayerContainer.style.top = window.innerHeight - elemWidthHalf + 'px';
+                    } else {
+                        miniPlayerContainer.style.top = (e.clientY - elemHeightHalf) + 'px';
+                    }
+                }
+            });
+        });
+
+        [{ type: 'mouseup', isMobile: false }, { type: 'touchend', isMobile: true }, { type: 'touchcancel', isMobile: true }].forEach(function (eventType) {
+            miniPlayerContainer.addEventListener(eventType.type, function (e) {
+                if (eventType.isMobile) e = e.changedTouches[0];
+                setStorage('mini_player_config', {
+                    top: window.getComputedStyle(miniPlayerContainer).top,
+                    left: window.getComputedStyle(miniPlayerContainer).right
+                });
+            });
+        });
+
         var root = document.getElementById('root');
 
         m.route.prefix = '';
@@ -241,7 +289,7 @@
 
         document.getElementById('footer-year').innerHTML = ' ' + (new Date()).getFullYear() + ' ';
 
-        var loadDeferredStyles = function() {
+        var loadDeferredStyles = function () {
             var addStylesNode = document.getElementById("deferred-styles");
             var replacement = document.createElement("div");
             replacement.innerHTML = addStylesNode.textContent;
@@ -250,7 +298,7 @@
         };
         var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
             window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-        if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+        if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
         else window.addEventListener('load', loadDeferredStyles);
     </script>
 </body>
