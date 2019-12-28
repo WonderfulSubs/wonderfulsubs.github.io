@@ -531,6 +531,14 @@ var Watch = {
                         WatchInfo.showInfo = false;
                         WatchInfo.episode = {};
                         WatchInfo.season = {};
+                    } else {
+                        if (Number.isFinite(WatchInfo.episode.index) && Number.isFinite(WatchInfo.season.index)) {
+                            window.m.route.set(
+                                location.pathname,
+                                { ss: WatchInfo.season.index, e: WatchInfo.episode.index },
+                                { title: WatchInfo.episode.title }
+                            );
+                        }
                     }
                     WatchPlayer.player.poster(getPosterWide(series.poster_wide, undefined, /*800*/1080).poster);
                     RecommendedList.getList(series);
