@@ -18,15 +18,16 @@
     background-position: center;
 }
 
-.vjs-icon-theatermode {
+.video-js .vjs-icon-return {
     font-family: VideoJS;
     font-weight: normal;
     font-style: normal;
+    display: none;
 }
 
-.vjs-icon-theatermode:before {
+.vjs-icon-return:before {
     content: "\f10b";
-    font-size: 1.4em
+    font-size: 1.8em
 }
 
 .video-js.vjs-hide-player {
@@ -47,10 +48,14 @@
     position: fixed;
 }
 
+#mini-player .vjs-icon-return {
+    display: block;
+}
+
 #mini-player video-js, #mini-player iframe {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.37);
 }
 
-#mini-player .video-js:not(.vjs-fullscreen) .vjs-control-bar > :not(.vjs-play-control):not(.vjs-custom-control-spacer):not(.vjs-volume-panel):not(.vjs-progress-control):not(.vjs-picture-in-picture-control):not(.vjs-fullscreen-control) {
+#mini-player .video-js:not(.vjs-fullscreen) .vjs-control-bar > :not(.vjs-play-control):not(.vjs-custom-control-spacer):not(.vjs-volume-panel):not(.vjs-progress-control):not(.vjs-picture-in-picture-control):not(.vjs-fullscreen-control):not(.vjs-icon-return) {
     display: none;
 }

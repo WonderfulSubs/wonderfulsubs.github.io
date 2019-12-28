@@ -176,21 +176,22 @@ function VideoPlayer(initialVnode) {
 
             if (!disableDefaultPoster) player.poster(posterWidePlaceholder);
 
-            // if (showTheaterToggle) {
-            //     var Button = videojs.getComponent('Button');
-            //     var theaterButton = videojs.extend(Button, {
-            //         constructor: function () {
-            //             Button.apply(this, arguments);
-            //             /* initialize your button */
-            //         },
-            //         handleClick: toggleTheater,
-            //         buildCSSClass: function () {
-            //             return "vjs-icon-theatermode vjs-control vjs-button";
-            //         }
-            //     });
-            //     videojs.registerComponent('MyButton', theaterButton);
-            //     player.getChild('controlBar').addChild('myButton', {});
-            // }
+            var Button = videojs.getComponent('Button');
+            var returnToWatchButton = videojs.extend(Button, {
+                constructor: function () {
+                    Button.apply(this, arguments);
+                    /* initialize your button */
+                    this.el_.title = 'Return to Watch page';
+                },
+                handleClick: function () {
+                    m.route.set('/watch/' + WatchInfo.currentSlug);
+                },
+                buildCSSClass: function () {
+                    return "vjs-icon-return vjs-control vjs-button";
+                }
+            });
+            videojs.registerComponent('ReturnToWatch', returnToWatchButton);
+            player.controlBar.addChild('returnToWatch', {}, player.controlBar.children_.length - 1);
 
             if (opts.autoplay !== false) {
                 player.on('loadstart', function () {
