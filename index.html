@@ -221,15 +221,38 @@
         };
 
         var miniPlayerContainer = document.getElementById('mini-player');
-        var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
-        var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
         var miniPlayConfig = getStorage('mini_player_config');
-        if (miniPlayConfig &&
-            (parseFloat(miniPlayConfig.right) < (window.innerWidth - (miniPlayerWidthHalf * 2))) &&
-            (parseFloat(miniPlayConfig.top) < window.innerHeight - miniPlayerHeightHalf)) {
-            miniPlayerContainer.style.right = miniPlayConfig.right;
-            miniPlayerContainer.style.top = miniPlayConfig.top;
+        if (miniPlayConfig) {
+            var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
+            var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
+            if (parseFloat(miniPlayConfig.right) < (window.innerWidth - (miniPlayerWidthHalf * 2))) {
+                miniPlayerContainer.style.right = miniPlayConfig.right;
+            }
+            if (parseFloat(miniPlayConfig.top) < window.innerHeight - miniPlayerHeightHalf) {
+                miniPlayerContainer.style.top = miniPlayConfig.top;
+            }
+            setStorage('mini_player_config', {
+                top: window.getComputedStyle(miniPlayerContainer).top,
+                right: window.getComputedStyle(miniPlayerContainer).right
+            });
         }
+
+        window.addEventListener('resize', function() {
+            var rightStyle = window.getComputedStyle(miniPlayerContainer).right;
+            var topStyle = window.getComputedStyle(miniPlayerContainer).top;
+            var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
+            var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
+            if (parseFloat(rightStyle) >= (window.innerWidth - (miniPlayerWidthHalf * 2))) {
+                miniPlayerContainer.style.right = (window.innerWidth - (miniPlayerWidthHalf * 2)) + 'px';
+            }
+            if (parseFloat(topStyle) >= window.innerHeight - (miniPlayerHeightHalf * 2)) {
+                miniPlayerContainer.style.top = window.innerHeight - (miniPlayerHeightHalf * 2) + 'px';
+            }
+            setStorage('mini_player_config', {
+                top: window.getComputedStyle(miniPlayerContainer).top,
+                right: window.getComputedStyle(miniPlayerContainer).right
+            });
+        });
 
         [{ type: 'mousemove', isMobile: false }, { type: 'touchmove', isMobile: true }].forEach(function (eventType) {
             miniPlayerContainer.addEventListener(eventType.type, function (e) {
@@ -262,7 +285,7 @@
                 if (eventType.isMobile) e = e.changedTouches[0];
                 setStorage('mini_player_config', {
                     top: window.getComputedStyle(miniPlayerContainer).top,
-                    left: window.getComputedStyle(miniPlayerContainer).right
+                    right: window.getComputedStyle(miniPlayerContainer).right
                 });
             });
         });
