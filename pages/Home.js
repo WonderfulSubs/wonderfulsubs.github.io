@@ -63,7 +63,7 @@ var posts = [
         content: 'Check out the annoying Big Buck Bunny video! You can watch the full thing here: https://youtu.be/aqz-KE-bpKQ\nEnjoy!',
         media: [
             {
-                mediaUrl: '/image/-IzPWLqY4gJ0%2FT01CPzNb1KI%2FAAAAAAAACgA%2F_8uyj68QhFE',
+                mediaUrl: 'https://cdnunlimited.com/image/efHq86JYU8_%2FaGcaaaaaaaa%2Fik1BnZpc10t%2F0jG4yQlwpZi-',
                 mediaType: 'image'
             }
         ],
