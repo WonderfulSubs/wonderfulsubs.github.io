@@ -4,6 +4,8 @@
     height: auto;
     padding: 14px 19px 0;
     user-select: text;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: border 1s;
 }
 
 .post-feed {
