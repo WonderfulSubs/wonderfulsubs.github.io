@@ -9,7 +9,7 @@ var AuthUser = {
     },
     data: getStorage('auth_user') || {},
     login: function (data, callback) {
-        AuthUser._returnUserData(domain + '/api/v1/users/login', data)
+        AuthUser._returnUserData(domain + '/api/v2/users/login', data)
             .then(function (onFulfilled) {
                 if (onFulfilled) {
                     AuthUser.fetchList('Watch List', function () {
@@ -29,7 +29,7 @@ var AuthUser = {
                 grecaptcha.execute(recaptchaKey, { action: 'signup' })
                     .then(function (g_response) {
                         data.g_response = g_response;
-                        AuthUser._returnUserData(domain + '/api/v1/users/create', data)
+                        AuthUser._returnUserData(domain + '/api/v2/users/create', data)
                             .then(function (onFulfilled) {
                                 if (callback) callback();
                                 if (onFulfilled) AuthUser.removeCaptchaBadge();
@@ -94,7 +94,7 @@ var AuthUser = {
     fetchList: function (listName, callback) {
         m.request({
             method: 'GET',
-            url: domain + '/api/v1/' + listName.toLowerCase().replace(/ /g, '') + '/list?_id=' + AuthUser.data._id,
+            url: domain + '/api/v2/' + listName.toLowerCase().replace(/ /g, '') + '/list?_id=' + AuthUser.data._id,
             headers: {
                 Authorization: 'Bearer ' + AuthUser.data.token
             }
@@ -157,7 +157,7 @@ var AuthUser = {
 
         m.request({
             method: 'POST',
-            url: domain + '/api/v1/' + listName.toLowerCase().replace(/ /g, '') + '/' + (!alreadySet ? 'add' : 'remove'),
+            url: domain + '/api/v2/' + listName.toLowerCase().replace(/ /g, '') + '/' + (!alreadySet ? 'add' : 'remove'),
             body: data,
             headers: {
                 Authorization: 'Bearer ' + AuthUser.data.token

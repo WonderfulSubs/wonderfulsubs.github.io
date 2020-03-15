@@ -20,7 +20,7 @@ var Search = {
     },
     getResults: function (query) {
         Search.results = {
-            url: domain + "/api/media/search?options=summary&q=" + query,
+            url: domain + "/api/v2/media/search?options=summary&q=" + query,
             options: {
                 header: Search.title,
                 callback: function (count) {

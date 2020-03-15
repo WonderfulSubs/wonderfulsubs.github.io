@@ -371,8 +371,8 @@ var HomeFeed = {
 }
 
 var SeriesFeed = {
-    popular: { url: domain + '/api/media/popular?count=24', options: { header: 'Popular' } },
-    updated: { url: domain + '/api/media/latest?count=24', options: { header: 'Recently Updated' } },
+    popular: { url: domain + '/api/v2/media/popular?count=24', options: { header: 'Popular' } },
+    updated: { url: domain + '/api/v2/media/latest?count=24', options: { header: 'Recently Updated' } },
     view: function () {
         return m('div', { class: 'flex two' }, [
             m('div', m(SeriesList, SeriesFeed.popular)),
@@ -382,7 +382,7 @@ var SeriesFeed = {
 };
 
 var RandomFeed = {
-    feed: { url: domain + '/api/media/random?options=summary&count=24', options: { header: 'Random' } },
+    feed: { url: domain + '/api/v2/media/random?options=summary&count=24', options: { header: 'Random' } },
     view: function () {
         return m('div', { class: 'flex one' }, m('div', m(SeriesList, RandomFeed.feed)))
     }

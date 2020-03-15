@@ -18,7 +18,7 @@ var Series = {
     },
     getResults: function (letter) {
         Series.results = {
-            url: domain + "/api/media/all?options=summary" + (letter ? '&letter=' + letter : ''),
+            url: domain + "/api/v2/media/all?options=summary" + (letter ? '&letter=' + letter : ''),
             options: {
                 header: Series.letter ? 'Series - ' + (Series.letter === 'none' ? '#' : Series.letter.toUpperCase()) : 'All Series',
                 callback: function (count) {

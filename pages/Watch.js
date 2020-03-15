@@ -20,7 +20,7 @@ var RecommendedList = {
         }
 
         RecommendedList.list = {
-            url: domain + "/api/v1/media/search?options=summary&count=4&index=1&q=" + series.title,
+            url: domain + "/api/v2/media/search?options=summary&count=4&index=1&q=" + series.title,
             options: {
                 filter: filterFunc,
                 callback: function (count) {
@@ -30,7 +30,7 @@ var RecommendedList = {
                         });
                         var keyword = keywords[Math.floor(Math.random() * keywords.length)];
                         RecommendedList.list = {
-                            url: domain + "/api/v1/media/random?options=summary&count=4&keyword=" + keyword,
+                            url: domain + "/api/v2/media/random?options=summary&count=4&keyword=" + keyword,
                             options: { filter: filterFunc }
                         };
                     }
@@ -301,7 +301,7 @@ var SourceSelectModal = {
 
         m.request({
             method: "GET",
-            url: domain + "/api/v1/media/stream?code=" + encodeURIComponent(source.retrieve_url),
+            url: domain + "/api/v2/media/stream?code=" + encodeURIComponent(source.retrieve_url),
             config: function (xhr) {
                 SourceSelectModal.XHR = xhr;
             }
@@ -515,7 +515,7 @@ var Watch = {
 
         m.request({
             method: "GET",
-            url: domain + "/api/v1/media/series?series=" + slug,
+            url: domain + "/api/v2/media/series?series=" + slug,
             config: function (xhr) {
                 Watch.XHR = xhr;
             }

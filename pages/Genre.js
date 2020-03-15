@@ -18,7 +18,7 @@ var Genre = {
     },
     getResults: function (category) {
         Genre.results = {
-            url: domain + (category ? "/api/media/search?options=summary" + '&q=' + category : "/api/media/all?options=summary"),
+            url: domain + (category ? "/api/v2/media/search?options=summary" + '&q=' + category : "/api/v2/media/all?options=summary"),
             options: {
                 header: Genre.category ? 'Genre - ' + Genre.category : 'All Genres',
                 callback: function (count) {
