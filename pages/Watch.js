@@ -345,6 +345,10 @@ var SourceSelectModal = {
                     type: 'error'
                 });
             }
+        }).catch(function (error) {
+            if (error.code < 200 && error.code < 299) {
+                AuthUser.logout();
+            }
         });
     },
     onremove: function() {
@@ -575,6 +579,10 @@ var Watch = {
                     if (WatchPlayer.player.el_) WatchPlayer.player.el_.addEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
                 }
             } catch (error) { }
+        }).catch(function (error) {
+            if (error.code < 200 && error.code < 299) {
+                AuthUser.logout();
+            }
         });
     }
 };
