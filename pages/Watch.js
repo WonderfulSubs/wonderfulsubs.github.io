@@ -302,6 +302,9 @@ var SourceSelectModal = {
         m.request({
             method: "GET",
             url: domain + "/api/v2/media/stream?code=" + encodeURIComponent(source.retrieve_url),
+            headers: {
+                Authorization: 'Bearer ' + AuthUser.data.token
+            },
             config: function (xhr) {
                 SourceSelectModal.XHR = xhr;
             }
@@ -516,6 +519,9 @@ var Watch = {
         m.request({
             method: "GET",
             url: domain + "/api/v2/media/series?series=" + slug,
+            headers: {
+                Authorization: 'Bearer ' + AuthUser.data.token
+            },
             config: function (xhr) {
                 Watch.XHR = xhr;
             }
