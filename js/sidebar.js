@@ -1,12 +1,12 @@
 function announcementClick() {
-    window.open('https://blog.wonderfulsubs.com/donate');
+    window.open('https://discord.gg/AQkYAbb');
     err(function () {
         ga('send', {
             hitType: 'event',
             eventCategory: 'Top Announcement',
             eventAction: 'Click',
-            eventLabel: 'Become A Supporter',//title,
-            eventValue: 2557916,//id,
+            eventLabel: 'Join WS Discord',//title,
+            eventValue: 3552917,//id,
         });
     });
 }
