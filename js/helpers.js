@@ -9,6 +9,16 @@ var loginErrMsg = 'You must log in to do that.';
 
 var supportsTouch = 'ontouchend' in document.documentElement;
 
+// Temp Coming soon toast
+function comingSoon() {
+    nativeToast({
+        message: 'Coming Soon',
+        position: 'north-east',
+        type: 'info',
+        closeOnClick: true
+    });
+}
+
 function err(func, returnFuncValue) {
     try {
         var value = func && func();
