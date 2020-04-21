@@ -153,7 +153,7 @@
                         <div class="dropdown-content side-scroll animated faster">
                             <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
                             <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
-                            <a href="/users" onclick="routeAnchor(event, '/users')" class="button">Users</a>
+                            <a href="/users" onclick="routeAnchor(event, '/users');comingSoon()" class="button">Users</a>
                         </div>
                     </div>
                 </div>
@@ -176,15 +176,15 @@
                 <i class="icon-cog"></i>
                 <div>Settings</div>
             </div>
-            <div class="bottom-bar-button" onclick="showHideMusicPlayer()">
+            <div class="bottom-bar-button" onclick="comingSoon()"> <!-- onclick="showHideMusicPlayer()" -->
                 <i class="icon-music"></i>
                 <div>Music</div>
             </div>
-            <div class="bottom-bar-button" onclick="showHideChatPanel()">
-                <i class="icon-comment"></i>
-                <div>Chat</div>
+            <div class="bottom-bar-button" onclick="comingSoon()"> <!--onclick="showHideChatPanel()" -->
+                <i class="icon-users"></i>
+                <div>Clubs</div>
             </div>
-            <div class="bottom-bar-button">
+            <div class="bottom-bar-button" onclick="comingSoon()">
                 <i class="icon-bell-alt"></i>
                 <div>Notifications</div>
             </div>
@@ -211,7 +211,7 @@
         var miniPlayerFrag = document.createDocumentFragment();
         m.mount(miniPlayerFrag, {
             view: function () {
-                this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true } });
+                this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true, enableBackForwardButtons: true } });
                 return this.player;
             }
         });
