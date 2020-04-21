@@ -411,40 +411,40 @@ var Home = {
     view: function () {
         setTitle('WonderfulSubs', true);
 
-        function turnOnChatOnResize() {
-            if (window.innerWidth >= 700) {
-                HomeToggleChatbox();
-                window.removeEventListener('resize', turnOnChatOnResize);
-            }
-        }
+        // function turnOnChatOnResize() {
+        //     if (window.innerWidth >= 700) {
+        //         HomeToggleChatbox();
+        //         window.removeEventListener('resize', turnOnChatOnResize);
+        //     }
+        // }
 
-        var player = llc(VideoPlayer, { src: { src: "https://stream.wonderfulsubs.com/live/stream/index.m3u8", type: "application/x-mpegURL" }, options: { muted: true, disablePauseOnScroll: true } });
+        // var player = llc(VideoPlayer, { src: { src: "https://stream.wonderfulsubs.com/live/stream/index.m3u8", type: "application/x-mpegURL" }, options: { muted: true, disablePauseOnScroll: true } });
 
-        var chatbox = llv('iframe', {
-            src: 'https://titan.wonderfulsubs.com/embed/386361030353354765?css=1&defaultchannel=386361187811459074&username=WS%20Guest', frameborder: '0',
-            oncreate: function (vnode) {
-                ChatboxElem = vnode.dom;
-                if (window.innerWidth < 700 && getStorage('chat')) window.addEventListener('resize', turnOnChatOnResize);
-            },
-            onremove: function () {
-                window.removeEventListener('resize', turnOnChatOnResize);
-            }
-        });
+        // var chatbox = llv('iframe', {
+        //     src: 'https://titan.wonderfulsubs.com/embed/386361030353354765?css=1&defaultchannel=386361187811459074&username=WS%20Guest', frameborder: '0',
+        //     oncreate: function (vnode) {
+        //         ChatboxElem = vnode.dom;
+        //         if (window.innerWidth < 700 && getStorage('chat')) window.addEventListener('resize', turnOnChatOnResize);
+        //     },
+        //     onremove: function () {
+        //         window.removeEventListener('resize', turnOnChatOnResize);
+        //     }
+        // });
 
-        var chatboxOverlay = m('div', { class: 'home-chat-overlay' }, m('button', { onclick: function(){ HomeToggleChatbox(); } }, [
-            m('i', { class: 'icon-comment' }),
-            'Turn Chat On'
-        ]));
+        // var chatboxOverlay = m('div', { class: 'home-chat-overlay' }, m('button', { onclick: function(){ HomeToggleChatbox(); } }, [
+        //     m('i', { class: 'icon-comment' }),
+        //     'Turn Chat On'
+        // ]));
 
         return m.fragment({}, [
             m('div', { class: 'main-container' }, [
-                m('div', { class: 'flex one two-700' }, [
-                    m('div', { class: 'flex-padding-reset two-third-700' }, player),
-                    m('div', { class: 'home-chat-container none third-700 flex-padding-reset animated fadeIn slow', oncreate: function (vnode) { Home.chatContainer = vnode.dom; } }, [
-                        Home.chatEnabled ? undefined : chatboxOverlay,
-                        Home.chatIframeLoaded ? chatbox : undefined
-                    ])
-                ]),
+                // m('div', { class: 'flex one two-700' }, [
+                //     m('div', { class: 'flex-padding-reset two-third-700' }, player),
+                //     m('div', { class: 'home-chat-container none third-700 flex-padding-reset animated fadeIn slow', oncreate: function (vnode) { Home.chatContainer = vnode.dom; } }, [
+                //         Home.chatEnabled ? undefined : chatboxOverlay,
+                //         Home.chatIframeLoaded ? chatbox : undefined
+                //     ])
+                // ]),
                 m('div', { class: 'list-switch-buttons animated fadeIn' }, [
                     m('button', { class: Home.currentListName === 'feed' ? 'active' : undefined, onclick: Home.switchList }, [m('i'), 'Feed']),
                     m('button', { class: Home.currentListName === 'series' ? 'active' : undefined, onclick: Home.switchList }, [m('i'), 'Series']),
