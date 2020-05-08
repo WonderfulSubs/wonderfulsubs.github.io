@@ -72,9 +72,7 @@ button,
 select:focus,
 select:active,
 [type="radio"] + .checkable:hover:before,
-[type="checkbox"] + .checkable:hover:before,
 [type="radio"]:focus + .checkable:before,
-[type="checkbox"]:focus + .checkable:before,
 th {
   background-color: #151515;
   transition: background-color 1s;
@@ -106,8 +104,7 @@ th {
 .card header h5,
 .modal .overlay ~ * header h5,
 .card header h6,
-.modal .overlay ~ * header h6,
-[type=checkbox]:checked+.checkable:after {
+.modal .overlay ~ * header h6 {
   color: #ffffff;
 }
 

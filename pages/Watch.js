@@ -441,45 +441,7 @@ var Watch = {
             window.m.redraw();
         }
     },
-    onupdate: function (vnode) {
-        var id = vnode.attrs.id;
-        if (id !== Watch.currentId) {
-            if (Watch.XHR) Watch.XHR.abort();
-            scrollToTop(500)
-                .then(function () {
-                    Watch.currentId = id;
-                    var outAnimationClasses = ["bounceOutDown", "faster"];
-                    var inAnimationClasses = ["bounceInUp", "fast"];
-                    outAnimationClasses.forEach(function (className) {
-                        root.classList.add(className);
-                    });
-
-                    root.addEventListener("animationend", function removeOutAnimationClass(e) {
-                        if (outAnimationClasses.indexOf(e.animationName) !== -1) {
-                            this.removeEventListener("animationend", removeOutAnimationClass);
-                            Watch.oncreate(vnode, function () {
-                                outAnimationClasses.forEach(function (className) {
-                                    root.classList.remove(className);
-                                });
-
-                                inAnimationClasses.forEach(function (className) {
-                                    root.classList.add(className);
-                                });
-
-                                root.addEventListener("animationend", function removeInAnimationClass(e) {
-                                    if (inAnimationClasses.indexOf(e.animationName) !== -1) {
-                                        this.removeEventListener("animationend", removeInAnimationClass);
-                                        inAnimationClasses.forEach(function (className) {
-                                            root.classList.remove(className);
-                                        });
-                                    }
-                                });
-                            });
-                        }
-                    });
-                });
-        }
-    },
+    onupdate: function(vnode) { animatePageUpdate(vnode, Watch); },
     view: function () {
         if (!AuthUser.data._id) {
             nativeToast({

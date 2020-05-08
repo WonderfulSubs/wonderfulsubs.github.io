@@ -59,6 +59,7 @@ function VideoPlayer(initialVnode) {
     var disableAnimation = opts.disableAnimation;
     var disableDefaultPoster = opts.disableDefaultPoster;
     var popoutOnScroll = opts.popoutOnScroll;
+    var enableBackForwardButtons = opts.enableBackForwardButtons;
     var classNames = opts.classNames ? (' ' + opts.classNames) : '';
     ['disablePauseOnScroll', 'disableDefaultPoster', 'disableAnimation'].forEach(function (key) {
         delete opts[key];
@@ -109,6 +110,19 @@ function VideoPlayer(initialVnode) {
                 var playToggleEl = p.controlBar.getChild('PlayToggle').el_;
                 var bigPlayButtonEl = p.bigPlayButton.el_;
                 var userPaused = false;
+
+                if (enableBackForwardButtons) {
+                    var backButton = document.createElement('button');
+                    backButton.className = 'vjs-big-play-button back';
+                    backButton.innerHTML = '<i class="icon-to-start"></i>';
+
+                    var forwardButton = document.createElement('button');
+                    forwardButton.className = 'vjs-big-play-button forward';
+                    forwardButton.innerHTML = '<i class="icon-to-end"></i>';
+
+                    bigPlayButtonEl.insertAdjacentElement('afterend', forwardButton);
+                    bigPlayButtonEl.insertAdjacentElement('afterend', backButton);
+                }
 
                 [posterImageEl, bigPlayButtonEl].forEach(function (elem) {
                     elem.addEventListener('click', function () {

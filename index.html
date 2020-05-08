@@ -67,13 +67,14 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#575757">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.1/picnic.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.2/picnic.min.css" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/Home.css" />
     <link rel="stylesheet" href="/css/overrides.css" />
     <link rel="stylesheet" href="/css/Login.css" />
     <link rel="stylesheet" href="/css/Welcome.css" />
     <link rel="stylesheet" href="/css/Watch.css" />
+    <link rel="stylesheet" href="/css/Club.css" />
     <link rel="stylesheet" href="/css/sidebar.css" />
     <link rel="stylesheet" href="/css/poster.css" />
     <link rel="stylesheet" href="/css/showcase.css" />
@@ -112,6 +113,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@2.0.7/dist/purify.min.js"></script>
     <script src="/js/native-toast.js"></script>
     <script src="/js/helpers.js"></script>
+    <script src="/js/posts.js"></script>
     <script src="/js/poster.js"></script>
     <script src="/js/showcase.js"></script>
     <script src="/js/lists.js"></script>
@@ -121,6 +123,7 @@
     <script src="/js/chatbox.js"></script>
     <script src="/js/music.js"></script>
     <script src="/js/settings.js"></script>
+    <script src="/js/fileupload.js"></script>
     <script src="/pages/Home.js"></script>
     <script src="/pages/Login.js"></script>
     <script src="/pages/Welcome.js"></script>
@@ -128,6 +131,8 @@
     <script src="/pages/Genre.js"></script>
     <script src="/pages/Watch.js"></script>
     <script src="/pages/Search.js"></script>
+    <script src="/pages/Profile.js"></script>
+    <script src="/pages/Club.js"></script>
     <script src="/js/darkthemecss.js" async></script>
 </head>
 
@@ -211,7 +216,7 @@
         var miniPlayerFrag = document.createDocumentFragment();
         m.mount(miniPlayerFrag, {
             view: function () {
-                this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true, enableBackForwardButtons: true } });
+                this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true, enableBackForwardButtons: /*true Fix this later*/ false } });
                 return this.player;
             }
         });
@@ -302,6 +307,8 @@
             // '/popular': SeriesFeed.popular,
             // '/updated': SeriesFeed.updated,
             '/search': Search,
+            '/profile/:id': Profile,
+            '/club/:id': Club,
             '/watch/:id': Watch,
         });
 

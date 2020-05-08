@@ -74,10 +74,16 @@ body{\n\
 .button,.label,.select select:focus,[data-tooltip]:after,[type=checkbox]+.checkable:hover:before,[type=checkbox]:focus+.checkable:before,[type=radio]+.checkable:hover:before,[type=radio]:focus+.checkable:before,[type=submit],button,select:active,select:focus,th{\n\
     background-color:#424242\n\
 }\n\
+[type=checkbox]:checked+.checkable:after{\n\
+    color: #ffffff;\n\
+}\n\
 @media only screen and (max-width:767px){\n\
     .dropdown-content a{\n\
         color:#000\n\
     }\n\
+}\n\
+.club-action-buttons>button{\n\
+    border-color:#ffffff;\n\
 }'.replace(/\n^\s*/gm, '');
 
 window.DARK_THEME_STYLES = m('style', DARK_THEME_CSS);

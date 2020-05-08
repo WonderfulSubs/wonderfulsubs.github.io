@@ -19,7 +19,7 @@ var Poster = {
 
         return m('div', { class: 'poster-item-container animated fadeInUp faster' }, [
             m('div', { class: 'poster-item' }, [
-                m('a', { href: item.url, oncreate: m.route.Link, onclick: function (e) { e.preventDefault(); } }, [
+                m(m.route.Link, { href: item.url }, [
                     llv('img', { src: imgSrc, class: 'animated fadeIn', alt: item.title, onclick: goToUrl }),
                     m('div', { class: 'poster-title', onclick: goToUrl }, [
                         m('span', item.title)

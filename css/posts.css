@@ -35,8 +35,20 @@
     padding-left: 5px;
 }
 
+.post-author-badge.icon-shield {
+    color: #f44336;
+}
+
 .post-author-badge.icon-star {
-    color: #575757;
+    color: #ff9900;
+}
+
+.post-author-badge.icon-lock {
+    color: #5d98ff;
+}
+
+.post-author-badge.icon-wrench {
+    color: #bc00bc;
 }
 
 .post-text {

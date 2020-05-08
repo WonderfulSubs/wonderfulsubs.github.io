@@ -38,6 +38,17 @@
     cursor: none;
 }
 
+.video-js .vjs-big-play-button.back {
+    left: 70px;
+    background: none;
+}
+
+.video-js .vjs-big-play-button.forward {
+    left: auto;
+    right: 21px;
+    background: none;
+}
+
 #mini-player {
     width: 320px;
     max-width: 60%;

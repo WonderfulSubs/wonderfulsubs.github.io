@@ -86,19 +86,19 @@ function getPosterTall(posterTall, minWidth) {
     return { poster: posterTallPlaceholder };
 }
 
-function getPosterWide(posterWide, posterTall, minWidth, minHeight) {
+function getPosterWide(posterWide, posterTall, minWideWidth, minTallHeight) {
     try {
         var currentPoster, wide = true;
         if (posterWide && posterWide.length) {
             posterWide.some(function (poster) {
-                if (poster.width === (minWidth || 600)) currentPoster = poster.source;
-                return poster.width === (minWidth || 600);
+                if (poster.width === (minWideWidth || 600)) currentPoster = poster.source;
+                return poster.width === (minWideWidth || 600);
             });
             if (!currentPoster) currentPoster = posterWide[posterWide.length - 1].source;
         } else if (posterTall && posterTall.length) {
             posterTall.some(function (poster) {
-                if (poster.height === (minHeight || 720)) currentPoster = poster.source;
-                return poster.height === (minHeight || 720);
+                if (poster.height === (minTallHeight || 720)) currentPoster = poster.source;
+                return poster.height === (minTallHeight || 720);
             });
             if (!currentPoster) {
                 currentPoster = posterTall[posterTall.length - 1].source;
@@ -186,6 +186,21 @@ function preventAndStop(e, callback) {
     e.preventDefault();
     e.stopPropagation();
     callback(e);
+}
+
+function addTextExpandEvent(vnode) {
+    vnode.dom.setAttribute('style', 'height:' + (vnode.dom.scrollHeight) + 'px;overflow-y:hidden;');
+    vnode.dom.addEventListener('input', expandTextboxOnType);
+}
+
+function removeTextExpandEvent(vnode) {
+    vnode.dom.removeEventListener('input', expandTextboxOnType);
+}
+
+function expandTextboxOnType(e) {
+    var elem = e.target;
+    elem.style.height = 'auto';
+    elem.style.height = (elem.scrollHeight) + 'px';
 }
 
 function getEpisodePages(episodes, maxPerPage, maxPageCount) {
@@ -326,6 +341,46 @@ function switchTheme(e) {
 }
 
 var theaterModeEnabled = getStorage('theater');
+
+function animatePageUpdate(vnode, component) {
+    var id = vnode.attrs.id;
+    if (id !== component.currentId) {
+        if (component.XHR) component.XHR.abort();
+        scrollToTop(500)
+            .then(function () {
+                component.currentId = id;
+                var outAnimationClasses = ["bounceOutDown", "faster"];
+                var inAnimationClasses = ["bounceInUp", "fast"];
+                outAnimationClasses.forEach(function (className) {
+                    root.classList.add(className);
+                });
+
+                root.addEventListener("animationend", function removeOutAnimationClass(e) {
+                    if (outAnimationClasses.indexOf(e.animationName) !== -1) {
+                        this.removeEventListener("animationend", removeOutAnimationClass);
+                        component.oncreate(vnode, function () {
+                            outAnimationClasses.forEach(function (className) {
+                                root.classList.remove(className);
+                            });
+
+                            inAnimationClasses.forEach(function (className) {
+                                root.classList.add(className);
+                            });
+
+                            root.addEventListener("animationend", function removeInAnimationClass(e) {
+                                if (inAnimationClasses.indexOf(e.animationName) !== -1) {
+                                    this.removeEventListener("animationend", removeInAnimationClass);
+                                    inAnimationClasses.forEach(function (className) {
+                                        root.classList.remove(className);
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+    }
+}
 
 // Global Keyboard shortcuts
 document.addEventListener('keydown', function (e) {

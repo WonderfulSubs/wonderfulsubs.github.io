@@ -1,0 +1,215 @@
+.club-content-container {
+    padding-bottom: 20px;
+}
+
+.club-content-container.saving {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.club-cover-img, .club-icon-img {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-color: #000;
+    cursor: pointer;
+    height: 150px;
+}
+
+.club-cover-img.edit {
+    opacity: 0.5;
+    top: 150px;
+    margin-top: -150px;
+    position: relative;
+    text-align: center;
+    padding-top: 50px;
+    color: #ffffff;
+}
+
+.club-icon-img {
+    z-index: 1;
+    min-width: 150px;
+    min-height: 150px;
+    width: 150px;
+    height: 150px;
+    margin: -64px auto 0;
+    border-radius: 75px;
+    border: 5px #ffffff solid;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.27);
+}
+
+.club-icon-img.edit {
+    z-index: 2;
+    position: relative;
+    top: 86px;
+    padding-top: 45px;
+    opacity: 0.5;
+    color: #ffffff;
+    text-align: center;
+}
+
+.club-icon-img.edit input[type=file], .club-cover-img.edit input[type=file] {
+    opacity: 0;
+    position: absolute;
+}
+
+.club-icon-img.edit input[type=file] {
+    padding: 50px;
+    margin: -39px -61px;
+}
+
+.club-cover-img.edit input[type=file] {
+    padding: 55px;
+    margin: -42px -49%;
+}
+
+.club-header-container {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    line-break: anywhere;
+}
+
+.club-header-title {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.club-header-title > label > div {
+    display: inline;
+}
+
+.club-header-title [type=checkbox]+.checkable {
+    padding-left: 1em;
+}
+
+.club-header-username, .club-header-date-created {
+    font-size: .85em;
+}
+
+.club-item-wrapper {
+    display: inline;
+}
+
+.club-item-wrapper.edit, .club-header-username.edit {
+    display: flex;
+}
+
+.club-item-wrapper.edit > i {
+    margin-top: 6px;
+}
+
+.club-header-description, .club-header-date-created {
+    display: none;
+    white-space: pre-wrap;
+}
+
+.club-header-description.extended-info, .club-header-date-created.extended-info {
+    display: block;
+}
+
+.club-action-buttons {
+    text-align: center;
+}
+
+.club-action-buttons > button {
+    border: 2px #151515 solid;
+    border-radius: 20px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.club-private-profile-msg {
+    text-align: center;
+    color: #5d98ff;
+}
+
+.club-info-container.edit > * {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+@media only screen and (max-width: 998px) {
+    .club-info-container {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 999px) {
+    .club-cover-img {
+        height: 268px;
+    }
+
+    .club-cover-img.edit {
+        top: 268px;
+        margin-top: -268px;
+    }
+
+    .club-header-container {
+        display: inline-flex;
+        padding-left: 20px;
+    }
+
+    .club-cover-img.edit {
+        padding-top: 110px;
+    }
+
+    .club-icon-img {
+        min-width: 180px;
+        min-height: 180px;
+        width: 180px;
+        height: 180px;
+        border-radius: 90px;
+    }
+
+    .club-icon-img.edit {
+        position: absolute;
+        padding-top: 60px;
+        top: inherit;
+    }
+
+    .club-icon-img.edit input[type=file] {
+        padding: 60px;
+        margin: -47px -76px;
+    }
+
+    .club-cover-img.edit input[type=file] {
+        padding: 120px;
+        margin: -110px -49%;
+    }
+
+    .club-info-container {
+        padding-left: 20px;
+    }
+
+    .club-header-title {
+        font-size: 1.4em;
+    }
+
+    .club-header-description, .club-header-date-created {
+        display: block;
+        padding-top: 10px;
+    }
+
+    .club-action-buttons {
+        position: absolute;
+        right: 20px;
+    }
+
+    .club-action-buttons .view-info {
+        display: none;
+    }
+}
+
+/* User Specific */
+.user-private-msg > i {
+    font-size: 9em;
+}
+
+.user-private-msg > div {
+    font-size: 1.5em;
+}
+
+.user-private-msg {
+    text-align: center;
+    padding-bottom: 100px;
+}

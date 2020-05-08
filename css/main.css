@@ -263,6 +263,7 @@ a, code {
   bottom: 0;
   text-align: center;
   margin-top: .2em;
+  z-index: 3;
   transition: background-color 1s;
 }
 
@@ -341,6 +342,10 @@ a, code {
     position: absolute;
     width: 100vw;
     left: calc(-50vw + 50%);
+  }
+
+  .flex-margin-reset.extend-padding {
+    padding-bottom: 90px;
   }
 }
 

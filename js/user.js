@@ -9,7 +9,7 @@ var AuthUser = {
     },
     data: getStorage('auth_user') || {},
     login: function (data, callback) {
-        AuthUser._returnUserData(domain + '/api/v2/users/login', data)
+        AuthUser._returnUserData(domain + '/api/v2/users/login', data, { requireToken: true, setAuthUser: true })
             .then(function (onFulfilled) {
                 if (onFulfilled) {
                     AuthUser.fetchList('Watch List', function () {
@@ -18,10 +18,23 @@ var AuthUser = {
                     AuthUser.fetchList('Favorites');
                     if (callback) callback();
                     AuthUser.removeCaptchaBadge();
+                } else {
+                    if (callback) callback();
+                    AuthUser.removeCaptchaBadge();
                 }
-                if (callback) callback();
-                AuthUser.removeCaptchaBadge();
+            })
+            .catch(function(error) {
+                if (callback) callback(error);
             });
+    },
+    update: function (data, callback) {
+        AuthUser._returnUserData(domain + '/api/v2/users/update', data, { withAuth: true })
+        .then(function (data) {
+            if (callback) callback(undefined, data);
+        })
+        .catch(function(error) {
+            if (callback) callback(error);
+        });
     },
     signup: function (data, callback) {
         function getReCaptcha() {
@@ -29,10 +42,13 @@ var AuthUser = {
                 grecaptcha.execute(recaptchaKey, { action: 'signup' })
                     .then(function (g_response) {
                         data.g_response = g_response;
-                        AuthUser._returnUserData(domain + '/api/v2/users/create', data)
+                        AuthUser._returnUserData(domain + '/api/v2/users/create', data, { requireToken: true, setAuthUser: true })
                             .then(function (onFulfilled) {
                                 if (callback) callback();
                                 if (onFulfilled) AuthUser.removeCaptchaBadge();
+                            })
+                            .catch(function(error) {
+                                if (callback) callback(error);
                             });
                     });
             });
@@ -54,22 +70,27 @@ var AuthUser = {
         var elem = document.querySelector('.grecaptcha-badge');
         //if (elem) location.reload();
     },
-    _returnUserData: function (url, data) {
+    _returnUserData: function (url, data, options) {
         return new Promise(function (resolve, reject) {
             Object.keys(data).forEach(function (key) {
                 if (data[key] === undefined || data[key] === "") delete data[key];
             });
-            m.request({ method: 'POST', url: url, body: data })
+            if (!options) options = {};
+            var headers = {};
+            if (options.withAuth) headers.Authorization = 'Bearer ' + AuthUser.data.token;
+            m.request({ method: 'POST', url: url, body: data, headers })
                 .then(function (result) {
                     try {
-                        if (result.data._id && result.token) {
-                            AuthUser.data = result.data;
-                            AuthUser.data.token = result.token;
-                            setStorage('auth_user', AuthUser.data);
+                        if (result.data && result.data._id && (options.requireToken ? result.token : true)) {
+                            if (options.setAuthUser) {
+                                AuthUser.data = result.data;
+                                AuthUser.data.token = result.token;
+                                setStorage('auth_user', AuthUser.data);
+                            }
+                            resolve();
                         } else {
-                            throw new Error(defaultErrMsg);
+                            reject(new Error(defaultErrMsg));
                         }
-                        resolve();
                     } catch (error) {
                         nativeToast({
                             message: result.error || defaultErrMsg,
@@ -78,6 +99,9 @@ var AuthUser = {
                         });
                         reject(error);
                     }
+                })
+                .catch(function(error) {
+                    reject(error);
                 });
         })
     },
@@ -248,8 +272,10 @@ function UserPanel() {
         view: function () {
             return m('div', [
                 m('div', { class: 'user-panel-profile' }, [
-                    llv('img', { class: 'left', src: AuthUser.data.profile_pic }),
-                    m('span', { class: 'left' }, AuthUser.data.display_name || AuthUser.data.username),
+                    m(m.route.Link, { href: '/profile/' + AuthUser.data.username }, [
+                        llv('img', { class: 'left', src: AuthUser.data.profile_pic }),
+                        m('span', { class: 'left' }, AuthUser.data.display_name || AuthUser.data.username)
+                    ]),
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                     m('div', { class: 'pointer right', onclick: AuthUser.logout }, [
                         m('i', { class: 'icon-logout' }),

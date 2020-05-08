@@ -43,7 +43,7 @@ var Login = {
                 });
             }
 
-            AuthUser[isSignUp ? 'signup' : 'login'](data, function () {
+            AuthUser[isSignUp ? 'signup' : 'login'](data, function (error) {
                 button.disabled = false;
             });
         }
@@ -105,7 +105,7 @@ var Login = {
                 m('label', [
                     m('i', { class: 'icon-lock' }),
                     m('input', { type: 'checkbox', name: 'private' }),
-                    m('span', { class: 'checkable' }, 'Make Profile Private')
+                    m('div', { class: 'checkable' }, 'Make Profile Private')
                 ]),
                 m('div', { style: convertObjToStyles({ opacity: '0.5', pointerEvents: 'none' }) }, [
                     m('label', [

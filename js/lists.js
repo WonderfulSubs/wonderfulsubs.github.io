@@ -3,6 +3,7 @@ function SeriesList(initialVnode) {
     var options = initialVnode.attrs.options;
     var nextPage;
     if (!options) options = {};
+    var withAuth = options.withAuth;
     var count = options.count || 10;
     var header = options.header;
     var className = options.className;
@@ -30,25 +31,37 @@ function SeriesList(initialVnode) {
             if (callback) callback(full_list.length);
             return;
         }
-        return m.request({
-            method: 'GET',
-            url: u
-        })
-        .then(function (result) {
-            var series = result.json.series;
-            nextPage = result.json.next_page;
+        var requestOpts = { method: 'GET', url: u };
+        if (withAuth) requestOpts.headers = { Authorization: 'Bearer ' + AuthUser.data.token };
+        return m.request(requestOpts)
+            .then(function (result) {
+                var series = (result.json || result.data).series;
 
-            if (filter) series = series.filter(filter);
+                // This is a hack. Format this properly on the backend
+                if (!series && result.data) {
+                    Object.entries(result.data).some(function (entry) {
+                        var value = Array.isArray(entry[1]);
+                        if (value) {
+                            series = entry[1];
+                            return true;
+                        }
+                    });
+                }
+                //End hack
 
-            if (append) {
-                list.push.apply(list, series);
-            } else {
-                list = series;
-            }
-            full_list = list;
-            if (onloaded) onloaded();
-            if (callback) callback(full_list.length);
-        });
+                nextPage = (result.json || result.data).next_page;
+
+                if (filter) series = series.filter(filter);
+
+                if (append) {
+                    list.push.apply(list, series);
+                } else {
+                    list = series;
+                }
+                full_list = list;
+                if (onloaded) onloaded();
+                if (callback) callback(full_list.length);
+            });
     }
 
     function push(u, vnode, e) {
@@ -86,14 +99,14 @@ function SeriesList(initialVnode) {
 var BloggerList = {
     oninit: function (vnode) {
         this.list = [];
-        this.loadList = function(u) {
+        this.loadList = function (u) {
             return m.jsonp({
                 url: u
             })
-            .then(function (result) {
-                var entry = convertBloggerJson(result.feed.entry);
-                vnode.state.list.push.apply(vnode.state.list, entry);
-            });
+                .then(function (result) {
+                    var entry = convertBloggerJson(result.feed.entry);
+                    vnode.state.list.push.apply(vnode.state.list, entry);
+                });
         };
         this.loadList(vnode.attrs.url, this.list);
     },
