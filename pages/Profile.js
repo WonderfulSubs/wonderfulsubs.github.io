@@ -140,7 +140,7 @@ var Profile = {
     title: '',
     currentListName: 'favorites',
     oninit: function (vnode) {
-        Watch.currentId = vnode.attrs.id;
+        Profile.currentId = vnode.attrs.id;
         scrollToTop();
     },
     view: function (vnode) {
@@ -242,6 +242,8 @@ var Profile = {
         getUserData({ username: username, callback: callback });
     },
     onupdate: function(vnode) {
+        var id = vnode.attrs.id;
+        if (id !== Profile.currentId) ProfileInfo.edit = false;
         if (ProfileInfo.edit === false) ProfileInfo.update = {};
         animatePageUpdate(vnode, Profile);
     }

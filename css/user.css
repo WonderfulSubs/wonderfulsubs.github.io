@@ -16,7 +16,7 @@
     margin-right: 10px;
 }
 
-.user-panel-profile .pointer.right {
+.user-panel-profile .pointer.left, .user-panel-profile .pointer.right {
     margin-left: 20px;
 }
 

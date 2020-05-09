@@ -131,8 +131,8 @@ a, code {
 }
 
 .nav-search {
-  width: 626px;
-  max-width: 50%;
+  width: 596px;
+  max-width: 34%;
   position: relative;
   float: right;
 }
@@ -160,13 +160,61 @@ a, code {
 .nav-buttons a, .nav-buttons button {
   background-color: transparent;
   color: #575757;
+  padding-left: 7px;
+  padding-right: 7px;
   transition: color 1s;
 }
 
+.user-panel-button {
+  float: right;
+  margin-top: 3px;
+  margin-left: 15px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.user-panel-button > div {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://cdn.wonderfulsubs.com/image/qhySagbClcGPxDDudybshZy-tKtYwcL9m5DTn13PFoR%2FeRbaaaaaaaa%2FidZktHkyxRx%2FKrEgkEORjKT-?size=200&crop");
+  margin-top: 7px;
+}
+
+.user-panel-button > div + i {
+  display: none;
+}
+
+.dropbtn.subdrop {
+  margin: 0 auto;
+  display: block;
+}
+
+.dropbtn.subdrop + div.dropdown-content {
+  display: none;
+  margin-left: 0;
+}
+
+.dropbtn.subdrop:hover + div.dropdown-content, .dropbtn.subdrop + div.dropdown-content:hover {
+  display: block;
+  margin-top: -8px;
+}
+
+@media only screen and (min-width: 493px) {
+  .nav-search {
+    max-width: 49%;
+  }
+}
+
 @media only screen and (max-width: 767px) {
+  .dropdown-content, .dropbtn.subdrop:hover + div.dropdown-content, .dropbtn.subdrop + div.dropdown-content:hover {
+    background-color: #ffffff;
+  }
+
   .dropdown-content {
     display: none;
-    background-color: #ffffff;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     height: 100vh;
@@ -176,8 +224,17 @@ a, code {
     animation-name: slideInLeft;
   }
 
-  .dropdown-content a {
+  .dropbtn.subdrop + div.dropdown-content {
+    border-top: 2px #000000 solid;
+    border-right: 2px #000000 solid;
+     margin-left: -20px;
+  }
+
+  .dropdown-content a, .dropbtn.subdrop, .dropbtn.subdrop + div.dropdown-content a {
     color: #000000;
+  }
+
+  .dropdown-content a {
     padding: 12px 16px;
     display: block;
   }
@@ -195,6 +252,18 @@ a, code {
   .dropbtn {
     display: none;
   }
+
+  .dropbtn.subdrop:hover + div.dropdown-content, .dropbtn.subdrop + div.dropdown-content:hover {
+    display: grid;
+    position: absolute;
+    margin-top: 42px;
+    background-color: #000000;
+  }
+
+  .dropbtn.subdrop + div.dropdown-content a {
+    color: #ffffff;
+    padding: 2px 9px;
+  }
 }
 
 .nav-search i {
@@ -202,7 +271,7 @@ a, code {
   float: right;
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 12px;
   transition: color 1s;
 }
 
@@ -365,6 +434,10 @@ a, code {
 @media only screen and (min-width:1000px) {
   .flex-margin-reset.desktop {
     margin-top: -0.3em;
+  }
+
+  .user-panel-button {
+    margin-right: 15px;
   }
 }
 

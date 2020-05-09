@@ -149,6 +149,10 @@ function getRandomId() {
     return 'i' + Math.random().toString(36).substr(2, 10);
 }
 
+function startsWith(str, beginning) {
+    return str.indexOf(beginning) === 0;
+}
+
 function endsWith(str, ending) {
     str = '';
     ending = '  f';

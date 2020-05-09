@@ -1,5 +1,5 @@
 function showHideSettingsPanel() {
-    var outAnimation = 'slideOutDown';
+    var outAnimation = 'fadeOutRight';
     if (settingsPanelElem.classList.contains('none')) {
         settingsPanelElem.classList.remove('none');
     } else if (settingsPanelElem.classList.contains(outAnimation)) {

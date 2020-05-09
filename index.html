@@ -144,6 +144,10 @@
                     <a href="/" onclick="routeAnchor(event, '/')">
                         <img class="brand" src="/svg/logo.svg" />
                     </a>
+                    <div class="user-panel-button" title="User Profile" onclick="showHideUserPanel()">
+                        <!-- <div></div> -->
+                        <i class="icon-user-circle"></i>
+                    </div>
                     <form class="nav-search" action="/search" onsubmit="getSearchResults(event)" acceptCharset="utf-8">
                         <label>
                             <input type="search" name="q" placeholder="Search..." autoComplete="off"
@@ -156,9 +160,13 @@
                     <div class="nav-buttons dropdown">
                         <button class="dropbtn"><label>&#9776;</label></button>
                         <div class="dropdown-content side-scroll animated faster">
-                            <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
-                            <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
+                            <button class="dropbtn subdrop"><label>Anime</label></button>
+                            <div class="dropdown-content animated faster">
+                                <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
+                                <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
+                            </div>
                             <a href="/users" onclick="routeAnchor(event, '/users');comingSoon()" class="button">Users</a>
+                            <a href="/clubs" onclick="routeAnchor(event, '/clubs');comingSoon()" class="button">Clubs</a>
                         </div>
                     </div>
                 </div>
@@ -170,22 +178,22 @@
         <div id="mini-player"></div>
         <div id="sidebar" class="fourth-1000"></div>
     </div>
-    <div id="settings-panel" class="panel-body animated faster lists slideInUp none"></div>
-    <div id="user-panel" class="panel-body animated faster lists slideInUp none"></div>
+    <div id="settings-panel" class="panel-body animated faster lists fadeInRight none"></div>
+    <div id="user-panel" class="panel-body animated faster lists fadeInRight none"></div>
     <div class="music-player full top-divider animated slideInUp faster none">
         <div id="music-panel" class="music-player-contents flex grow"></div>
     </div>
-    <div class="bottom-bar top-divider full">
+    <!-- <div class="bottom-bar top-divider full">
         <div class="flex">
             <div class="bottom-bar-button" onclick="showHideSettingsPanel()">
                 <i class="icon-cog"></i>
                 <div>Settings</div>
             </div>
-            <div class="bottom-bar-button" onclick="comingSoon()"> <!-- onclick="showHideMusicPlayer()" -->
+            <div class="bottom-bar-button" onclick="showHideMusicPlayer()">
                 <i class="icon-music"></i>
                 <div>Music</div>
             </div>
-            <div class="bottom-bar-button" onclick="comingSoon()"> <!--onclick="showHideChatPanel()" -->
+            <div class="bottom-bar-button" onclick="showHideChatPanel()">
                 <i class="icon-users"></i>
                 <div>Clubs</div>
             </div>
@@ -198,7 +206,7 @@
                 <div>User</div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="footer">
         <div>
             <div class="left">

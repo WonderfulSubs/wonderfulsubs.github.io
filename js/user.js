@@ -216,7 +216,7 @@ function showHideUserPanel() {
         m.route.set('/login');
         return;
     }
-    var outAnimation = 'slideOutDown';
+    var outAnimation = 'fadeOutRight';
     if (userPanelElem.classList.contains('none')) {
         userPanelElem.classList.remove('none');
     } else if (userPanelElem.classList.contains(outAnimation)) {
@@ -276,6 +276,7 @@ function UserPanel() {
                         llv('img', { class: 'left', src: AuthUser.data.profile_pic }),
                         m('span', { class: 'left' }, AuthUser.data.display_name || AuthUser.data.username)
                     ]),
+                    m('div', { class: 'left pointer', title: 'Settings', onclick: function(e) { preventAndStop(e, showHideSettingsPanel) } }, m('i', { class: 'icon-cog' })),
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                     m('div', { class: 'pointer right', onclick: AuthUser.logout }, [
                         m('i', { class: 'icon-logout' }),
@@ -283,6 +284,7 @@ function UserPanel() {
                     ])
                 ]),
                 m('div', { class: 'list-switch-buttons' }, [
+                    m('button', { onclick: function(e){ preventAndStop(e, comingSoon); } }, [m('i', { class: 'icon-bell-alt' }), 'Notifications']),
                     m('button', { class: 'active', onclick: switchList }, [m('i', { class: 'icon-clock' }), 'Watch List']),
                     m('button', { onclick: switchList }, [m('i', { class: 'icon-heart' }), 'Favorites'])
                 ]),

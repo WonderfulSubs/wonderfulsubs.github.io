@@ -221,15 +221,15 @@ function sanitizeContent(content, postId) {
             return x;
         })
         .forEach(function (str, index) {
-            if (str.indexOf('http://') === 0 || str.indexOf('https://') === 0) {
+            if (startsWith(str, 'http://') || startsWith(str, 'https://')) {
                 var strUrl = new URL(str);
                 var giphyId = err(function() {
                     if (strUrl.hostname === 'media.giphy.com' || strUrl.hostname === 'i.giphy.com') {
                         return strUrl.pathname.match(/\/media\/(.+?)\/.+?/)[1];
                     } else if (strUrl.hostname === 'giphy.com') {
-                        if (strUrl.pathname.indexOf('/gifs/') === 0 && strUrl.pathname.match(/\//g).length <= 3) {
+                        if (startsWith(strUrl.pathname, '/gifs/') && strUrl.pathname.match(/\//g).length <= 3) {
                             return strUrl.pathname.match(/\/gifs\/.*?-*?([A-z0-9]+)\/{0,1}$/)[1];
-                        } else if (strUrl.pathname.indexOf('/embed/') === 0 && strUrl.pathname.match(/\//g).length <= 3) {
+                        } else if (startsWith(strUrl.pathname, '/embed/') && strUrl.pathname.match(/\//g).length <= 3) {
                             return strUrl.pathname.match(/\/embed\/([A-z0-9]+)\/{0,1}$/)[1];
                         }
                     }
@@ -242,6 +242,9 @@ function sanitizeContent(content, postId) {
                     return endsWith(str, ext);
                 });
                 
+                // Disallow loading of non-secure content
+                if ((isImg || isVideo) && startsWith(str, 'http://')) return;
+
                 if (giphyId) {
                     var oncreate = function(vnode) {
                         ['autoplay', 'muted', 'playsinline', 'loop'].forEach(function (attr) {
@@ -288,7 +291,10 @@ function dataToPostFeed(posts) {
         var stzedContent = sanitizeContent(post.content, post.id);
         if (post.media) {
             post.media.forEach(function(postMedia, index) {
-                var isVideo = postMedia.mediaType === 'video';
+                // Disallow loading of non-secure content
+                if (startsWith(postMedia.mediaUrl, 'http://')) return stzedContent.mediaLinks.push(m.fragment({ key: getKey(postMedia.mediaUrl + index, post.id) }, (sanitizeContent(postMedia.mediaUrl, postMedia.mediaUrl)).content));
+
+                var isVideo = postMedia.mediaType === 'video';                
                 var player = llc(VideoPlayer, { src: { src: postMedia.mediaUrl, type: 'video/mp4' }, options: postVjsPlayerOpts });
                 stzedContent.mediaLinks.push(isVideo ?
                     m.fragment({ key: getKey(postMedia.mediaUrl + index, post.id) }, player)

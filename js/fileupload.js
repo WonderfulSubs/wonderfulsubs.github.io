@@ -100,7 +100,7 @@ var openFile = function (event, callback) {
                                 var contentId = json.content_id;
 
                                 if (isLastChunk) {
-                                    var isImage = fileType.indexOf('image/') === 0;
+                                    var isImage = startsWith(fileType, 'image/');
                                     var url = 'https://cdn.wonderfulsubs.com/' + (isImage ? 'image' : 'video') + '/' + contentId;
                                     var urlHTML = '<br><span>Direct Link: <a class="media-direct-link" href="' + url + '">' + url + '</a></span>';
                                     if (isImage) {

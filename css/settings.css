@@ -1,3 +1,7 @@
+#settings-panel {
+    z-index: 10002;
+}
+
 .settings-option-container {
     padding: 10px 10px;
 }

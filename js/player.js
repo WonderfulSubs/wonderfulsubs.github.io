@@ -13,7 +13,7 @@ function setTheaterClass() {
 
 function toggleTheater(on, store, showToast) {
     if (window.innerWidth < 700) return;
-    if (typeof on === 'boolean' || m.route.get().indexOf('/watch/') === 0) {
+    if (typeof on === 'boolean' || startsWith(m.route.get(), '/watch/')) {
         var doTurnOn;
         if (typeof on === 'boolean') {
             doTurnOn = on;
@@ -21,9 +21,9 @@ function toggleTheater(on, store, showToast) {
             theaterModeEnabled = !theaterModeEnabled;
             doTurnOn = theaterModeEnabled;
         }
-        var bottomBar = document.querySelector('.bottom-bar');
+        // var bottomBar = document.querySelector('.bottom-bar');
         var musicPlayerBar = document.querySelector('.music-player');
-        bottomBar.classList[doTurnOn ? 'add' : 'remove']('third-700');
+        // bottomBar.classList[doTurnOn ? 'add' : 'remove']('third-700');
         musicPlayerBar.classList[doTurnOn ? 'add' : 'remove']('third-700');
         if (doTurnOn) {
             setTheaterClass();

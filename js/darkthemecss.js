@@ -3,7 +3,7 @@ var DARK_THEME_CSS =
     color:#d2d2d2\n\
 }\n\
 .main-container{\n\
-    background-color:transparent\n\
+    background-color:#212121\n\
 }\n\
 .result-switch button{\n\
     background-color:#000000\n\
@@ -78,8 +78,17 @@ body{\n\
     color: #ffffff;\n\
 }\n\
 @media only screen and (max-width:767px){\n\
-    .dropdown-content a{\n\
-        color:#000\n\
+    .dropbtn.subdrop+div.dropdown-content{\n\
+        border-top:2px #ffffff solid;\n\
+        border-right:2px #ffffff solid;\n\
+    }\n\
+    .dropdown-content a:hover{\n\
+        color:#000000;\n\
+    }\n\
+    .dropdown-content,.dropbtn.subdrop:hover+div.dropdown-content,.dropbtn.subdrop+div.dropdown-content:hover,.dropdown-content a,.dropbtn.subdrop,.dropbtn.subdrop+div.dropdown-content a{\n\
+        background-color:#000000;\n\
+        color: #ffffff;\n\
+        transition:none;\n\
     }\n\
 }\n\
 .club-action-buttons>button{\n\
