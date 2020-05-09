@@ -95,7 +95,7 @@ a, code {
 }
 
 .list-switch-buttons button {
-  min-width: 100px;
+  min-width: 90px;
   border: solid 1px #151515;
   transition: background-color 1s, border 1s;
 }
@@ -104,6 +104,14 @@ a, code {
   background-color: #ffffff;
   box-shadow: none;
   color: #000000;
+}
+
+.list-switch-buttons button.active span {
+  display: inline;
+}
+
+.list-switch-buttons button span {
+  display: none;
 }
 
 .list-switch-buttons button i {
@@ -179,7 +187,6 @@ a, code {
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("https://cdn.wonderfulsubs.com/image/qhySagbClcGPxDDudybshZy-tKtYwcL9m5DTn13PFoR%2FeRbaaaaaaaa%2FidZktHkyxRx%2FKrEgkEORjKT-?size=200&crop");
   margin-top: 7px;
 }
 

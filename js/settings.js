@@ -34,7 +34,7 @@ function SettingsPanel() {
                     m('span', { class: 'left' }, 'Settings'),
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                 ]),
-                m('div', { class: 'settings-option-container' }, [
+                m('div', { class: 'settings-option-container flex two' }, [
                     m('button', { class: 'settings-option', onclick: function (e) { preventAndStop(e, switchTheme); } }, [
                         m('i', { class: 'icon-color-adjust' }),
                         'Change Theme'

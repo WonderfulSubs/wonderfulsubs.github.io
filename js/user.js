@@ -284,9 +284,9 @@ function UserPanel() {
                     ])
                 ]),
                 m('div', { class: 'list-switch-buttons' }, [
-                    m('button', { onclick: function(e){ preventAndStop(e, comingSoon); } }, [m('i', { class: 'icon-bell-alt' }), 'Notifications']),
-                    m('button', { class: 'active', onclick: switchList }, [m('i', { class: 'icon-clock' }), 'Watch List']),
-                    m('button', { onclick: switchList }, [m('i', { class: 'icon-heart' }), 'Favorites'])
+                    m('button', { onclick: function(e){ preventAndStop(e, comingSoon); } }, [m('i', { class: 'icon-bell-alt' }), m('span', 'Notifications')]),
+                    m('button', { class: 'active', onclick: switchList }, [m('i', { class: 'icon-clock' }), m('span', 'Watch List')]),
+                    m('button', { onclick: switchList }, [m('i', { class: 'icon-heart' }), m('span', 'Favorites')])
                 ]),
                 m(SeriesList, CurrentUser.currentList)
             ]);
@@ -294,9 +294,22 @@ function UserPanel() {
     };
 }
 
+var UserPanelButton = {
+    view: function() {
+        return m.fragment({ key: getRandomId() }, [
+            AuthUser.data.profile_pic ? m('div', { style: convertObjToStyles({ backgroundImage: 'url(' + AuthUser.data.profile_pic + ')' }) }) : undefined,
+            m('i', { class: 'icon-user-circle' })
+        ]);
+    }
+};
+
 var userPanelElem;
+var userPanelButtonElem;
 document.addEventListener('DOMContentLoaded', function () {
     userPanelElem = document.getElementById('user-panel');
     userPanelElem.onclick = showHideUserPanel;
     m.mount(userPanelElem, UserPanel);
+
+    userPanelButtonElem = document.querySelector('.user-panel-button');
+    m.mount(userPanelButtonElem, UserPanelButton);
 });

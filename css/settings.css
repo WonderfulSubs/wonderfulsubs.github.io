@@ -7,13 +7,13 @@
 }
 
 .settings-option {
-    width: 100%;
-    line-height: 50px;
+    /* width: 100%; */
+    line-height: 150px;
     background-color: #ffffff;
     border: 1.5px solid #000000;
     color: #000000;
     cursor: pointer;
-    padding-left: 10px;
+    /* padding-left: 10px; */
     transition: none;
     box-shadow: none;
 }

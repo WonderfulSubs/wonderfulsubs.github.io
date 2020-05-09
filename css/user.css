@@ -9,6 +9,13 @@
     color: #ffffff;
 }
 
+.user-panel-profile a > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 31%;
+}
+
 .user-panel-profile img {
     height: 30px;
     width: 30px;
