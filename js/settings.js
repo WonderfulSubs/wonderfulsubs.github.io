@@ -32,6 +32,7 @@ function SettingsPanel() {
         view: function () {
             return m('div', [
                 m('div', { class: 'user-panel-profile' }, [
+                    m('i', { class: 'icon-cog left' }),
                     m('span', { class: 'left' }, 'Settings'),
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                 ]),

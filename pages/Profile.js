@@ -97,6 +97,7 @@ function updateUserData() {
                     }
                 });
                 ProfileInfo.edit = false;
+                scrollToTop(500);
                 nativeToast({
                     message: 'Profile changes saved',
                     position: 'north-east',

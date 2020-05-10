@@ -2,6 +2,10 @@
     z-index: 10002;
 }
 
+#settings-panel .user-panel-profile .icon-cog {
+    margin-right: 5px;
+}
+
 .settings-option-container {
     padding: 10px 10px;
 }

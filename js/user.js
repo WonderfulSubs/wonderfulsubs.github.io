@@ -277,12 +277,12 @@ function UserPanel() {
                         m('img', { class: 'left', src: AuthUser.data.profile_pic }),
                         m('span', { class: 'left' }, AuthUser.data.display_name || AuthUser.data.username)
                     ]),
-                    m('div', { class: 'left pointer', title: 'Settings', onclick: function(e) { preventAndStop(e, showHideSettingsPanel) } }, m('i', { class: 'icon-cog' })),
                     m('div', { class: 'pointer right' }, m('i', { class: 'icon-cancel-circled' })),
                     m('div', { class: 'pointer right', onclick: AuthUser.logout }, [
                         m('i', { class: 'icon-logout' }),
                         m('span', 'Log Out')
-                    ])
+                    ]),
+                    m('div', { class: 'pointer right', title: 'Settings', onclick: function(e) { preventAndStop(e, showHideSettingsPanel) } }, m('i', { class: 'icon-cog' })),
                 ]),
                 m('div', { class: 'list-switch-buttons' }, [
                     m('button', { onclick: function(e){ preventAndStop(e, comingSoon); } }, [m('i', { class: 'icon-bell-alt' }), m('span', 'Notifications')]),
@@ -305,12 +305,11 @@ var UserPanelButton = {
 };
 
 var userPanelElem;
-var userPanelButtonElem;
 document.addEventListener('DOMContentLoaded', function () {
     userPanelElem = document.getElementById('user-panel');
     userPanelElem.onclick = showHideUserPanel;
     m.mount(userPanelElem, UserPanel);
 
-    userPanelButtonElem = document.querySelector('.user-panel-button');
+    var userPanelButtonElem = document.querySelector('.user-panel-button');
     m.mount(userPanelButtonElem, UserPanelButton);
 });
