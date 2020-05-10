@@ -387,8 +387,9 @@ function animatePageUpdate(vnode, component) {
 }
 
 // Global Keyboard shortcuts
-document.addEventListener('keydown', function (e) {
-    if (!(document.activeElement instanceof HTMLInputElement)) {
+document.addEventListener('keyup', function (e) {
+    if (!(document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement)) {
+        e.preventDefault();
         switch (e.key) {
             case "Escape":
                 var postMediaViewer = document.querySelector('.post-media-viewer');

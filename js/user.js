@@ -239,7 +239,8 @@ function refreshUserList() {
 
 function UserPanel() {
     function keyEvents(e) {
-        if (!(document.activeElement instanceof HTMLInputElement)) {
+        if (!(document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement)) {
+            e.preventDefault();
             switch (e.key) {
                 case "w":
                     showHideUserPanel();
@@ -264,16 +265,16 @@ function UserPanel() {
 
     return {
         oncreate: function () {
-            document.addEventListener('keydown', keyEvents);
+            document.addEventListener('keyup', keyEvents);
         },
         onremove: function () {
-            document.removeEventListener('keydown', keyEvents);
+            document.removeEventListener('keyup', keyEvents);
         },
         view: function () {
             return m('div', [
                 m('div', { class: 'user-panel-profile' }, [
                     m(m.route.Link, { href: '/profile/' + AuthUser.data.username }, [
-                        llv('img', { class: 'left', src: AuthUser.data.profile_pic }),
+                        m('img', { class: 'left', src: AuthUser.data.profile_pic }),
                         m('span', { class: 'left' }, AuthUser.data.display_name || AuthUser.data.username)
                     ]),
                     m('div', { class: 'left pointer', title: 'Settings', onclick: function(e) { preventAndStop(e, showHideSettingsPanel) } }, m('i', { class: 'icon-cog' })),

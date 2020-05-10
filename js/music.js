@@ -12,7 +12,7 @@ function showHideMusicPlayer() {
 
 function MusicPlayer() {
     function keyEvents(e) {
-        if (!(document.activeElement instanceof HTMLInputElement)) {
+        if (!(document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement)) {
             switch (e.key) {
                 case "r":
                     showHideMusicPlayer();
@@ -23,10 +23,10 @@ function MusicPlayer() {
 
     return {
         oncreate: function () {
-            document.addEventListener('keydown', keyEvents);
+            document.addEventListener('keyup', keyEvents);
         },
         onremove: function () {
-            document.removeEventListener('keydown', keyEvents);
+            document.removeEventListener('keyup', keyEvents);
         },
         view: function () {
             function playPauseMusic() {

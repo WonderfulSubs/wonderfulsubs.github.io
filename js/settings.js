@@ -12,7 +12,8 @@ function showHideSettingsPanel() {
 
 function SettingsPanel() {
     function keyEvents(e) {
-        if (!(document.activeElement instanceof HTMLInputElement)) {
+        if (!(document.activeElement instanceof HTMLInputElement || document.activeElement instanceof HTMLTextAreaElement)) {
+            e.preventDefault();
             switch (e.key) {
                 case "e":
                     showHideSettingsPanel();
@@ -23,10 +24,10 @@ function SettingsPanel() {
 
     return {
         oncreate: function () {
-            document.addEventListener('keydown', keyEvents);
+            document.addEventListener('keyup', keyEvents);
         },
         onremove: function () {
-            document.removeEventListener('keydown', keyEvents);
+            document.removeEventListener('keyup', keyEvents);
         },
         view: function () {
             return m('div', [

@@ -234,7 +234,7 @@ a, code {
   .dropbtn.subdrop + div.dropdown-content {
     border-top: 2px #000000 solid;
     border-right: 2px #000000 solid;
-     margin-left: -20px;
+     margin-left: 0;
   }
 
   .dropdown-content a, .dropbtn.subdrop, .dropbtn.subdrop + div.dropdown-content a {
@@ -252,6 +252,10 @@ a, code {
 
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  .dropbtn.subdrop {
+    border-bottom: 1px rgba(189, 189, 189, 0.5) solid;
   }
 }
 

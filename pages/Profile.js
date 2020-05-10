@@ -83,7 +83,19 @@ function updateUserData() {
                 var isCurrentUser = AuthUser.data._id === ProfileInfo.user._id;
                 var usernameDidChange = ProfileInfo.update.username !== undefined && ProfileInfo.update.username !== ProfileInfo.user.username;
                 if (usernameDidChange) m.route.set('/profile/:id', { id: ProfileInfo.update.username }, { replace: true });
-                getUserData({ _id: ProfileInfo.user._id });
+                getUserData({
+                    _id: ProfileInfo.user._id,
+                    callback: function () {
+                        if (isCurrentUser) {
+                            var storedUserData = getStorage('auth_user');
+                            Object.keys(ProfileInfo.user).forEach(function(key) {
+                                storedUserData[key] = ProfileInfo.user[key];
+                                setStorage('auth_user', storedUserData);
+                                AuthUser.data = storedUserData;
+                            });
+                        }
+                    }
+                });
                 ProfileInfo.edit = false;
                 nativeToast({
                     message: 'Profile changes saved',
