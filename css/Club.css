@@ -213,3 +213,59 @@
     text-align: center;
     padding-bottom: 100px;
 }
+
+.user-item {
+    width: 222px;
+    max-width: 222px;
+    padding: 0;
+    margin: 0 auto 24px;
+}
+
+.user-item .club-cover-img {
+    height: 100px;
+}
+
+.user-item .club-icon-img {
+    min-width: 110px;
+    min-height: 110px;
+    width: 110px;
+    height: 110px;
+}
+
+.user-item .club-header-title {
+    font-size: 1em;
+}
+
+.user-item .club-header-container {
+    display: block;
+    padding-left: 0.3em;
+}
+
+.user-item .club-header-description, .user-item .club-header-date-created {
+    display: none;
+}
+
+.user-item .club-header-description.extended-info, .user-item .club-header-date-created.extended-info {
+    display: block;
+}
+
+.user-item .club-action-buttons .view-info {
+    display: inline;
+}
+
+.user-item .club-info-container {
+    padding-left: 0;
+    text-align: center;
+}
+
+.user-item .club-action-buttons {
+    position: static;
+}
+
+.user-item .club-header-username {
+    cursor: pointer;
+}
+
+.user-item .club-header-username:hover {
+    text-decoration: underline;
+}

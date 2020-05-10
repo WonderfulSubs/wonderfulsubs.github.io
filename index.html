@@ -115,6 +115,7 @@
     <script src="/js/native-toast.js"></script>
     <script src="/js/helpers.js"></script>
     <script src="/js/posts.js"></script>
+    <script src="/js/useritem.js"></script>
     <script src="/js/poster.js"></script>
     <script src="/js/showcase.js"></script>
     <script src="/js/lists.js"></script>
@@ -167,7 +168,7 @@
                                 <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
                                 <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
                             </div>
-                            <a href="/users" onclick="routeAnchor(event, '/users');comingSoon()" class="button">Users</a>
+                            <a href="/users" onclick="routeAnchor(event, '/users');" class="button">Users</a>
                             <a href="/clubs" onclick="routeAnchor(event, '/clubs');comingSoon()" class="button">Clubs</a>
                         </div>
                     </div>
@@ -317,6 +318,7 @@
             // '/popular': SeriesFeed.popular,
             // '/updated': SeriesFeed.updated,
             '/search': Search,
+            '/users': Users,
             '/profile/:id': Profile,
             '/club/:id': Club,
             '/watch/:id': Watch,
