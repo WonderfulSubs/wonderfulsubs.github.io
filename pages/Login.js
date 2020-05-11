@@ -1,4 +1,4 @@
-function loadCaptchaScript() {
+function loadCaptchaScript(vnode) {
     var hcaptchaScriptExists = document.querySelector('script[src*="' + hcaptchaUrl + '"]');
     if (!hcaptchaScriptExists) {
         var script = document.createElement('script');
@@ -6,6 +6,8 @@ function loadCaptchaScript() {
         script.async = true;
         script.defer = true;
         document.head.appendChild(script);
+    } else {
+        hcaptcha.render(vnode.dom);
     }
 }
 
@@ -15,9 +17,6 @@ var Login = {
     onupdate: function () {
         var currentRoute = m.route.get();
         if (currentRoute !== '/') setTitle(Login.is_signing_up ? 'Sign Up' : 'Login');
-    },
-    oncreate: function () {
-        loadCaptchaScript();
     },
     view: function () {
         if (AuthUser.data._id) {
@@ -131,7 +130,7 @@ var Login = {
                         m('div', 'Upload')
                     ])
                 ]),
-                m('div', { class: 'h-captcha center-align', 'data-sitekey': hcaptchaKey }),
+                m('div', { class: 'h-captcha center-align', 'data-sitekey': hcaptchaKey, oncreate: loadCaptchaScript }),
                 m('input', { class: 'full', type: 'submit', value: 'Sign Up' })
             ])
         ]);
