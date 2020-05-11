@@ -28,6 +28,7 @@
     height: 200px;
     margin: 20px auto;
     padding-bottom: 0;
+    color: #616161;
 }
 
 @media only screen and (min-width: 1000px) {

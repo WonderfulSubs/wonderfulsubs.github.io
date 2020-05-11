@@ -4,7 +4,6 @@
     background-color: #e7e7e7;
     overflow: hidden;
     display: flex;
-    transition: background-color 1s, color 1s;
 }
 
 .showcase-container img {

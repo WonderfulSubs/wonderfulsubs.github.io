@@ -2,8 +2,8 @@ var domain = true ? 'https://www.wonderfulsubs.com' : '';
 var posterTallPlaceholder = /*domain +*/ '/img/poster_placeholder_tall.png';
 var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
 var siteShortname = 'ws';
-var recaptchaKey = true ? '6LcC9ncUAAAAAGClorUQbnX9jl331yMXu_RZGtnx' : '6Ldb-XcUAAAAABImcnwvx1EeOEs73hVn2ecXaaKL';
-var recaptchaUrl = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaKey;
+var hcaptchaKey = '5eff7443-d3ba-4f50-bac5-587cd647b18f';
+var hcaptchaUrl = 'https://hcaptcha.com/1/api.js';
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
 
@@ -384,6 +384,41 @@ function animatePageUpdate(vnode, component) {
                 });
             });
     }
+}
+
+function uploadImg(e, options) {
+    if (!options) options = {};
+    var key = options.key;
+    var object = options.object;
+    var type = options.type;
+    var cameraIcon = err(function() { return e.target.parentElement.querySelector('i[class*="icon-camera"]').parentElement; }, true);
+    var uploadText = err(function() { return cameraIcon.nextElementSibling; }, true);
+    if (cameraIcon) cameraIcon.className = 'animated infinite rubberBand';
+    if (uploadText) uploadText.innerHTML = 'Uploading...';
+
+    openFile(e, function (error, url) {
+        if (!error) {
+            // Temp size fix. Remove this later
+            if (key === 'profile_pic') url += '?size=200&crop';
+            if (key === 'cover_pic') url += '?width=1147&height=298&crop';// '?size=1200';
+
+            if (type === 'form') {
+                object[key].value = url;
+            } else {
+                object[key] = url;
+            }
+            m.redraw();
+        } else {
+            // Handle image upload error
+            nativeToast({
+                message: defaultErrMsg,
+                position: 'north-east',
+                type: 'error'
+            });
+        }
+        if (cameraIcon) cameraIcon.className = '';
+        if (uploadText) uploadText.innerHTML = 'Upload';
+    });
 }
 
 // Global Keyboard shortcuts

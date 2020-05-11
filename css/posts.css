@@ -109,7 +109,6 @@
     padding-top: 20px;
     padding-bottom: 20px;
     cursor: pointer;
-    transition: background-color 1s, color 1s;
 }
 
 .post-media {

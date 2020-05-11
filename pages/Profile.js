@@ -33,33 +33,6 @@ var WatchListFeed = {
     }
 };
 
-function uploadImg(e, options) {
-    var cameraIcon = e.target.parentElement.querySelector('i[class="icon-camera"]').parentElement;
-    var uploadText = cameraIcon.nextElementSibling;
-    cameraIcon.className = 'animated infinite rubberBand';
-    uploadText.innerHTML = 'Uploading...';
-
-    openFile(e, function (error, url) {
-        if (!error) {
-            // Temp size fix. Remove this later
-            if (options.key === 'profile_pic') url += '?size=200&crop';
-            if (options.key === 'cover_pic') url += '?width=1147&height=298&crop';// '?size=1200';
-
-            options.object[options.key] = url;
-            m.redraw();
-        } else {
-            // Handle image upload error
-            nativeToast({
-                message: defaultErrMsg,
-                position: 'north-east',
-                type: 'error'
-            });
-        }
-        cameraIcon.className = '';
-        uploadText.innerHTML = 'Upload';
-    });
-}
-
 function setProfileUpdateValue(e) {
     var elem = e.target;
     ProfileInfo.update[elem.name] = elem.type === 'checkbox' ? elem.checked : elem.value;

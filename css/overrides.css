@@ -2,7 +2,6 @@ nav .brand {
   transform: translateX(-50%) translateY(-50%);
   left: 50%;
   z-index: 1;
-  transition: filter 1s;
 }
 
 @media only screen and (min-width: 768px) {
@@ -75,7 +74,6 @@ select:active,
 [type="radio"]:focus + .checkable:before,
 th {
   background-color: #151515;
-  transition: background-color 1s;
 }
 
 .card,
@@ -110,4 +108,29 @@ th {
 
 .card .subtitle {
   color: #bdbdbd;
+}
+
+/*Disable Color Transitions*/
+a,
+button,
+.button,
+[type=submit],
+.dropimage,
+input,
+textarea,
+.select select,
+select,
+[type=radio] + .checkable:before,
+[type=checkbox] + .checkable:before,
+[type=radio] + .checkable:after,
+[type=checkbox] + .checkable:after,
+.flex,
+nav,
+nav .show ~ .menu > *,
+.card, .modal .overlay ~ *,
+.modal .overlay,
+.modal .overlay ~ *,
+.tabs > .row
+{
+  transition: color 0s, background-color 0s;
 }

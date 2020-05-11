@@ -102,7 +102,7 @@ var openFile = function (event, callback) {
                                 if (isLastChunk) {
                                     var isImage = startsWith(fileType, 'image/');
                                     var url = 'https://cdn.wonderfulsubs.com/' + (isImage ? 'image' : 'video') + '/' + contentId;
-                                    var urlHTML = '<br><span>Direct Link: <a class="media-direct-link" href="' + url + '">' + url + '</a></span>';
+                                    // var urlHTML = '<br><span>Direct Link: <a class="media-direct-link" href="' + url + '">' + url + '</a></span>';
                                     if (isImage) {
                                         callback(undefined, 'https://cdn.wonderfulsubs.com/image/' + contentId);
                                         // contentInfo.innerHTML = '<img src="/image/' + contentId + '"/>' + urlHTML;

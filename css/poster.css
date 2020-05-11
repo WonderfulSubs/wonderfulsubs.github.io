@@ -2,7 +2,6 @@
     color: #686868;
     height: 65px;
     text-align: center;
-    transition: color 1s;
 }
 
 .poster-item-container {
@@ -41,7 +40,6 @@
     text-align: center;
     line-height: 1.5;
     font-size: 13.5px;
-    transition: background-color 1s, color 1s;
 }
 
 .poster-item .poster-title {
@@ -65,7 +63,6 @@
 
 .poster-item .poster-watch-later {
     background-color: #575757;
-    transition: background-color 1s;
 }
 
 .poster-item .poster-watch-later.active {
@@ -74,7 +71,6 @@
 
 .poster-item .poster-favorite {
     background-color: #212121;
-    transition: background-color 1s;
 }
 
 .poster-item .poster-favorite.active {
@@ -95,5 +91,4 @@
     color: #ffffff;
     font-size: 12px;
     /* border-radius: 0 0 .2em .2em; */
-    transition: background-color 1s;
 }

@@ -3,7 +3,6 @@ body {
   color: #616161;
   user-select: none;
   font-family: 'Cabin Condensed', sans-serif;
-  transition: background-color 1s, color 1s;
 }
 
 * {
@@ -24,7 +23,6 @@ a, code {
   padding: 0 .6em 190px;
   margin-top: 60vh;
   position: static;
-  transition: background-color 1s;
 }
 
 .footer a {
@@ -87,7 +85,6 @@ a, code {
 .result-switch button {
   margin: 6px 9px;
   background-color: #575757;
-  transition: background-color 1s;
 }
 
 .list-switch-buttons {
@@ -97,7 +94,6 @@ a, code {
 .list-switch-buttons button {
   min-width: 90px;
   border: solid 1px #151515;
-  transition: background-color 1s, border 1s;
 }
 
 .list-switch-buttons button.active {
@@ -127,7 +123,6 @@ a, code {
 .nav-menu-content {
   background-color: #ffffff;
   height: 50px;
-  transition: background-color 1s;
 }
 
 .nav-menu-content > div {
@@ -170,7 +165,6 @@ a, code {
   color: #575757;
   padding-left: 7px;
   padding-right: 7px;
-  transition: color 1s;
 }
 
 .user-panel-button {
@@ -278,7 +272,6 @@ a, code {
   position: absolute;
   right: 10px;
   top: 12px;
-  transition: color 1s;
 }
 
 .nav-search,
@@ -327,7 +320,6 @@ a, code {
 
 .main-container {
   background-color: #ffffff;
-  transition: background-color 1s;
 }
 
 .bottom-bar, .music-player {
@@ -339,14 +331,12 @@ a, code {
   text-align: center;
   margin-top: .2em;
   z-index: 3;
-  transition: background-color 1s;
 }
 
 .bottom-bar-button, .music-player-button {
   text-align: center;
   color: #575757;
   padding-top: .17em;
-  transition: color 1s;
   cursor: pointer;
 }
 
@@ -492,5 +482,4 @@ a, code {
   bottom: 0;
   position: fixed;
   overflow-y: scroll;
-  transition: background-color 1s;
 }

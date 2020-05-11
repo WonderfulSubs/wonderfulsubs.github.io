@@ -79,8 +79,7 @@ body{\n\
 }\n\
 @media only screen and (max-width:767px){\n\
     .dropbtn.subdrop+div.dropdown-content{\n\
-        border-top:2px #ffffff solid;\n\
-        border-right:2px #ffffff solid;\n\
+        border:2px #ffffff solid;\n\
     }\n\
     .dropdown-content a:hover{\n\
         color:#000000;\n\

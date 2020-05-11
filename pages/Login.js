@@ -1,3 +1,14 @@
+function loadCaptchaScript() {
+    var hcaptchaScriptExists = document.querySelector('script[src*="' + hcaptchaUrl + '"]');
+    if (!hcaptchaScriptExists) {
+        var script = document.createElement('script');
+        script.src = hcaptchaUrl;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+}
+
 var Login = {
     is_logged: false,
     is_signing_up: window.location.pathname === '/signup',
@@ -5,22 +16,16 @@ var Login = {
         var currentRoute = m.route.get();
         if (currentRoute !== '/') setTitle(Login.is_signing_up ? 'Sign Up' : 'Login');
     },
+    oncreate: function () {
+        loadCaptchaScript();
+    },
     view: function () {
         if (AuthUser.data._id) {
-            m.route.set('/');
+            m.route.set('/profile/' + AuthUser.data.username);
             return;
         }
 
         var currentRoute = m.route.get();
-
-        function loadImg(e) {
-            var inputfile = this, reader = new FileReader();
-            reader.onloadend = function () {
-                inputfile.style['background-image'] = 'url(' + reader.result + ')';
-                inputfile.style['background-color'] = '#ffffff';
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
 
         function logUserIn(isSignUp, e) {
             e.preventDefault();
@@ -34,7 +39,7 @@ var Login = {
 
             if (isSignUp) {
                 var form = this;
-                ['email', 'display_name', 'private', /*'profile_pic'*/].forEach(function (key) {
+                ['email', 'display_name', 'private', 'h-captcha-response', /*'profile_pic'*/].forEach(function (key) {
                     if (form[key].type === 'checkbox') {
                         data[key] = form[key].checked;
                     } else {
@@ -45,6 +50,13 @@ var Login = {
 
             AuthUser[isSignUp ? 'signup' : 'login'](data, function (error) {
                 button.disabled = false;
+                if (error) {
+                    nativeToast({
+                        message: error,
+                        position: 'north-east',
+                        type: 'error'
+                    });
+                }
             });
         }
 
@@ -107,16 +119,19 @@ var Login = {
                     m('input', { type: 'checkbox', name: 'private' }),
                     m('div', { class: 'checkable' }, 'Make Profile Private')
                 ]),
-                m('div', { style: convertObjToStyles({ opacity: '0.5', pointerEvents: 'none' }) }, [
+                m('div', [
                     m('label', [
-                        m('div', 'Temporarily Disabled'),
                         m('i', { class: 'icon-picture' }),
                         m('span', 'Upload Profile Picture:')
                     ]),
-                    m('label', { class: 'dropimage', onchange: loadImg }, [
-                        m('input', { type: 'file', title: 'Drop image or click me', name: 'profile_pic' })
+                    m('label', { class: 'dropimage', style: Login.uploaded_profile_pic ? convertObjToStyles({ backgroundImage: 'url(' + Login.uploaded_profile_pic + ')' }) : undefined }, [
+                        m('input', { class: 'none', name: 'profile_pic', value: Login.uploaded_profile_pic }),
+                        m('input', { type: 'file', accept: 'image/*', title: 'Drag & Drop image or click here', onchange: function(e) { uploadImg(e, { object: Login, key: 'uploaded_profile_pic' }) } }),
+                        m('div', m('i', { class: 'icon-camera none' })),
+                        m('div', 'Upload')
                     ])
                 ]),
+                m('div', { class: 'h-captcha', 'data-sitekey': hcaptchaKey }),
                 m('input', { class: 'full', type: 'submit', value: 'Sign Up' })
             ])
         ]);

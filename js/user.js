@@ -17,10 +17,8 @@ var AuthUser = {
                     });
                     AuthUser.fetchList('Favorites');
                     if (callback) callback();
-                    AuthUser.removeCaptchaBadge();
                 } else {
                     if (callback) callback();
-                    AuthUser.removeCaptchaBadge();
                 }
             })
             .catch(function(error) {
@@ -37,38 +35,13 @@ var AuthUser = {
         });
     },
     signup: function (data, callback) {
-        function getReCaptcha() {
-            grecaptcha.ready(function () {
-                grecaptcha.execute(recaptchaKey, { action: 'signup' })
-                    .then(function (g_response) {
-                        data.g_response = g_response;
-                        AuthUser._returnUserData(domain + '/api/v2/users/create', data, { requireToken: true, setAuthUser: true })
-                            .then(function (onFulfilled) {
-                                if (callback) callback();
-                                if (onFulfilled) AuthUser.removeCaptchaBadge();
-                            })
-                            .catch(function(error) {
-                                if (callback) callback(error);
-                            });
-                    });
-            });
-        }
-
-        var recaptchaScriptExists = document.querySelector('script[src*="' + recaptchaUrl + '"]');
-        if (!recaptchaScriptExists) {
-            var script = document.createElement('script');
-            script.src = recaptchaUrl;
-            script.async = true;
-            script.defer = true;
-            script.onload = getReCaptcha;
-            document.head.appendChild(script);
-        } else {
-            getReCaptcha();
-        }
-    },
-    removeCaptchaBadge: function () {
-        var elem = document.querySelector('.grecaptcha-badge');
-        //if (elem) location.reload();
+        AuthUser._returnUserData(domain + '/api/v2/users/create', data, { requireToken: true, setAuthUser: true })
+        .then(function (onFulfilled) {
+            if (callback) callback();
+        })
+        .catch(function(error) {
+            if (callback) callback(error);
+        });
     },
     _returnUserData: function (url, data, options) {
         return new Promise(function (resolve, reject) {
@@ -89,7 +62,7 @@ var AuthUser = {
                             }
                             resolve();
                         } else {
-                            reject(new Error(defaultErrMsg));
+                            reject(new Error((result && result.error) || defaultErrMsg));
                         }
                     } catch (error) {
                         nativeToast({
