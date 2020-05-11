@@ -39,7 +39,7 @@ var Login = {
 
             if (isSignUp) {
                 var form = this;
-                ['email', 'display_name', 'private', 'h-captcha-response', /*'profile_pic'*/].forEach(function (key) {
+                ['email', 'display_name', 'private', 'h-captcha-response', 'profile_pic'].forEach(function (key) {
                     if (form[key].type === 'checkbox') {
                         data[key] = form[key].checked;
                     } else {
@@ -131,7 +131,7 @@ var Login = {
                         m('div', 'Upload')
                     ])
                 ]),
-                m('div', { class: 'h-captcha', 'data-sitekey': hcaptchaKey }),
+                m('div', { class: 'h-captcha center-align', 'data-sitekey': hcaptchaKey }),
                 m('input', { class: 'full', type: 'submit', value: 'Sign Up' })
             ])
         ]);
