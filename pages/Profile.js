@@ -41,7 +41,7 @@ function setProfileUpdateValue(e) {
 function updateUserData() {
     var data = {};
 
-    Object.keys(ProfileInfo.update).map(function (key) {
+    Object.keys(ProfileInfo.update).forEach(function (key) {
         if (ProfileInfo.update[key] !== ProfileInfo.user[key]) data[key] = ProfileInfo.update[key];
     });
 
