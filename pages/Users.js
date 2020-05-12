@@ -12,7 +12,7 @@ var Users = {
         Users.sort = sort;
         Users.order = order;
         Users.count = '';
-        Users.title = letter ? '"' + (letter === 'none' ? '#' : letter.toUpperCase()) + '" - A-Z List' : 'A-Z List';
+        Users.title = (letter ? '"' + (letter === 'none' ? '#' : letter.toUpperCase()) + '" - ' : (sort === 'date_created' && order === 'desc') ? 'Recent - ' : '') + 'Users List';
         Users.getResults(Users.letter ? Users.letter.trim() : undefined, Users.sort ? Users.sort.trim() : undefined,  Users.order ? Users.order.trim() : undefined);
         // m.redraw();
     },
@@ -28,7 +28,7 @@ var Users = {
         Users.results = {
             url: domain + "/api/v2/users/list?" + (letter ? 'letter=' + letter : '') + (sort ? '&sort=' + sort : '') + (order ? '&order=' + order : ''),
             options: {
-                header: Users.letter ? 'Users - ' + (Users.letter === 'none' ? '#' : Users.letter.toUpperCase()) : 'All Users',
+                header: (Users.sort === 'date_created' && Users.order === 'desc') ? 'Recent Users' : Users.letter ? 'Users - ' + (Users.letter === 'none' ? '#' : Users.letter.toUpperCase()) : 'All Users',
                 callback: function (count) {
                     Users.count = count;
                 }
