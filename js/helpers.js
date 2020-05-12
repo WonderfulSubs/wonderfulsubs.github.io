@@ -39,6 +39,12 @@ function getSearchResults(event, isTarget) {
     input.blur();
 }
 
+function dismissOpenPanels() {
+    document.querySelectorAll('.panel-body:not(.fadeOutRight)').forEach(function(elem) {
+        elem.classList.add('fadeOutRight');
+    });
+}
+
 function setTitle(title, showAlone) {
     if (!title) return;
     document.title = showAlone ? title : title + ' | WonderfulSubs';
@@ -399,7 +405,7 @@ function uploadImg(e, options) {
     openFile(e, function (error, url) {
         if (!error) {
             // Temp size fix. Remove this later
-            if (key === 'profile_pic') url += '?size=200&crop';
+            if (key === 'profile_pic' || key === 'uploaded_profile_pic') url += '?size=200&crop';
             if (key === 'cover_pic') url += '?width=1147&height=298&crop';// '?size=1200';
 
             if (type === 'form') {
@@ -419,6 +425,19 @@ function uploadImg(e, options) {
         if (cameraIcon) cameraIcon.className = '';
         if (uploadText) uploadText.innerHTML = 'Upload';
     });
+}
+
+function loadCaptchaScript(vnode) {
+    var hcaptchaScriptExists = document.querySelector('script[src*="' + hcaptchaUrl + '"]');
+    if (!hcaptchaScriptExists) {
+        var script = document.createElement('script');
+        script.src = hcaptchaUrl;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    } else {
+        hcaptcha.render(vnode.dom);
+    }
 }
 
 // Global Keyboard shortcuts

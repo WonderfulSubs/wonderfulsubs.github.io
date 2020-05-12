@@ -121,7 +121,7 @@ function openMediaViewer(e) {
     viewerContainer.className = 'post-media-viewer animated fadeIn faster';
     viewerContainer.onclick = function () {
         viewerContainer.parentElement.removeChild(viewerContainer);
-        history.pushState("", document.title, window.location.pathname + window.location.search);
+        // m.route.set(window.location.pathname + window.location.search, {}, { replace: true });
     };
 
     var backArrow = document.createElement('div');
@@ -208,7 +208,7 @@ function openMediaViewer(e) {
         };
 
         viewerContainer.appendChild(item);
-        m.route.set('#viewer');
+        // m.route.set('#viewer');
     }
 
     setItem(elem);

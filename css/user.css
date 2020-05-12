@@ -1,3 +1,24 @@
+.user-panel-button {
+    float: right;
+    margin-top: 3px;
+    margin-left: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.user-panel-button > div {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 7px;
+}
+
+.user-panel-button > div + i {
+    display: none;
+}
+
 .user-panel-profile {
     padding: 10px;
     height: 50px;
@@ -32,4 +53,10 @@
         max-width: 75%;
         margin: 0 auto;
     }
+}
+
+@media only screen and (min-width:1000px) {
+  .user-panel-button {
+    margin-right: 15px;
+  }
 }

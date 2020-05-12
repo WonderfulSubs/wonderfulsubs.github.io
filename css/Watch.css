@@ -115,7 +115,7 @@
     background-color: #670090;
 }
 
-.info-watch-later, .info-favorite, .icon-info-circled {
+.watch-content-container .info-watch-later, .watch-content-container .info-favorite, .watch-content-container .icon-info-circled {
     transition: color 1s;
 }
 

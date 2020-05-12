@@ -148,7 +148,6 @@
                         <img class="brand" src="/svg/logo.svg" />
                     </a>
                     <div class="user-panel-button" title="User Profile" onclick="showHideUserPanel()">
-                        <!-- <div></div> -->
                         <i class="icon-user-circle"></i>
                     </div>
                     <form class="nav-search" action="/search" onsubmit="getSearchResults(event)" acceptCharset="utf-8">
@@ -183,6 +182,7 @@
     </div>
     <div id="settings-panel" class="panel-body animated faster lists fadeInRight none"></div>
     <div id="user-panel" class="panel-body animated faster lists fadeInRight none"></div>
+    <div class="panel-bg animated fadeIn faster" onclick="dismissOpenPanels();"></div>
     <div class="music-player full top-divider animated slideInUp faster none">
         <div id="music-panel" class="music-player-contents flex grow"></div>
     </div>

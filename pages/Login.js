@@ -1,16 +1,3 @@
-function loadCaptchaScript(vnode) {
-    var hcaptchaScriptExists = document.querySelector('script[src*="' + hcaptchaUrl + '"]');
-    if (!hcaptchaScriptExists) {
-        var script = document.createElement('script');
-        script.src = hcaptchaUrl;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-    } else {
-        hcaptcha.render(vnode.dom);
-    }
-}
-
 var Login = {
     is_logged: false,
     is_signing_up: window.location.pathname === '/signup',

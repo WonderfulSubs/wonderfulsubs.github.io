@@ -167,27 +167,6 @@ a, code {
   padding-right: 7px;
 }
 
-.user-panel-button {
-  float: right;
-  margin-top: 3px;
-  margin-left: 15px;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.user-panel-button > div {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-top: 7px;
-}
-
-.user-panel-button > div + i {
-  display: none;
-}
-
 .dropbtn.subdrop {
   margin: 0 auto;
   display: block;
@@ -431,10 +410,6 @@ a, code {
   .flex-margin-reset.desktop {
     margin-top: -0.3em;
   }
-
-  .user-panel-button {
-    margin-right: 15px;
-  }
 }
 
 .center-element {
@@ -477,9 +452,28 @@ a, code {
 .panel-body {
   z-index: 10001;
   height: 100%;
-  width: 100%;
-  background-color:rgba(255, 255, 255, 0.75);
+  max-width: 100%;
+  width: 420px;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.75);
   bottom: 0;
   position: fixed;
   overflow-y: scroll;
+}
+
+.panel-bg {
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+
+@media only screen and (min-width: 421px) {
+    .panel-body.fadeInRight:not(.fadeOutRight):not(.none) ~ .panel-bg {
+        display: block;
+    }
 }

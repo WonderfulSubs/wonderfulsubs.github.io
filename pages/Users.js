@@ -6,19 +6,27 @@ var Users = {
         scrollToTop();
         var params = m.route.param();
         var letter = params.letter;
+        var sort = params.sort;
+        var order = params.order;
         Users.letter = letter;
+        Users.sort = sort;
+        Users.order = order;
         Users.count = '';
         Users.title = letter ? '"' + (letter === 'none' ? '#' : letter.toUpperCase()) + '" - A-Z List' : 'A-Z List';
-        Users.getResults(Users.letter ? Users.letter.trim() : undefined);
+        Users.getResults(Users.letter ? Users.letter.trim() : undefined, Users.sort ? Users.sort.trim() : undefined,  Users.order ? Users.order.trim() : undefined);
         // m.redraw();
     },
     onupdate: function (vnode) {
         var letter = vnode.attrs.letter;
-        if ((letter && letter !== Users.letter) || !letter && Users.letter || letter && !Users.letter) Users.oninit();
+        var sort = vnode.attrs.sort;
+        var order = vnode.attrs.order;
+        if ((letter && letter !== Users.letter) || !letter && Users.letter || letter && !Users.letter ||
+            (sort && sort !== Users.sort) || !sort && Users.sort || sort && !Users.sort ||
+            (order && order !== Users.order) || !order && Users.order || order && !Users.order) return Users.oninit();
     },
-    getResults: function (letter) {
+    getResults: function (letter, sort, order) {
         Users.results = {
-            url: domain + "/api/v2/users/list?" + (letter ? 'letter=' + letter : ''),
+            url: domain + "/api/v2/users/list?" + (letter ? 'letter=' + letter : '') + (sort ? '&sort=' + sort : '') + (order ? '&order=' + order : ''),
             options: {
                 header: Users.letter ? 'Users - ' + (Users.letter === 'none' ? '#' : Users.letter.toUpperCase()) : 'All Users',
                 callback: function (count) {
@@ -36,6 +44,7 @@ var Users = {
 
         var buttons = m('div', { class: 'result-switch flex twelve center' }, [
             m('button', { onclick: function () { m.route.set('/users'); } }, 'All'),
+            m('button', { onclick: function () { m.route.set('/users?sort=date_created&order=desc'); } }, 'Recent'),
             m('button', { onclick: loadResults.bind(this, 'none') }, '#'),
             ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'].map(function (letter) {
                 return m('button', { key: letter, onclick: loadResults.bind(this, letter) }, letter);

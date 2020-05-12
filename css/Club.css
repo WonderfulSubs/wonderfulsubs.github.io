@@ -219,6 +219,7 @@
     max-width: 222px;
     padding: 0;
     margin: 0 auto 24px;
+    cursor: pointer;
 }
 
 .user-item .club-cover-img {
@@ -256,6 +257,9 @@
 .user-item .club-info-container {
     padding-left: 0;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-item .club-action-buttons {
