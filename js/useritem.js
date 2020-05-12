@@ -9,11 +9,11 @@ var UserItem = {
             m.route.set('/profile/' + item.username);
         }
 
-        return m('div', { class: 'club-content-container left-divider right-divider bottom-divider animated fadeInUp faster user-item', onclick: goToUrl }, [
-            llv('div', { class: 'club-cover-img', style: convertObjToStyles({ backgroundImage: 'url(' + item.cover_pic + ')' }) }),
+        return m('div', { class: 'club-content-container left-divider right-divider bottom-divider animated fadeInUp faster user-item' }, [
+            llv('div', { class: 'club-cover-img', onclick: goToUrl, style: convertObjToStyles({ backgroundImage: 'url(' + item.cover_pic + ')' }) }),
             m('div', { class: 'club-header-container' }, [
-                llv('div', { class: 'club-icon-img', style: convertObjToStyles({ backgroundImage: 'url(' + item.profile_pic + ')' }) }),
-                m('div', { class: 'club-info-container' }, [
+                llv('div', { class: 'club-icon-img', onclick: goToUrl, style: convertObjToStyles({ backgroundImage: 'url(' + item.profile_pic + ')' }) }),
+                m('div', { class: 'club-info-container', onclick: goToUrl }, [
                     m('div', { class: 'club-header-title' }, [
                         m('div', { class: 'club-item-wrapper' }, name),
                         m('label', item.verified ? m('div', m('i', { class: 'post-author-badge icon-ok-circled', title: 'Verified User' })) : undefined),
