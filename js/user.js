@@ -46,7 +46,8 @@ var AuthUser = {
     _returnUserData: function (url, data, options) {
         return new Promise(function (resolve, reject) {
             Object.keys(data).forEach(function (key) {
-                if (data[key] === undefined/* || data[key] === ""*/) delete data[key];
+                // Create a list of filtered keys allowed to be empty string later
+                if (data[key] === undefined || (data[key] === "" && key != 'biography')) delete data[key];
             });
             if (!options) options = {};
             var headers = {};
