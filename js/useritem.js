@@ -22,7 +22,7 @@ var UserItem = {
                         m('label', item.supporter ? m('div', m('i', { class: 'post-author-badge icon-star', title: 'Supporter' })) : undefined),
                         m('label', item.private ? m('div', m('i', { class: 'post-author-badge icon-lock', title: 'Private Profile' })) : undefined),
                     ]),
-                    m('div', { class: 'club-header-username' }, '@' + item.username),
+                    m(m.route.Link, { href: '/profile/' + item.username, class: 'club-header-username' }, '@' + item.username),
                     m('div', { class: 'club-item-wrapper' }, [
                          m('div', { class: 'club-header-description' + (vnode.state.extendInfo ? ' extended-info' : '') }, item.biography),
                         m('div', { class: 'club-header-date-created' + (vnode.state.extendInfo ? ' extended-info' : '') }, 'Joined ' + (new Date(item.date_created).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })))
