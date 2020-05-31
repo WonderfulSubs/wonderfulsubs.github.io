@@ -66,7 +66,7 @@ var EpisodeInfo = {
         var sectionElements = [m("p", showInfo ? description : episode.description || description)];
         if (!showInfo && episode.title) sectionElements.unshift(m("h4", episode.title));
 
-        var showMoreButton = m('div', { class: 'show-more top-divider bottom-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
+        var showMoreButton = m('div', { class: 'show-more top-divider', onclick: showHideMore }, m('i', { class: 'icon-down-dir' }));
 
         return m('div', { class: 'episode-info-container animated fadeInLeft' }, [
             m("article", { class: "card episode-info-card" }, [
@@ -411,19 +411,11 @@ var Watch = {
     oninit: function (vnode) {
         Watch.currentId = vnode.attrs.id;
         document.body.classList.add('watch-body');
-        // var bottomBar = document.querySelector('.bottom-bar');
-        var musicPlayerBar = document.querySelector('.music-player');
-        // Watch.initialBottomBarClassName = bottomBar.className;
-        Watch.initialMusicPlayerBarClassName = musicPlayerBar.className;
         if (theaterModeEnabled) toggleTheater(theaterModeEnabled, false, false);
     },
     onremove: function () {
         document.body.classList.remove('watch-body');
         toggleTheater(false, false, false);
-        // var bottomBar = document.querySelector('.bottom-bar');
-        var musicPlayerBar = document.querySelector('.music-player');
-        // bottomBar.className = Watch.initialBottomBarClassName;
-        musicPlayerBar.className = Watch.initialMusicPlayerBarClassName;
         if (WatchPlayer.player.el_) WatchPlayer.player.el_.removeEventListener(supportsTouch ? "touchend" : "click", Watch.setPlayerClick);
         if (Watch.XHR) Watch.XHR.abort();
     },
@@ -452,7 +444,7 @@ var Watch = {
             return m.route.set('/login');
         }
 
-        var hideSidebarStyles = m('style', '#sidebar{display:none}');
+        var hideSidebarStyles = m('style', '.sidebar-container{display:none}');
 
         return m("div", { class: 'flex-margin-reset' + (theaterModeEnabled ? ' desktop' : '') }, [
             themeStyleElem ? undefined : window.DARK_THEME_STYLES,

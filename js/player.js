@@ -21,10 +21,6 @@ function toggleTheater(on, store, showToast) {
             theaterModeEnabled = !theaterModeEnabled;
             doTurnOn = theaterModeEnabled;
         }
-        // var bottomBar = document.querySelector('.bottom-bar');
-        var musicPlayerBar = document.querySelector('.music-player');
-        // bottomBar.classList[doTurnOn ? 'add' : 'remove']('third-700');
-        musicPlayerBar.classList[doTurnOn ? 'add' : 'remove']('third-700');
         if (doTurnOn) {
             setTheaterClass();
         } else {

@@ -82,12 +82,11 @@
     <link rel="stylesheet" href="/css/player.css" />
     <link rel="stylesheet" href="/css/posts.css" />
     <link rel="stylesheet" href="/css/user.css" />
-    <link rel="stylesheet" href="/css/music.css" />
     <link rel="stylesheet" href="/css/settings.css" />
     <link rel="stylesheet" href="https://vjs.zencdn.net/7.6.6/video-js.min.css" />
     <link rel="stylesheet" href="/css/vsg-skin.css" />
     <link rel="stylesheet" href="/css/icons.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin+Condensed&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
 
     <noscript id="deferred-styles">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
@@ -123,7 +122,6 @@
     <script src="/js/player.js"></script>
     <script src="/js/user.js"></script>
     <script src="/js/chatbox.js"></script>
-    <script src="/js/music.js"></script>
     <script src="/js/settings.js"></script>
     <script src="/js/fileupload.js"></script>
     <script src="/pages/Home.js"></script>
@@ -168,7 +166,8 @@
                                 <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
                             </div>
                             <a href="/users" onclick="routeAnchor(event, '/users');" class="button">Users</a>
-                            <a href="/clubs" onclick="routeAnchor(event, '/clubs');comingSoon()" class="button">Clubs</a>
+                            <a href="/clubs" onclick="routeAnchor(event, '/clubs');comingSoon()"
+                                class="button">Clubs</a>
                         </div>
                     </div>
                 </div>
@@ -176,53 +175,14 @@
         </div>
     </div>
     <div class="content-wrapper-container flex animated">
-        <div id="root" class="content-wrapper animated three-fourth-1000"></div>
+        <div id="root" class="content-wrapper animated"></div>
         <div id="mini-player"></div>
-        <div id="sidebar" class="fourth-1000"></div>
+        <div class="sidebar-container animated slideInDown"></div>
     </div>
     <div id="settings-panel" class="panel-body animated faster lists fadeInRight none"></div>
     <div id="user-panel" class="panel-body animated faster lists fadeInRight none"></div>
     <div class="panel-bg animated fadeIn faster" onclick="dismissOpenPanels();"></div>
-    <div class="music-player full top-divider animated slideInUp faster none">
-        <div id="music-panel" class="music-player-contents flex grow"></div>
-    </div>
-    <!-- <div class="bottom-bar top-divider full">
-        <div class="flex">
-            <div class="bottom-bar-button" onclick="showHideSettingsPanel()">
-                <i class="icon-cog"></i>
-                <div>Settings</div>
-            </div>
-            <div class="bottom-bar-button" onclick="showHideMusicPlayer()">
-                <i class="icon-music"></i>
-                <div>Music</div>
-            </div>
-            <div class="bottom-bar-button" onclick="showHideChatPanel()">
-                <i class="icon-users"></i>
-                <div>Clubs</div>
-            </div>
-            <div class="bottom-bar-button" onclick="comingSoon()">
-                <i class="icon-bell-alt"></i>
-                <div>Notifications</div>
-            </div>
-            <div class="bottom-bar-button" onclick="showHideUserPanel()">
-                <i class="icon-user-circle"></i>
-                <div>User</div>
-            </div>
-        </div>
-    </div> -->
-    <div class="footer">
-        <div>
-            <div class="left">
-                ©<span id="footer-year"> </span>WonderfulSubs LLC
-                <br>
-                Wikipe-tan: © 2006 Kasuga~jawiki / Wikimedia Commons / <a
-                    href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank"
-                    rel="nofollow noreferrer"><u>CC-BY-SA-3.0</u></a> / <a
-                    href="https://www.gnu.org/licenses/fdl-1.3.html" target="_blank"
-                    rel="nofollow noreferrer"><u>GFDL</u></a>. Eye color changed to yellow and/or mouth added
-            </div>
-        </div>
-    </div>
+
     <script>
         var miniPlayerFrag = document.createDocumentFragment();
         m.mount(miniPlayerFrag, {
@@ -253,7 +213,7 @@
             });
         }
 
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             var rightStyle = window.getComputedStyle(miniPlayerContainer).right;
             var topStyle = window.getComputedStyle(miniPlayerContainer).top;
             var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
@@ -324,12 +284,10 @@
             '/watch/:id': Watch,
         });
 
-        var sidebarExists = document.querySelector('.sidebar-container');
+        var sidebarExists = document.querySelector('.sidebar-top-announcement');
         if (!sidebarExists) {
-            m.mount(document.getElementById('sidebar'), Sidebar);
+            m.mount(document.querySelector('.sidebar-container'), Sidebar);
         }
-
-        document.getElementById('footer-year').innerHTML = ' ' + (new Date()).getFullYear() + ' ';
 
         var loadDeferredStyles = function () {
             var addStylesNode = document.getElementById("deferred-styles");
@@ -342,6 +300,26 @@
             window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
         if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
         else window.addEventListener('load', loadDeferredStyles);
+
+        // window.addEventListener('load', function setF() {
+        //     window.removeEventListener('load', setF);
+
+        //     var sidebar = document.querySelector('.sidebar-container');
+        //     var origOffsetY = sidebar.offsetTop;
+
+        //     function onScroll(e) {
+        //         var body = document.body,
+        //             html = document.documentElement;
+
+        //         var height = Math.max(body.scrollHeight, body.offsetHeight,
+        //             html.clientHeight, html.scrollHeight, html.offsetHeight);
+        //         if (window.scrollY < (height - 50)) {
+        //             sidebar.style.marginTop = window.scrollY + 'px';
+        //         }
+        //     }
+
+        //     document.addEventListener('scroll', onScroll);
+        // });
     </script>
 </body>
 
