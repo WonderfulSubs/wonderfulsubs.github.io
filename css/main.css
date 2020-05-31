@@ -2,7 +2,7 @@ body {
   background-color: #f5f5f5;
   color: #616161;
   user-select: none;
-  font-family: 'Cabin Condensed', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 * {
@@ -12,21 +12,6 @@ body {
 
 a, code {
   color: #575757;
-}
-
-.footer {
-  width: 100%;
-  height: 10px;
-  font-size: 13px;
-  background-color: #151515;
-  color: #ffffff;
-  padding: 0 .6em 190px;
-  margin-top: 60vh;
-  position: static;
-}
-
-.footer a {
-  color: #ffffff;
 }
 
 ::-webkit-scrollbar {
@@ -93,12 +78,11 @@ a, code {
 
 .list-switch-buttons button {
   min-width: 90px;
-  border: solid 1px #151515;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .list-switch-buttons button.active {
   background-color: #ffffff;
-  box-shadow: none;
   color: #000000;
 }
 
@@ -114,18 +98,17 @@ a, code {
   padding-right: 5px;
 }
 
-.nav-menu-content > div, .bottom-bar > .flex, .footer > div {
+.nav-menu-content>div {
   max-width: 1440px;
   margin: 0 auto;
 }
 
-.nav-menu,
-.nav-menu-content {
+.nav-menu, .nav-menu-content {
   background-color: #ffffff;
   height: 50px;
 }
 
-.nav-menu-content > div {
+.nav-menu-content>div {
   height: inherit;
 }
 
@@ -172,12 +155,12 @@ a, code {
   display: block;
 }
 
-.dropbtn.subdrop + div.dropdown-content {
+.dropbtn.subdrop+div.dropdown-content {
   display: none;
   margin-left: 0;
 }
 
-.dropbtn.subdrop:hover + div.dropdown-content, .dropbtn.subdrop + div.dropdown-content:hover {
+.dropbtn.subdrop:hover+div.dropdown-content, .dropbtn.subdrop+div.dropdown-content:hover {
   display: block;
   margin-top: -6px;
 }
@@ -189,14 +172,13 @@ a, code {
 }
 
 @media only screen and (max-width: 767px) {
-  .dropdown-content, .dropbtn.subdrop:hover + div.dropdown-content, .dropbtn.subdrop + div.dropdown-content:hover {
+  .dropdown-content, .dropbtn.subdrop:hover+div.dropdown-content, .dropbtn.subdrop+div.dropdown-content:hover {
     background-color: #ffffff;
     height: 110px;
   }
-
   .dropdown-content {
     display: none;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     height: 100vh;
     width: 240px;
@@ -204,24 +186,19 @@ a, code {
     -webkit-animation-name: slideInLeft;
     animation-name: slideInLeft;
   }
-
-  .dropdown-content a, .dropbtn.subdrop, .dropbtn.subdrop + div.dropdown-content a {
+  .dropdown-content a, .dropbtn.subdrop, .dropbtn.subdrop+div.dropdown-content a {
     color: #000000;
   }
-
   .dropdown-content a {
     padding: 12px 16px;
     display: block;
   }
-
   .dropdown-content a:hover {
     background-color: #f1f1f1
   }
-
   .dropdown:hover .dropdown-content {
     display: block;
   }
-
   .dropbtn.subdrop {
     border-bottom: 1px rgba(189, 189, 189, 0.5) solid;
   }
@@ -231,15 +208,13 @@ a, code {
   .dropbtn {
     display: none;
   }
-
-  .dropbtn.subdrop:hover + div.dropdown-content, .dropbtn.subdrop + div.dropdown-content:hover {
+  .dropbtn.subdrop:hover+div.dropdown-content, .dropbtn.subdrop+div.dropdown-content:hover {
     display: grid;
     position: absolute;
     margin-top: 42px;
     background-color: #000000;
   }
-
-  .dropbtn.subdrop + div.dropdown-content a {
+  .dropbtn.subdrop+div.dropdown-content a {
     color: #ffffff;
     padding: 2px 9px;
   }
@@ -253,8 +228,7 @@ a, code {
   top: 12px;
 }
 
-.nav-search,
-.nav-search input {
+.nav-search, .nav-search input {
   height: 100%;
 }
 
@@ -262,21 +236,17 @@ a, code {
   .nav-search i {
     color: #9e9e9e;
   }
-
   .nav-search input {
     width: 100%;
     opacity: 1;
   }
-
   .nav-search input:focus {
     width: 100%;
   }
-
   .nav-buttons {
     position: static;
     max-width: 27%;
   }
-
   .result-switch.mobile-scroll {
     display: flex;
     flex-wrap: wrap;
@@ -286,93 +256,20 @@ a, code {
 }
 
 .content-wrapper-container.flex {
-  max-width: 1390px;
+  max-width: 1440px;
   margin: 0 auto;
+  position: relative;
+  flex-direction: column-reverse
 }
 
 .content-wrapper {
   position: relative;
-  max-width: 1390px;
-  margin: 0 auto;
+  max-width: 1440px;
   padding-bottom: 80px;
 }
 
-.main-container {
-  background-color: #ffffff;
-}
-
-.bottom-bar, .music-player {
-  right: 0;
-  height: 60px;
-  background-color: #ffffff;
-  position: fixed;
-  bottom: 0;
-  text-align: center;
-  margin-top: .2em;
-  z-index: 3;
-}
-
-.bottom-bar-button, .music-player-button {
-  text-align: center;
-  color: #575757;
-  padding-top: .17em;
-  cursor: pointer;
-}
-
-.post-actions > *:hover, .bottom-bar-button:hover, .music-player-button:hover {
+.post-actions>*:hover {
   background-color: #d6d6d6;
-}
-
-.music-player {
-  height: 120px;
-  padding-top: 0;
-}
-
-.music-player.show-music-video {
-  height: 280px;
-}
-
-.music-player.show-music-video .music-player-info img {
-  display: none;
-}
-
-.music-player-info img {
-  float: left;
-  padding: 0;
-  margin-right: 3px;
-}
-
-.music-player-contents {
-  height: calc(100% - 66px);
-  margin: 0;
-}
-
-.music-player-contents * {
-  max-height: 100%;
-}
-
-.music-player-contents .flex > *, .music-player-contents.flex > * {
-  padding: 0;
-}
-
-.music-player-info, .music-player-info * {
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0;
-}
-
-.music-player-info.half, .music-player-controls.half {
-  padding: 0 5px;
-}
-
-.music-player-info h6 {
-  opacity: 0.7;
-}
-
-.music-player-button {
-  line-height: 53px;
 }
 
 .flex .flex-padding-reset {
@@ -387,7 +284,6 @@ a, code {
     width: 100vw;
     left: calc(-50vw + 50%);
   }
-
   .flex-margin-reset.extend-padding {
     padding-bottom: 90px;
   }
@@ -401,14 +297,28 @@ a, code {
 
 .flex-margin-reset.desktop {
   padding-top: 0;
-  position: absolute;
   width: 100vw;
-  left: calc(-50vw + 50%);
 }
 
-@media only screen and (min-width:1000px) {
+@media only screen and (min-width:999px) {
   .flex-margin-reset.desktop {
     margin-top: -0.3em;
+  }
+
+  .content-wrapper {
+    left: 0;
+    position: absolute;
+    width: calc(100% - 337px);
+    max-width: none;
+  }
+
+  .content-wrapper-container.flex {
+    flex-direction: row;
+    padding-top: 0.3em
+  }
+
+  .content-wrapper-container.flex div:not(:last-child) {
+    padding-right: 0;
   }
 }
 
@@ -473,7 +383,11 @@ a, code {
 }
 
 @media only screen and (min-width: 421px) {
-    .panel-body.fadeInRight:not(.fadeOutRight):not(.none) ~ .panel-bg {
-        display: block;
-    }
+  .panel-body.fadeInRight:not(.fadeOutRight):not(.none)~.panel-bg {
+    display: block;
+  }
+  
+  .panel-body {
+    box-shadow: 7px 5px 6px 9px rgba(0, 0, 0, 0.5);
+  }
 }
