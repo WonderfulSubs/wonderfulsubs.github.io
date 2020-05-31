@@ -266,23 +266,29 @@ function llc() {
             return true;
         }
     });
+    var didInitialObserve = false;
     return m('div', { width: '1', height: '1', oncreate: function (vnode) {
         var target = vnode.dom;
         var observer = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.intersectionRatio > 0) {
-                    observer.unobserve(entry.target);
-                    target.removeAttribute('width');
-                    target.removeAttribute('height');
-                    if (foundAttr && typeof foundAttr.oninit === 'function') foundAttr.oninit(vnode);
-                    target.classList.add('fadeIn');
-                    target.classList.add('animated');
-                    // if (typeof component === 'function') {
+                    if (!didInitialObserve) {
+                        didInitialObserve = true;
+                        if (foundAttr && typeof foundAttr.onobserve !== 'function') observer.unobserve(entry.target);
+                        target.removeAttribute('width');
+                        target.removeAttribute('height');
+                        if (foundAttr && typeof foundAttr.oninit === 'function') foundAttr.oninit(vnode);
+                        target.classList.add('fadeIn');
+                        target.classList.add('animated');
+                        // if (typeof component === 'function') {
                         // m.render(target, m(component.apply(this, [].slice.call(args, 1))), true);
-                    // } else {
+                        // } else {
                         m.render(target, m.apply(this, [].slice.call(args))/*, true*/);
-                    // }
-                    if (foundAttr && typeof foundAttr.oncreate === 'function') foundAttr.oncreate(vnode);
+                        // }
+                        if (foundAttr && typeof foundAttr.oncreate === 'function') foundAttr.oncreate(vnode);
+                    } else {
+                        if (foundAttr && typeof foundAttr.onobserve === 'function') foundAttr.onobserve(vnode);
+                    }
                 }
             });
         });
