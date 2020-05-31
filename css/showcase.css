@@ -1,7 +1,6 @@
 .showcase-container > div > a > div {
     width: 100%;
     height: 80px;
-    background-color: #e7e7e7;
     overflow: hidden;
     display: flex;
 }
@@ -16,4 +15,6 @@
 .showcase-container span {
     width: calc(100% - 148px);
     padding-right: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

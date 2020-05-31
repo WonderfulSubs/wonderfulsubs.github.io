@@ -50,6 +50,10 @@ select,
   border-radius: 0px;
 }
 
+button {
+  outline: none;
+}
+
 input:not([type="radio"]):not([type="checkbox"]) {
   -webkit-appearance: none;
   -webkit-border-radius: 1px;

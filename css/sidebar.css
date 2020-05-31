@@ -7,27 +7,36 @@
     background-color: #ffffff;
 }
 
-
 @media only screen and (min-width: 999px) {
     .sidebar-container {
-        position: fixed;
         max-width: 337px;
-        margin-right: 5px;
-        height: calc(100% - 78px);
-        overflow-y: hidden;
+        /* height: 100vh; */
+        height: 100%;
+        /* overflow-y: scroll; */
     }
 }
 
-.sidebar-container > *:first-child {
+.sidebar-container>*:first-child {
     margin-top: .3em;
 }
 
-.sidebar-container > * {
+.sidebar-container>* {
     margin-bottom: 10px;
 }
 
-.sidebar-container > *:not(:first-child) {
+.sidebar-container>*:not(:first-child) {
     display: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.sidebar-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+
+.sidebar-container {
+    -ms-overflow-style: none;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -35,12 +44,23 @@
         height: 268px;
         background-image: url(/img/Discord_Square.png);
     }
-    
-    .sidebar-container > *:first-child {
+    .sidebar-container {
+        right: 0;
+        position: absolute;
+    }
+    .sidebar-container>*:first-child {
         margin-top: 0;
     }
-    
-    .sidebar-container > *:not(:first-child) {
+    .sidebar-container>*:not(:first-child) {
         display: block;
+    }
+}
+
+@media only screen and (min-width: 999px) and (max-width: 1444px) {
+    .sidebar-container {
+        height: 100vh;
+        overflow-y: scroll;
+        position: fixed;
+        padding-bottom: 100px;
     }
 }

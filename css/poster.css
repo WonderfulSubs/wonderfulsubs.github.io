@@ -7,7 +7,7 @@
 .poster-item-container {
     float: left;
     transform-origin: center top;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 .side-scroll .poster-item-container {
@@ -18,7 +18,7 @@
     width: 140px;
     margin: 0 auto;
     background-color: #424242;
-    box-shadow: -1px 1px 4px #b6b6b6;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .poster-item img {
@@ -28,8 +28,8 @@
     /* border-radius: .2em .2em 0 0; */
 }
 
-.post-item, .post-actions > *, .post-show-more-less, .poster-item .poster-title {
-    background-color: #e7e7e7;
+.post-item, .post-actions>*, .post-show-more-less, .poster-item .poster-title {
+    background-color: #ffffff;
     color: #686868;
 }
 

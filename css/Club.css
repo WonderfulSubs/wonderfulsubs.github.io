@@ -1,5 +1,6 @@
 .club-content-container {
     padding-bottom: 20px;
+    background-color: #ffffff;
 }
 
 .club-content-container.saving {
@@ -114,8 +115,8 @@
 .club-action-buttons > button {
     border: 2px #151515 solid;
     border-radius: 20px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .club-private-profile-msg {
