@@ -317,7 +317,7 @@ a, code {
     padding-top: 0.3em
   }
 
-  .content-wrapper-container.flex div:not(:last-child) {
+  .content-wrapper-container.flex > div:not(:last-child) {
     padding-right: 0;
   }
 }
