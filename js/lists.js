@@ -65,7 +65,7 @@ function SeriesList(initialVnode) {
     }
 
     function push(u, vnode, e) {
-        e.stopPropagation();
+        if (e && 'stopPropagation' in e) e.stopPropagation();
         if (!isObject && vnode) {
             vnode.dom.style['pointer-events'] = 'none';
             vnode.dom.style.opacity = 0.5;
@@ -88,9 +88,13 @@ function SeriesList(initialVnode) {
         load: loadList,
         push: push,
         view: function (vnode) {
+            function autoLoadPage() {
+                push(nextPage, vnode);
+            }
+
             var elements = [m(PosterGrid, { items: list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeonremove: changeOnRemove })];
             if (header) elements.unshift(m('h4', { class: 'poster-header' }, header));
-            if (nextPage || (isObject && currentCount < url.length)) elements.push(m('button', { class: 'center-element', onclick: push.bind(this, nextPage, vnode) }, 'View More'));
+            if (nextPage || (isObject && currentCount < url.length)) elements.push(llc('button', { class: 'center-element', onclick: autoLoadPage, oncreate: autoLoadPage, onobserve: autoLoadPage }, 'View More'));
             return m('div', { class: className }, elements);
         }
     };
@@ -186,9 +190,13 @@ function UserList(initialVnode) {
         load: loadList,
         push: push,
         view: function (vnode) {
+            function autoLoadPage() {
+                push(nextPage, vnode);
+            }
+
             var elements = [m(UserGrid, { items: list, sideScroll: sideScroll, preventUpdate: preventUpdate, changeonremove: changeOnRemove })];
             if (header) elements.unshift(m('h4', { class: 'poster-header' }, header));
-            if (nextPage || (isObject && currentCount < url.length)) elements.push(llc('button', { class: 'center-element', oncreate: push.bind(this, nextPage, vnode), onobserve: function(vnode) { push(nextPage, vnode); } }, 'View More'));
+            if (nextPage || (isObject && currentCount < url.length)) elements.push(llc('button', { class: 'center-element', onclick: autoLoadPage, oncreate: autoLoadPage, onobserve: autoLoadPage }, 'View More'));
             return m('div', { class: className }, elements);
         }
     };
