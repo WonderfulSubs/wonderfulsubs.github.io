@@ -139,10 +139,6 @@
     cursor: pointer;
 }
 
-.show-more:hover {
-    box-shadow: inset 0 0 0 99em rgba(255,255,255,0.2);
-}
-
 .show-more:active {
     box-shadow: inset 0 0 0 99em rgba(17,17,17,0.2);
 }
@@ -285,5 +281,18 @@
 @media only screen and (min-width: 1000px) {
     .watch-body:not(.theater-body) .content-wrapper {
         width: auto;
+    }
+}
+
+.season-list-container {
+    -ms-overflow-style: none;
+}
+
+@media only screen and (min-width: 999px) and (max-width: 1444px) {
+    .season-list-container {
+        right: -2px;
+        overflow-y: scroll;
+        position: fixed;
+        padding-bottom: 100px;
     }
 }
