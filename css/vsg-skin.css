@@ -218,3 +218,7 @@
 .video-js .vjs-load-progress{
     background:rgba(255,255,255,.5)
 }
+
+.vjs-has-started:not(.vjs-waiting) {
+    background-color: transparent;
+}
