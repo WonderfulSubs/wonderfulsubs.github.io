@@ -280,7 +280,7 @@
 
 @media only screen and (min-width: 1000px) {
     .watch-body:not(.theater-body) .content-wrapper {
-        width: auto;
+        width: 100%;
     }
 }
 
