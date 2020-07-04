@@ -11,6 +11,15 @@ var DARK_THEME_CSS =
 nav .brand{\n\
     filter:brightness(0) invert(1)\n\
 }\n\
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {\n\
+    nav .brand{\n\
+        background-image: url(/svg/white_logo.svg);\n\
+        background-repeat:no-repeat;\n\
+        padding-top:34px;\n\
+        height:34px;\n\
+        width:168px\n\
+    }\n\
+}\n\
 .nav-menu,.nav-menu-content{\n\
     background-color:#171717\n\
 }\n\
