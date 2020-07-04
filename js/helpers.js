@@ -1,3 +1,12 @@
+/* Polyfills start */
+
+// missing forEach on NodeList for IE11
+if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+}
+
+/* Polyfills end*/
+
 var domain = true ? 'https://www.wonderfulsubs.com' : '';
 var posterTallPlaceholder = /*domain +*/ '/img/poster_placeholder_tall.png';
 var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
