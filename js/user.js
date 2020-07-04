@@ -52,7 +52,7 @@ var AuthUser = {
             if (!options) options = {};
             var headers = {};
             if (options.withAuth) headers.Authorization = 'Bearer ' + AuthUser.data.token;
-            m.request({ method: 'POST', url: url, body: data, headers })
+            m.request({ method: 'POST', url: url, body: data, headers: headers })
                 .then(function (result) {
                     try {
                         if (result.data && result.data._id && (options.requireToken ? result.token : true)) {
