@@ -256,7 +256,8 @@ a, code {
 }
 
 .content-wrapper-container.flex {
-  max-width: 1440px;
+  width: 1440px;
+  max-width: 100%;
   margin: 0 auto;
   position: relative;
   flex-direction: column-reverse
