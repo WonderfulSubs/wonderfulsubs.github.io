@@ -68,8 +68,13 @@ a, code {
 }
 
 .result-switch button {
+  border-radius: 21px;
   margin: 6px 9px;
   background-color: #575757;
+}
+
+.result-switch button {
+  width: min-content;
 }
 
 .list-switch-buttons {
@@ -77,8 +82,18 @@ a, code {
 }
 
 .list-switch-buttons button {
-  min-width: 90px;
+  border-radius: 18px;
+  margin-left: 2px;
+  margin-right: 2px;
+  min-width: 98px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+@media only screen and (min-width: 329px) {
+  .list-switch-buttons button {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
 }
 
 .list-switch-buttons button.active {
@@ -94,8 +109,8 @@ a, code {
   display: none;
 }
 
-.list-switch-buttons button i {
-  padding-right: 5px;
+.list-switch-buttons button > *:not(:first-child) {
+  padding-left: 5px;
 }
 
 .nav-menu-content>div {
@@ -371,6 +386,10 @@ a, code {
   bottom: 0;
   position: fixed;
   overflow-y: scroll;
+}
+
+.panel-body .list-switch-buttons button {
+  min-width: initial;
 }
 
 .panel-bg {

@@ -95,9 +95,9 @@ var Home = {
                 //     ])
                 // ]),
                 m('div', { class: 'list-switch-buttons animated fadeIn' }, [
-                    m('button', { class: Home.currentListName === 'feed' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, [m('i'), 'Feed']),
-                    m('button', { class: Home.currentListName === 'series' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, [m('i'), 'Series']),
-                    m('button', { class: Home.currentListName === 'random' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, [m('i'), 'Random'])
+                    m('button', { class: Home.currentListName === 'feed' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Feed'),
+                    m('button', { class: Home.currentListName === 'series' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Series'),
+                    m('button', { class: Home.currentListName === 'random' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Random')
                 ]),
                 Home.currentListName === 'series' ? m(SeriesFeed) : Home.currentListName === 'random' ? m(RandomFeed) : m(HomeFeed)
             ])
