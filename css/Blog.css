@@ -21,6 +21,11 @@
     margin: 0 auto;
 }
 
+.blog-body-content td {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .blog-body-info {
     font-size: 16px;
     padding-bottom: 15px;
