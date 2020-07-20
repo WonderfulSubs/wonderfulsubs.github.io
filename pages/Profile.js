@@ -127,7 +127,6 @@ var Profile = {
     currentListName: 'favorites',
     oninit: function (vnode) {
         Profile.currentId = vnode.attrs.id;
-        scrollToTop();
     },
     view: function (vnode) {
         setTitle(Profile.title);

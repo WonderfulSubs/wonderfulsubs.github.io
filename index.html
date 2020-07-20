@@ -76,6 +76,7 @@
     <link rel="stylesheet" href="/css/Welcome.css" />
     <link rel="stylesheet" href="/css/Watch.css" />
     <link rel="stylesheet" href="/css/Club.css" />
+    <link rel="stylesheet" href="/css/Blog.css" />
     <link rel="stylesheet" href="/css/sidebar.css" />
     <link rel="stylesheet" href="/css/poster.css" />
     <link rel="stylesheet" href="/css/showcase.css" />
@@ -134,6 +135,7 @@
     <script src="/pages/Search.js"></script>
     <script src="/pages/Profile.js"></script>
     <script src="/pages/Club.js"></script>
+    <script src="/pages/BlogPost.js"></script>
     <script src="/js/darkthemecss.js" async></script>
 </head>
 
@@ -281,6 +283,7 @@
             '/profile/:id': Profile,
             '/club/:id': Club,
             '/watch/:id': Watch,
+            '/blog/post/:id': BlogPost,
         });
 
         var sidebarExists = document.querySelector('.sidebar-top-announcement');

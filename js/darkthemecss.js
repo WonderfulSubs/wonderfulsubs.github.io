@@ -92,6 +92,9 @@ body{\n\
 }\n\
 .club-action-buttons>button{\n\
     border-color:#ffffff\n\
+}\n\
+.blog-body{\n\
+    background-color:transparent\n\
 }'.replace(/\n^\s*/gm, '');
 
 window.DARK_THEME_STYLES = m('style', DARK_THEME_CSS);

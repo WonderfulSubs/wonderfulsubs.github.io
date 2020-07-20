@@ -4,7 +4,7 @@ var ShowcaseItem = {
         if (item.poster) item.poster = item.poster.replace('\/s1600\/', '\/w203-h107-c\/');
         var numOfItems = vnode.attrs.numOfItems;
         var index = vnode.attrs.index;
-        return m('a', { href: item.url, rel: 'noopener', target: '_blank' }, [
+        return m(m.route.Link, { href: item.url }, [
             m('div', { class: index !== (numOfItems - 1) ? 'bottom-divider' : undefined }, [
                 llv('img', { class: 'vertical-center', src: item.poster || getPosterWide(item.poster_wide).poster }),
                 m('span', item.title)

@@ -132,10 +132,14 @@ function convertBloggerJson(posts, options) {
         var height = options.height;
         return posts.map(function (article) {
             try {
+                var id = article.id.$t;
+                id = id.slice(id.lastIndexOf('-') + 1);
+                var url = '/blog/post/' + id;
+
                 return {
                     title: article.title.$t,
                     description: article.summary.$t,
-                    url: article.link[2].href,
+                    url: url, //article.link[2].href,
                     poster: article.media$thumbnail.url.replace('/s72-c/', !width && !height ? '/s1600/' : width && height ? '/w' + width + '-h' + height + '/' : width ? '/w' + width + '/' : '/h' + height + '/'),
                     external: true
                 };
