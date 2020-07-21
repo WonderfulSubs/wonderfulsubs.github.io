@@ -13,6 +13,7 @@ var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
 var siteShortname = 'ws';
 var hcaptchaKey = '5eff7443-d3ba-4f50-bac5-587cd647b18f';
 var hcaptchaUrl = 'https://hcaptcha.com/1/api.js';
+var gaUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
 
@@ -456,6 +457,19 @@ function loadCaptchaScript(vnode) {
         document.head.appendChild(script);
     } else {
         hcaptcha.render(vnode.dom);
+    }
+}
+
+function loadGAScript(vnode) {
+    var gaScriptExists = document.querySelector('script[src*="' + gaUrl + '"]');
+    if (!gaScriptExists) {
+        var script = document.createElement('script');
+        script.src = gaUrl;
+        script.async = true;
+        document.head.appendChild(script);
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    } else {
+        (adsbygoogle = window.adsbygoogle || []).push({});
     }
 }
 

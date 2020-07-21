@@ -30,6 +30,7 @@ var BlogPost = {
                 vnode.state.publishDate = (new Date(result.entry.published.$t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
                 vnode.state.postContent = m.trust(result.entry.content.$t);
                 setTitle(vnode.state.title);
+                loadGAScript();
             } catch(error) {
                 // console.log(error);
             }
@@ -44,6 +45,17 @@ var BlogPost = {
                 target.onclick = function (e) {
                     preventAndStop(e, openMediaViewer.bind(this, e));
                 };
+            }
+        });
+    },
+    onremove: function() {
+        document.querySelectorAll('ins').forEach(function(elem) {
+            elem.removeAttribute('data-adsbygoogle-status');
+            elem.innerHTML = '';
+            var parentElem = elem.parentElement;
+            if (parentElem && parentElem.style) {
+                if (parentElem.style.getPropertyPriority('height') === 'important') parentElem.style.removeProperty('height');
+                if (parentElem.style.getPropertyPriority('width') === 'important') parentElem.style.removeProperty('width');
             }
         });
     }

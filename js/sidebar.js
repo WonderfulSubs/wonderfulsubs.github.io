@@ -19,7 +19,9 @@ var Sidebar = {
 
         return m.fragment({}, [
             m.fragment({}, [
-                llv('div', { class: 'sidebar-top-announcement pointer', onclick: announcementClick }),
+                llv('div', { class: 'sidebar-top-announcement pointer', onclick: announcementClick }, [
+                    m("ins.adsbygoogle[data-ad-client='ca-pub-7274415743225662'][data-ad-format='vertical,rectangle,horizontal'][data-ad-slot='6251333500'][data-full-width-responsive='true']", {style: {"display": "block"}})
+                ]),
                 blogPosts,
                 m('div', { class: 'animated fadeInUp slower' },  '© ' + (new Date()).getFullYear() + ' WonderfulSubs LLC')
                 // llv('iframe', { src: 'https://discordapp.com/widget?id=386361030353354765&theme=light', width: '100%', height: '500', allowtransparency: 'true', frameborder: '0' })
