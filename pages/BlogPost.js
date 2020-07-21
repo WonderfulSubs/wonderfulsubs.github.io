@@ -48,15 +48,7 @@ var BlogPost = {
             }
         });
     },
-    onremove: function() {
-        document.querySelectorAll('ins').forEach(function(elem) {
-            elem.removeAttribute('data-adsbygoogle-status');
-            elem.innerHTML = '';
-            var parentElem = elem.parentElement;
-            if (parentElem && parentElem.style) {
-                if (parentElem.style.getPropertyPriority('height') === 'important') parentElem.style.removeProperty('height');
-                if (parentElem.style.getPropertyPriority('width') === 'important') parentElem.style.removeProperty('width');
-            }
-        });
+    onremove: function () {
+        removeGAInstances();
     }
 };

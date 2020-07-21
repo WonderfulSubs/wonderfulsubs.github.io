@@ -460,7 +460,7 @@ function loadCaptchaScript(vnode) {
     }
 }
 
-function loadGAScript(vnode) {
+function loadGAScript() {
     var gaScriptExists = document.querySelector('script[src*="' + gaUrl + '"]');
     if (!gaScriptExists) {
         var script = document.createElement('script');
@@ -471,6 +471,32 @@ function loadGAScript(vnode) {
     } else {
         (adsbygoogle = window.adsbygoogle || []).push({});
     }
+
+    document.querySelectorAll('ins').forEach(function(elem) {
+        var parentElem = elem.parentElement;
+        if (parentElem && parentElem.onclick) {
+            parentElem.onclickBackup = parentElem.onclick;
+            parentElem.onclick = undefined;
+        }
+    });
+}
+
+function removeGAInstances() {
+    document.querySelectorAll('ins').forEach(function (elem) {
+        elem.removeAttribute('data-adsbygoogle-status');
+        elem.innerHTML = '';
+        var parentElem = elem.parentElement;
+        if (parentElem) {
+            if (parentElem.style) {
+                if (parentElem.style.getPropertyPriority('height') === 'important') parentElem.style.removeProperty('height');
+                if (parentElem.style.getPropertyPriority('width') === 'important') parentElem.style.removeProperty('width');
+            }
+            if (parentElem.onclickBackup) {
+                parentElem.onclick = parentElem.onclickBackup;
+                parentElem.onclickBackup = undefined;
+            }
+        }
+    });
 }
 
 // Global Keyboard shortcuts
