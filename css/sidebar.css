@@ -8,7 +8,8 @@
 }
 
 .sidebar-top-announcement[style*="!important"] {
-    background: none;
+    background-image: none;
+    background-color: transparent;
     cursor: auto;
 }
 
