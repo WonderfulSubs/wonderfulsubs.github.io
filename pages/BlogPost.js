@@ -10,15 +10,19 @@ function insertNativePlcment() {
                 XPathResult.ANY_UNORDERED_NODE_TYPE
             ).singleNodeValue;
 
-            var nativePlcment = document.createElement('ins');
-            nativePlcment.setAttribute('class', "adsbygoogle");
-            nativePlcment.setAttribute('style', "display:block; text-align:center;");
-            nativePlcment.setAttribute('data-ad-layout', "in-article");
-            nativePlcment.setAttribute('data-ad-format', "fluid");
-            nativePlcment.setAttribute('data-ad-client', "ca-pub-7274415743225662");
-            nativePlcment.setAttribute('data-ad-slot', "5578369122");
-
-            textNode.parentElement.insertBefore(nativePlcment, textNode);
+            if (textNode) {
+                var nativePlcment = document.createElement('ins');
+                nativePlcment.setAttribute('class', "adsbygoogle");
+                nativePlcment.setAttribute('style', "display:block; text-align:center;");
+                nativePlcment.setAttribute('data-ad-layout', "in-article");
+                nativePlcment.setAttribute('data-ad-format', "fluid");
+                nativePlcment.setAttribute('data-ad-client', "ca-pub-7274415743225662");
+                nativePlcment.setAttribute('data-ad-slot', "5578369122");
+    
+                textNode.parentElement.insertBefore(nativePlcment, textNode);
+    
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
         }, 1000);
     } catch (error) {
         // console.log(error);
