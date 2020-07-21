@@ -1,7 +1,40 @@
+function insertNativePlcment() {
+    try {
+        setTimeout(function () {
+            var blogBodyContent = document.querySelector('.blog-body-content');
+
+            var textNode = document.evaluate(
+                '//br/following-sibling::text()[2]',
+                blogBodyContent,
+                null,
+                XPathResult.ANY_UNORDERED_NODE_TYPE
+            ).singleNodeValue;
+
+            var nativePlcment = document.createElement('ins');
+            nativePlcment.setAttribute('class', "adsbygoogle");
+            nativePlcment.setAttribute('style', "display:block; text-align:center;");
+            nativePlcment.setAttribute('data-ad-layout', "in-article");
+            nativePlcment.setAttribute('data-ad-format', "fluid");
+            nativePlcment.setAttribute('data-ad-client', "ca-pub-7274415743225662");
+            nativePlcment.setAttribute('data-ad-slot', "5578369122");
+
+            textNode.parentElement.insertBefore(nativePlcment, textNode);
+        }, 1000);
+    } catch (error) {
+        // console.log(error);
+    }
+}
+
+function removeNativePlcment() {
+    document.querySelectorAll('ins[data-ad-layout="in-article"]').forEach(function (elem) {
+        elem.parentElement.removeChild(elem);
+    });
+}
+
 var BlogPost = {
     view: function (vnode) {
         return m.fragment({},
-            m('div', { class: 'main-container' }, 
+            m('div', { class: 'main-container' },
                 m('div', { class: 'blog-body' }, [
                     m('h2', { class: 'blog-body-title' }, vnode.state.title),
                     m('div', { class: 'blog-body-info' }, [
@@ -30,13 +63,15 @@ var BlogPost = {
                 vnode.state.publishDate = (new Date(result.entry.published.$t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
                 vnode.state.postContent = m.trust(result.entry.content.$t);
                 setTitle(vnode.state.title);
+                removeNativePlcment();
+                insertNativePlcment();
                 loadGAScript();
-            } catch(error) {
+            } catch (error) {
                 // console.log(error);
             }
         });
     },
-    onupdate: function(vnode) {
+    onupdate: function (vnode) {
         var id = vnode.attrs.id;
         if (id !== BlogPost.currentId) BlogPost.oncreate(vnode);
 
