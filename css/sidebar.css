@@ -70,3 +70,21 @@
         padding-bottom: 100px;
     }
 }
+
+@media only screen and (max-width: 998px) {
+    .sidebar-container {
+        padding-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 699px) {
+    .sidebar-container>*:first-child {
+        margin-bottom: .3em;
+    }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 998px) {
+    .sidebar-container>*:first-child {
+        margin-bottom: 0;
+    }
+}
