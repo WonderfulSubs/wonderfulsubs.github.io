@@ -3,28 +3,41 @@ function insertNativePlcment() {
         setTimeout(function () {
             var blogBodyContent = document.querySelector('.blog-body-content');
 
-            var textNode = document.evaluate(
-                '//br/following-sibling::text()[2]',
-                blogBodyContent,
-                null,
-                XPathResult.ANY_UNORDERED_NODE_TYPE
-            ).singleNodeValue;
+            var maxNodesReached = false;
+            var nodeIndex = 2;
 
-            if (textNode) {
-                var nativePlcment = document.createElement('ins');
-                nativePlcment.setAttribute('class', "adsbygoogle");
-                nativePlcment.setAttribute('style', "display:block; text-align:center;");
-                nativePlcment.setAttribute('data-ad-layout', "in-article");
-                nativePlcment.setAttribute('data-ad-format', "fluid");
-                nativePlcment.setAttribute('data-ad-client', "ca-pub-7274415743225662");
-                nativePlcment.setAttribute('data-ad-slot', "5578369122");
-    
-                textNode.parentElement.insertBefore(nativePlcment, textNode);
+            while (maxNodesReached === false) {
+                try {
+                    var textNode = document.evaluate(
+                        '//br/following-sibling::text()[' + nodeIndex + ']',
+                        blogBodyContent,
+                        null,
+                        XPathResult.ANY_UNORDERED_NODE_TYPE
+                    ).singleNodeValue;
 
-                var br = document.createElement('br');
-                textNode.parentElement.insertBefore(br, textNode);
-    
-                (adsbygoogle = window.adsbygoogle || []).push({});
+                    nodeIndex += 3;
+
+                    if (textNode) {
+                        var nativePlcment = document.createElement('ins');
+                        nativePlcment.setAttribute('class', "adsbygoogle");
+                        nativePlcment.setAttribute('style', "display:block; text-align:center;");
+                        nativePlcment.setAttribute('data-ad-layout', "in-article");
+                        nativePlcment.setAttribute('data-ad-format', "fluid");
+                        nativePlcment.setAttribute('data-ad-client', "ca-pub-7274415743225662");
+                        nativePlcment.setAttribute('data-ad-slot', "5578369122");
+
+                        textNode.parentElement.insertBefore(nativePlcment, textNode);
+
+                        var br = document.createElement('br');
+                        textNode.parentElement.insertBefore(br, textNode);
+
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    } else {
+                        maxNodesReached = true;
+                    }
+                } catch (error) {
+                    maxNodesReached = true;
+                }
             }
         }, 1000);
     } catch (error) {
@@ -34,6 +47,8 @@ function insertNativePlcment() {
 
 function removeNativePlcment() {
     document.querySelectorAll('ins[data-ad-layout="in-article"]').forEach(function (elem) {
+        var nextEl = elem.nextElementSibling;
+        if (nextEl && nextEl.nodeName === 'BR') nextEl.parentElement.removeChild(nextEl);
         elem.parentElement.removeChild(elem);
     });
 }
