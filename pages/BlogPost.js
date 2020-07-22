@@ -20,6 +20,9 @@ function insertNativePlcment() {
                 nativePlcment.setAttribute('data-ad-slot', "5578369122");
     
                 textNode.parentElement.insertBefore(nativePlcment, textNode);
+
+                var br = document.createElement('br');
+                textNode.parentElement.insertBefore(br, textNode);
     
                 (adsbygoogle = window.adsbygoogle || []).push({});
             }
@@ -37,7 +40,7 @@ function removeNativePlcment() {
 
 var BlogPost = {
     view: function (vnode) {
-        return m.fragment({},
+        return m.fragment({}, [
             m('div', { class: 'main-container' },
                 m('div', { class: 'blog-body' }, [
                     m('h2', { class: 'blog-body-title' }, vnode.state.title),
@@ -47,8 +50,9 @@ var BlogPost = {
                     ]),
                     m('div', { class: 'blog-body-content bottom-divider' }, vnode.state.postContent)
                 ])
-            )
-        );
+            ),
+            m('style', '@media only screen and (max-width:998px){.content-wrapper-container.flex{overflow:hidden}}')
+        ]);
     },
     oncreate: function (vnode) {
         var id = vnode.attrs.id;
