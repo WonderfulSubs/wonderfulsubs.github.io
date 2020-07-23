@@ -283,7 +283,8 @@
             '/profile/:id': Profile,
             '/club/:id': Club,
             '/watch/:id': Watch,
-            '/blog/post/:id': BlogPost,
+            '/blog/entry/:year/:month/:slug': BlogPost,
+            '/blog/post/:year/:month/:slug': BlogPost,
         });
 
         var sidebarExists = document.querySelector('.sidebar-top-announcement');

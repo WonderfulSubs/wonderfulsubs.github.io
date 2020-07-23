@@ -70,21 +70,35 @@ var BlogPost = {
         ]);
     },
     oncreate: function (vnode) {
-        var id = vnode.attrs.id;
+        window.history.replaceState({}, '', m.route.get().replace('/blog/post/', '/blog/entry/'));
+        var year = vnode.attrs.year;
+        var month = vnode.attrs.month;
+        var slug = vnode.attrs.slug;
+        var id = year + month + slug;
         BlogPost.currentId = id;
+
+        var firstDayOfMonth = (new Date(year, (parseInt(month) - 1), 1)).toISOString();
+        var lastDayOfMonth = (new Date(year, parseInt(month), 0)).toISOString();
 
         setTitle("WonderfulSubs", true);
         scrollToTop();
 
+        var searchSlug = slug;
+        try {
+            var mtch = searchSlug.match(/_[0-9]+$/);
+            if (mtch) searchSlug = searchSlug.slice(0, -mtch[0].length);
+        } catch (error) { }
+
         m.jsonp({
-            url: 'https://blog.wonderfulsubs.com/feeds/posts/default/' + id + '?alt=json',
+            url: 'https://blog.wonderfulsubs.com/feeds/posts/default/?alt=json&max-results=1&q=' + encodeURIComponent(searchSlug) + '&published-min=' + encodeURIComponent(firstDayOfMonth) + '&published-max=' + encodeURIComponent(lastDayOfMonth)
         }).then(function (result) {
             try {
-                vnode.state.title = result.entry.title.$t;
-                vnode.state.authorImg = 'https:' + result.entry.author[0].gd$image.src;
-                vnode.state.authorName = result.entry.author[0].name.$t;
-                vnode.state.publishDate = (new Date(result.entry.published.$t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
-                vnode.state.postContent = m.trust(result.entry.content.$t);
+                var entry = result.feed.entry[0];
+                vnode.state.title = entry.title.$t;
+                vnode.state.authorImg = 'https:' + entry.author[0].gd$image.src;
+                vnode.state.authorName = entry.author[0].name.$t;
+                vnode.state.publishDate = (new Date(entry.published.$t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+                vnode.state.postContent = m.trust(entry.content.$t);
                 setTitle(vnode.state.title);
                 removeNativePlcment();
                 insertNativePlcment();
@@ -95,7 +109,10 @@ var BlogPost = {
         });
     },
     onupdate: function (vnode) {
-        var id = vnode.attrs.id;
+        var year = vnode.attrs.year;
+        var month = vnode.attrs.month;
+        var slug = vnode.attrs.slug;
+        var id = year + month + slug;
         if (id !== BlogPost.currentId) BlogPost.oncreate(vnode);
 
         vnode.dom.querySelectorAll('img').forEach(function (target) {

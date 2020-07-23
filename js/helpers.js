@@ -133,9 +133,7 @@ function convertBloggerJson(posts, options) {
         var height = options.height;
         return posts.map(function (article) {
             try {
-                var id = article.id.$t;
-                id = id.slice(id.lastIndexOf('-') + 1);
-                var url = '/blog/post/' + id;
+                var url = '/blog/entry' + (new URL(article.link[2].href.slice(0, -5))).pathname;
 
                 return {
                     title: article.title.$t,
