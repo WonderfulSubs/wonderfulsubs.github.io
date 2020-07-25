@@ -26,6 +26,24 @@
     padding-right: 0;
 }
 
+.blog-body-content a {
+    color: #ff9900;
+}
+
+.blog-body-content iframe {
+    border: none;
+}
+
+.blog-body-content iframe.BLOG_video_class {
+    width: 100%;
+}
+
+@media only screen and (min-width: 532px) {
+    .blog-body-content iframe.BLOG_video_class {
+        height: 453px;
+    }
+}
+
 .blog-body-info {
     font-size: 16px;
     padding-bottom: 15px;
