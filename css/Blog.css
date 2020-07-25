@@ -34,12 +34,18 @@
     border: none;
 }
 
-.blog-body-content iframe.BLOG_video_class, .blog-body-content iframe.YOUTUBE-iframe-video {
+.blog-body-content iframe.BLOG_video_class,
+.blog-body-content iframe.YOUTUBE-iframe-video,
+.blog-body-content iframe[src*="youtube.com/"],
+.blog-body-content iframe[src*="youtu.be/"] {
     width: 100%;
 }
 
 @media only screen and (min-width: 532px) {
-    .blog-body-content iframe.BLOG_video_class, .blog-body-content iframe.YOUTUBE-iframe-video {
+    .blog-body-content iframe.BLOG_video_class,
+    .blog-body-content iframe.YOUTUBE-iframe-video,
+    .blog-body-content iframe[src*="youtube.com/"],
+    .blog-body-content iframe[src*="youtu.be/"] {
         height: 453px;
     }
 }
