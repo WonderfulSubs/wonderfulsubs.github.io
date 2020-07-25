@@ -34,12 +34,12 @@
     border: none;
 }
 
-.blog-body-content iframe.BLOG_video_class {
+.blog-body-content iframe.BLOG_video_class, .blog-body-content iframe.YOUTUBE-iframe-video {
     width: 100%;
 }
 
 @media only screen and (min-width: 532px) {
-    .blog-body-content iframe.BLOG_video_class {
+    .blog-body-content iframe.BLOG_video_class, .blog-body-content iframe.YOUTUBE-iframe-video {
         height: 453px;
     }
 }
