@@ -16,8 +16,10 @@ var ShowcaseItem = {
 var ShowcaseGrid = {
     view: function (vnode) {
         var items = vnode.attrs.items;
+        var title = vnode.attrs.title;
+
         return m('div', { class: 'showcase-container animated zoomIn faster' }, [
-            m('h4', { class: 'poster-header' }, 'From the Blog'),
+            m('h4', { class: 'poster-header' }, title),
             m('div', items.map(function (item, index) {
                 return m(ShowcaseItem, { key: item.url, item: item, index: index, numOfItems: items.length });
             }))

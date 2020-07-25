@@ -15,7 +15,7 @@ function announcementClick() {
 var Sidebar = {
     view: function () {
         // var sidebarStyles = m('style', '.content-wrapper-container.flex{margin:0 auto;flex-direction:column-reverse}@media only screen and (min-width:1000px){.content-wrapper-container.flex{flex-direction:row;padding-top:0.3em}}');
-        var blogPosts = m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary?alt=json&max-results=5' });
+        var blogPosts = m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary?alt=json&max-results=5', title: 'From the Blog' });
 
         return m.fragment({}, [
             m.fragment({}, [

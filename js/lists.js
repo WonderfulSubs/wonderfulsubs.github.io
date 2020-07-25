@@ -202,24 +202,28 @@ function UserList(initialVnode) {
     };
 }
 
-var BloggerList = {
-    oninit: function (vnode) {
-        this.list = [];
-        this.loadList = function (u) {
-            return m.jsonp({
-                url: u
-            })
-                .then(function (result) {
-                    var entry = convertBloggerJson(result.feed.entry);
-                    vnode.state.list.push.apply(vnode.state.list, entry);
-                });
-        };
-        this.loadList(vnode.attrs.url, this.list);
-    },
-    push: function (u) {
-        this.loadList(u, this.list);
-    },
-    view: function () {
-        return m(ShowcaseGrid, { items: this.list });
-    }
-};
+function BloggerList(initialVnode) {
+    var title = initialVnode.attrs.title;
+
+    return {
+        oninit: function (vnode) {
+            this.list = [];
+            this.loadList = function (u) {
+                return m.jsonp({
+                    url: u
+                })
+                    .then(function (result) {
+                        var entry = convertBloggerJson(result.feed.entry);
+                        vnode.state.list.push.apply(vnode.state.list, entry);
+                    });
+            };
+            this.loadList(vnode.attrs.url, this.list);
+        },
+        push: function (u) {
+            this.loadList(u, this.list);
+        },
+        view: function () {
+            return m(ShowcaseGrid, { items: this.list, title: title });
+        }
+    };
+}
