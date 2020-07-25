@@ -20,7 +20,7 @@ var Sidebar = {
         return m.fragment({}, [
             m.fragment({}, [
                 llv('div', { class: 'sidebar-top-announcement pointer', onclick: announcementClick }, [
-                    m("ins.adsbygoogle[data-ad-client='ca-pub-7274415743225662'][data-ad-format='vertical,rectangle,horizontal'][data-ad-slot='6251333500'][data-full-width-responsive='true']", {style: {"display": "block"}})
+                    m("ins.adsbygoogle[data-ad-client='ca-pub-7274415743225662'][data-ad-format='vertical,rectangle,horizontal'][data-ad-slot='6251333500'][data-full-width-responsive='true']", { style: { "display": "block" }, backup_style: convertObjToStyles({ "display": "block" }) })
                 ]),
                 blogPosts,
                 m('div', { class: 'animated fadeInUp slower' },  '© ' + (new Date()).getFullYear() + ' WonderfulSubs LLC')

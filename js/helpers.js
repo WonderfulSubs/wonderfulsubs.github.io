@@ -134,12 +134,19 @@ function convertBloggerJson(posts, options) {
         return posts.map(function (article) {
             try {
                 var url = '/blog/entry' + (new URL(article.link[2].href.slice(0, -5))).pathname;
+                var poster = article.media$thumbnail.url;
+
+                if (poster.indexOf('//img.youtube.com/') !== -1) {
+                    poster = poster.replace('/default.', '/mqdefault.');
+                } else {
+                    poster = poster.replace('/s72-c/', !width && !height ? '/s1600/' : width && height ? '/w' + width + '-h' + height + '/' : width ? '/w' + width + '/' : '/h' + height + '/');
+                }
 
                 return {
                     title: article.title.$t,
                     description: article.summary.$t,
                     url: url, //article.link[2].href,
-                    poster: article.media$thumbnail.url.replace('/s72-c/', !width && !height ? '/s1600/' : width && height ? '/w' + width + '-h' + height + '/' : width ? '/w' + width + '/' : '/h' + height + '/'),
+                    poster: poster,
                     external: true
                 };
             } catch (error) { }
@@ -483,6 +490,8 @@ function removeGAInstances() {
     document.querySelectorAll('ins').forEach(function (elem) {
         elem.removeAttribute('data-adsbygoogle-status');
         elem.innerHTML = '';
+        if (elem.attributes.backup_style) elem.setAttribute('style', elem.attributes.backup_style.value);
+        
         var parentElem = elem.parentElement;
         if (parentElem) {
             if (parentElem.style) {
@@ -494,6 +503,10 @@ function removeGAInstances() {
                 parentElem.onclickBackup = undefined;
             }
         }
+    });
+    
+    document.querySelectorAll('*[style="height: auto !important;"').forEach(function (elem) {
+        elem.removeAttribute('style');
     });
 }
 
