@@ -126,7 +126,7 @@ var BlogPost = {
                     } catch (error) {}
     
                     setTitle(vnode.state.title);
-                    
+
                     try {
                         removeNativePlcment();
                         insertNativePlcment();
@@ -137,6 +137,8 @@ var BlogPost = {
                         didRetry = true;
                         entryId = undefined;
                         fetchPost();
+                    } else {
+                        window.location.reload();
                     }
                 }
             });
