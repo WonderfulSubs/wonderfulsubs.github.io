@@ -14,7 +14,8 @@ var ShowcaseItem = {
         return m(m.route.Link, { href: item.url }, [
             m('div', { class: ( full ? 'post-item ' : '') + ((!full && index) !== (numOfItems - 1) ? 'bottom-divider' : '') }, [
                 llv('img', { class: 'vertical-center', src: item.poster || getPosterWide(item.poster_wide).poster }),
-                m('span', item.title)
+                m('span', item.title),
+                full ? m('span', { class: 'shwcse-author top-divider' }, 'by ' + item.author + ' • ' + item.publish_date) : undefined
             ])
         ]);
     }

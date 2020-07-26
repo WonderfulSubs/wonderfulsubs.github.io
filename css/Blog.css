@@ -105,3 +105,8 @@
     width: 100%;
     padding: 0.6em;
 }
+
+.showcase-container .post-item .shwcse-author {
+    font-size: 0.6em;
+    padding: 1.2em;
+}

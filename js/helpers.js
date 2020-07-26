@@ -151,6 +151,8 @@ function convertBloggerJson(posts, options) {
 
                 return {
                     title: article.title.$t,
+                    author: article.author[0].name.$t,
+                    publish_date: (new Date(article.published.$t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })),
                     description: article.summary.$t,
                     url: url, //article.link[2].href,
                     poster: poster,
