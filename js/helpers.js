@@ -137,13 +137,17 @@ function convertBloggerJson(posts, options) {
                 id = id.slice(id.lastIndexOf('-') + 1);
 
                 var url = '/blog/entry' + (new URL(article.link[2].href.slice(0, -5))).pathname + '?e=' + id;
-                var poster = article.media$thumbnail.url;
+                
+                var poster;
+                err(function () {
+                    poster = article.media$thumbnail.url;
 
-                if (poster.indexOf('//img.youtube.com/') !== -1) {
-                    poster = poster.replace('/default.', '/mqdefault.');
-                } else {
-                    poster = poster.replace('/s72-c/', !width && !height ? '/s1600/' : width && height ? '/w' + width + '-h' + height + '/' : width ? '/w' + width + '/' : '/h' + height + '/');
-                }
+                    if (poster.indexOf('//img.youtube.com/') !== -1) {
+                        poster = poster.replace('/default.', '/mqdefault.');
+                    } else {
+                        poster = poster.replace('/s72-c/', !width && !height ? '/s1600/' : width && height ? '/w' + width + '-h' + height + '/' : width ? '/w' + width + '/' : '/h' + height + '/');
+                    }
+                });
 
                 return {
                     title: article.title.$t,

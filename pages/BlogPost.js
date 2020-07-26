@@ -53,6 +53,8 @@ function removeNativePlcment() {
     });
 }
 
+var contractions = ["aight","aint","amnt","arent","cant","cause","couldve","couldnt","couldntve","darent","daresnt","dasnt","didnt","doesnt","dont","dunno","dye","eer","everybodys","everyones","finna","gday","gimme","givn","gonna","gont","gotta","hadnt","hadve","hasnt","havent","hed","hell","hes","heve","howd","howdy","howll","howre","hows","id","idve","ill","im","ima","imo","innit","ive","isnt","itd","itll","its","iunno","lets","maam","maynt","mayve","methinks","mightnt","mightve","mustnt","mustntve","mustve","neednt","nal","neer","oclock","oer","ol","oughtnt","s","shallnt","shant","shed","shell","shes","shouldve","shouldnt","shouldntve","somebodys","someones","somethings","sore","thatll","thatre","thats","thatd","thered","therell","therere","theres","thesere","theseve","theyd","theyll","theyre","theyve","thiss","thosere","thoseve","tis","tove","twas","wanna","wasnt","wed","wedve","well","were","weve","werent","whatd","whatll","whatre","whats","whatve","whens","whered","wherell","wherere","wheres","whereve","whichd","whichll","whichre","whichs","whichve","whod","whodve","wholl","whore","whos","whove","whyd","whyre","whys","willnt","wont","wonnot","wouldve","wouldnt","wouldntve","yall","yalldve","yallre","youd","youll","youre","youve"];
+
 var BlogPost = {
     view: function (vnode) {
         return m.fragment({}, [
@@ -86,10 +88,17 @@ var BlogPost = {
         scrollToTop();
 
         var searchSlug = slug;
-        try {
+
+        err(function () {
             var mtch = searchSlug.match(/_[0-9]+$/);
             if (mtch) searchSlug = searchSlug.slice(0, -mtch[0].length);
-        } catch (error) { }
+            contractions.forEach(function(w) {
+                var reg1 = new RegExp('^' + w + '-');
+                var reg2 = new RegExp('-' + w + '$');
+                var reg3 = new RegExp('-' + w + '-', 'g');
+                searchSlug = searchSlug.replace(reg1, '').replace(reg2, '').replace(reg3, '-');
+            });
+        });
 
         var didRetry = false;
 
@@ -103,9 +112,9 @@ var BlogPost = {
                 try {
                     var entry;
                     if (entryId) {
-                        entry = result.entry
+                        entry = result.entry;
                     } else {
-                        result.feed.entry.some(function (e) {
+                        (result.feed.entry || [result.feed]).some(function (e) {
                             if (BlogPost.currentId === ((new URL(e.link[2].href.slice(0, -5))).pathname).replace(/\//g, '')) {
                                 entry = e;
                                 return true;
@@ -138,7 +147,12 @@ var BlogPost = {
                         entryId = undefined;
                         fetchPost();
                     } else {
-                        window.location.reload();
+                        if (sessionStorage.getItem('ws_try_blog_reload') !== 'true') {
+                            sessionStorage.setItem('ws_try_blog_reload', 'true');
+                            window.location.reload();
+                        } else {
+                            sessionStorage.removeItem('ws_try_blog_reload');
+                        }
                     }
                 }
             });

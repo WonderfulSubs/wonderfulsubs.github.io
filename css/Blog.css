@@ -76,3 +76,32 @@
     margin: 0 !important;
     width: 100%;
 }
+
+.showcase-container .post-feed {
+    margin: 0 auto;
+}
+
+.showcase-container .post-feed, .showcase-container .post-item {
+    width: 100%;
+    max-width: 680px;
+}
+
+.showcase-container .post-item {
+    display: grid;
+    height: auto;
+    font-size: 1.2em;
+    padding: 0;
+    margin: 0 auto 2em auto;
+    text-align: left;
+}
+
+.showcase-container .post-item img {
+    width: 100%;
+    height: auto;
+    padding: 0;
+}
+
+.showcase-container .post-item span {
+    width: 100%;
+    padding: 0.6em;
+}

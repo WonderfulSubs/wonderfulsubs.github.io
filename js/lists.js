@@ -204,6 +204,7 @@ function UserList(initialVnode) {
 
 function BloggerList(initialVnode) {
     var title = initialVnode.attrs.title;
+    var full = initialVnode.attrs.full;
 
     return {
         oninit: function (vnode) {
@@ -223,7 +224,7 @@ function BloggerList(initialVnode) {
             this.loadList(u, this.list);
         },
         view: function () {
-            return m(ShowcaseGrid, { items: this.list, title: title });
+            return m(ShowcaseGrid, { items: this.list, title: title, full: full });
         }
     };
 }

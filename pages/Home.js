@@ -1,33 +1,33 @@
-var ChatboxElem;
-function HomeToggleChatbox(options) {
-    if (window.innerWidth >= 700) {
-        Home.chatEnabled = !Home.chatEnabled;
-        if (Home.chatEnabled && !Home.chatIframeLoaded) Home.chatIframeLoaded = true;
-        if (ChatboxElem) {
-            if (!ChatboxElem.style.display) {
-                ChatboxElem.style.display = 'none';
-            } else {
-                ChatboxElem.style.display = '';
-            }
-        }
-        m.redraw();
-        setStorage('chat', Home.chatEnabled);
-        if (!options) options = {};
-        var showToast = options.showToast;
-        if (showToast) {
-            nativeToast({
-                message: 'Chat ' + (Home.chatEnabled ? 'On' : 'Off'),
-                position: 'north-east',
-                type: 'info',
-                closeOnClick: true
-            });
-        }
-    }
-}
+// var ChatboxElem;
+// function HomeToggleChatbox(options) {
+//     if (window.innerWidth >= 700) {
+//         Home.chatEnabled = !Home.chatEnabled;
+//         if (Home.chatEnabled && !Home.chatIframeLoaded) Home.chatIframeLoaded = true;
+//         if (ChatboxElem) {
+//             if (!ChatboxElem.style.display) {
+//                 ChatboxElem.style.display = 'none';
+//             } else {
+//                 ChatboxElem.style.display = '';
+//             }
+//         }
+//         m.redraw();
+//         setStorage('chat', Home.chatEnabled);
+//         if (!options) options = {};
+//         var showToast = options.showToast;
+//         if (showToast) {
+//             nativeToast({
+//                 message: 'Chat ' + (Home.chatEnabled ? 'On' : 'Off'),
+//                 position: 'north-east',
+//                 type: 'info',
+//                 closeOnClick: true
+//             });
+//         }
+//     }
+// }
 
 var HomeFeed = {
     view: function() {
-        return m('div', { class: 'post-feed' }, dataToPostFeed(posts))
+        return m('div', { class: 'post-feed' }, dataToPostFeed(posts));
     }
 }
 
@@ -38,27 +38,47 @@ var SeriesFeed = {
         return m('div', { class: 'flex two' }, [
             m('div', m(SeriesList, SeriesFeed.popular)),
             m('div', { class: 'left-divider' }, m(SeriesList, SeriesFeed.updated))
-        ])
+        ]);
     }
 };
 
-var RandomFeed = {
-    feed: { url: domain + '/api/v2/media/random?options=summary&count=24', options: { header: 'Random' } },
+var BlogFeed = {
     view: function () {
-        return m('div', { class: 'flex one' }, m('div', m(SeriesList, RandomFeed.feed)))
+        return m('div', m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary?alt=json', full: true }));
     }
 };
+
+// var RandomFeed = {
+//     feed: { url: domain + '/api/v2/media/random?options=summary&count=24', options: { header: 'Random' } },
+//     view: function () {
+//         return m('div', { class: 'flex one' }, m('div', m(SeriesList, RandomFeed.feed)))
+//     }
+// };
 
 var Home = {
     oninit: function () {
         scrollToTop();
-
-        Home.chatEnabled = window.innerWidth < 700 ? false : getStorage('chat');
-        Home.chatIframeLoaded = Home.chatEnabled;
+        if (m.route.get() === '/blog') {
+            Home.currentListName = 'blog';
+            setTitle('WonderfulSubs Blog', true);
+        } else {
+            setTitle('WonderfulSubs', true);
+        }
+        // Home.chatEnabled = window.innerWidth < 700 ? false : getStorage('chat');
+        // Home.chatIframeLoaded = Home.chatEnabled;
+    },
+    onupdate: function() {
+        if (m.route.get() === '/blog' && Home.currentListName !== 'blog') {
+            m.route.set('/');
+            setTitle('WonderfulSubs', true);
+        } else if (Home.currentListName === 'blog' && m.route.get() !== '/blog') {
+            m.route.set('/blog');
+            setTitle('WonderfulSubs Blog', true);
+        }
     },
     currentListName: 'series',
     view: function () {
-        setTitle('WonderfulSubs', true);
+        // setTitle('WonderfulSubs', true);
 
         // function turnOnChatOnResize() {
         //     if (window.innerWidth >= 700) {
@@ -97,9 +117,10 @@ var Home = {
                 m('div', { class: 'list-switch-buttons animated fadeIn' }, [
                     m('button', { class: Home.currentListName === 'feed' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Feed'),
                     m('button', { class: Home.currentListName === 'series' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Series'),
-                    m('button', { class: Home.currentListName === 'random' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Random')
+                    m('button', { class: Home.currentListName === 'blog' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Blog')
+                    // m('button', { class: Home.currentListName === 'random' ? 'active' : undefined, onclick: function(e) {switchList(e, Home);} }, 'Random')
                 ]),
-                Home.currentListName === 'series' ? m(SeriesFeed) : Home.currentListName === 'random' ? m(RandomFeed) : m(HomeFeed)
+                Home.currentListName === 'series' ? m(SeriesFeed) : Home.currentListName === 'blog' /*'random'*/ ? m(BlogFeed) /*m(RandomFeed)*/ : m(HomeFeed)
             ])
         ]);
     }
