@@ -7,7 +7,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 
 /* Polyfills end*/
 
-var domain = true ? 'https://www.wonderfulsubs.com' : '';
+var domain = true ? 'https://api.wonderfulsubs.com' : '';
 var posterTallPlaceholder = /*domain +*/ '/img/poster_placeholder_tall.png';
 var posterWidePlaceholder = /*domain +*/ '/img/poster_placeholder_wide.png';
 var siteShortname = 'ws';
