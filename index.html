@@ -140,6 +140,42 @@
     <script src="/pages/Blog.js"></script>
     <script src="/pages/BlogPost.js"></script>
     <script src="/js/darkthemecss.js" async></script>
+    
+    <script type='application/ld+json'>
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "url": "https://www.wonderfulsubs.com",
+            "logo": "https://www.wonderfulsubs.com/img/icon.png"
+        }
+    </script>
+    <script type='application/ld+json'>
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "WonderfulSubs",
+            "url": "https://www.wonderfulsubs.com",
+            "sameAs": [
+              "https://www.facebook.com/WonderfulSubs",
+              "https://twitter.com/WonderfulSubs",
+              "https://www.youtube.com/WonderfulSubs",
+              "https://www.instagram.com/wonderful.subs"
+            ]
+        }
+    </script>
+    <script type='application/ld+json'>
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "WonderfulSubs",
+            "url": "https://www.wonderfulsubs.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.wonderfulsubs.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
 </head>
 
 <body>
