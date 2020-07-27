@@ -15,7 +15,9 @@ function insertNativePlcment() {
                         XPathResult.ANY_UNORDERED_NODE_TYPE
                     ).singleNodeValue;
 
-                    nodeIndex += 3;
+                    if (!textNode) textNode = document.querySelectorAll('div > br')[nodeIndex];
+
+                    nodeIndex += 4;
 
                     if (textNode) {
                         var nativePlcment = document.createElement('ins');
