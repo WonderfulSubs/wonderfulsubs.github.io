@@ -95,7 +95,7 @@ var BlogPost = {
                     ]),
                     m('div', { class: 'blog-body-content bottom-divider' }, vnode.state.postContent),
                     vnode.state.category ? m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary/-/' + vnode.state.category + '?alt=json&max-results=5', title: 'Recommended' }) : undefined,
-                    // vnode.state.show_comments ? m('div', { id: 'disqus_thread' }) : m('button', { class: 'show-comments-btn', onclick: loadDisqusComments.bind(this, vnode) }, 'Show Comments')
+                    vnode.state.show_comments ? m('div', { id: 'disqus_thread' }) : m('button', { class: 'show-comments-btn', onclick: loadDisqusComments.bind(this, vnode) }, 'Show Comments')
                 ])
             ),
             m('style', '@media only screen and (max-width:998px){.content-wrapper-container.flex{overflow:hidden}}')
