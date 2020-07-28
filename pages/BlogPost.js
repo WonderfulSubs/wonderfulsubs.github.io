@@ -8,18 +8,19 @@ function insertNativePlcment() {
 
             while (maxNodesReached === false) {
                 try {
-                    var textNode = document.evaluate(
-                        '//br/following-sibling::text()[' + nodeIndex + ']',
-                        blogBodyContent,
-                        null,
-                        XPathResult.ANY_UNORDERED_NODE_TYPE
-                    ).singleNodeValue;
+                    var textNode = document.querySelectorAll('div > br')[nodeIndex];
 
-                    var isInDiv = false;
+                    var isInDiv = true;
 
                     if (!textNode) {
-                        textNode = document.querySelectorAll('div > br')[nodeIndex];
-                        isInDiv = true;
+                        textNode = document.evaluate(
+                            '//br/following-sibling::text()[' + nodeIndex + ']',
+                            blogBodyContent,
+                            null,
+                            XPathResult.ANY_UNORDERED_NODE_TYPE
+                        ).singleNodeValue;
+
+                        if (textNode) isInDiv = false;
                     }
 
                     nodeIndex += 4;
@@ -35,8 +36,10 @@ function insertNativePlcment() {
 
                         textNode.parentElement.insertBefore(nativePlcment, textNode);
 
-                        if (!isInDiv) {
-                            var br = document.createElement('br');
+                        var br = document.createElement('br');
+                        if (isInDiv) {
+                            nativePlcment.parentElement.insertBefore(br, nativePlcment);
+                        } else {
                             textNode.parentElement.insertBefore(br, textNode);
                         }
 
