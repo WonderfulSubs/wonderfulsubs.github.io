@@ -6,22 +6,18 @@ function insertNativePlcment() {
             var maxNodesReached = false;
             var nodeIndex = 2;
 
+            var isInDiv = Boolean(document.querySelector('div > br'));
+
             while (maxNodesReached === false) {
                 try {
-                    var textNode = document.querySelectorAll('div > br')[nodeIndex];
 
-                    var isInDiv = true;
 
-                    if (!textNode) {
-                        textNode = document.evaluate(
-                            '//br/following-sibling::text()[' + nodeIndex + ']',
-                            blogBodyContent,
-                            null,
-                            XPathResult.ANY_UNORDERED_NODE_TYPE
-                        ).singleNodeValue;
-
-                        if (textNode) isInDiv = false;
-                    }
+                    var textNode = isInDiv ? document.querySelectorAll('div > br')[nodeIndex] : document.evaluate(
+                        '//br/following-sibling::text()[' + nodeIndex + ']',
+                        blogBodyContent,
+                        null,
+                        XPathResult.ANY_UNORDERED_NODE_TYPE
+                    ).singleNodeValue;
 
                     nodeIndex += 4;
 
