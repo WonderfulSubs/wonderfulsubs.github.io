@@ -15,7 +15,12 @@ function insertNativePlcment() {
                         XPathResult.ANY_UNORDERED_NODE_TYPE
                     ).singleNodeValue;
 
-                    if (!textNode) textNode = document.querySelectorAll('div > br')[nodeIndex];
+                    var isInDiv = false;
+
+                    if (!textNode) {
+                        textNode = document.querySelectorAll('div > br')[nodeIndex];
+                        isInDiv = true;
+                    }
 
                     nodeIndex += 4;
 
@@ -30,8 +35,10 @@ function insertNativePlcment() {
 
                         textNode.parentElement.insertBefore(nativePlcment, textNode);
 
-                        var br = document.createElement('br');
-                        textNode.parentElement.insertBefore(br, textNode);
+                        if (!isInDiv) {
+                            var br = document.createElement('br');
+                            textNode.parentElement.insertBefore(br, textNode);
+                        }
 
                         (adsbygoogle = window.adsbygoogle || []).push({});
                     } else {
