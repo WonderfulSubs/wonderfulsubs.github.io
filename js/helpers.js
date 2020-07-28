@@ -14,6 +14,7 @@ var siteShortname = 'ws';
 var hcaptchaKey = '5eff7443-d3ba-4f50-bac5-587cd647b18f';
 var hcaptchaUrl = 'https://hcaptcha.com/1/api.js';
 var gaUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+var disqusUrl = 'https://wonderful-subs.disqus.com/embed.js';
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
 
@@ -493,6 +494,16 @@ function loadGAScript() {
             parentElem.onclick = undefined;
         }
     });
+}
+
+function loadDisqusScript() {
+    var disqusScriptExists = document.querySelector('script[src*="' + disqusUrl + '"]');
+    if (!disqusScriptExists) {
+        var script = document.createElement('script');
+        script.src = disqusUrl;
+        script.setAttribute('data-timestamp', +new Date());
+        document.head.appendChild(script);
+    }
 }
 
 function removeGAInstances() {

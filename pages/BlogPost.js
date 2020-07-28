@@ -10,8 +10,6 @@ function insertNativePlcment() {
 
             while (maxNodesReached === false) {
                 try {
-
-
                     var textNode = isInDiv ? document.querySelectorAll('div > br')[nodeIndex] : document.evaluate(
                         '//br/following-sibling::text()[' + nodeIndex + ']',
                         blogBodyContent,
@@ -61,12 +59,34 @@ function removeNativePlcment() {
     });
 }
 
+function loadDisqusComments(vnode) {
+    if (vnode.state.canon_id && vnode.state.canon_url && vnode.state.title) {
+        vnode.state.show_comments = true;
+        m.redraw();
+        setTimeout(function() {
+            var useReload = 'DISQUS' in window;
+            window.disqus_config = function () {
+                this.page.url = window.location.origin + vnode.state.canon_url;
+                this.page.identifier = vnode.state.canon_id;
+                this.page.title = vnode.state.title;
+            };
+            loadDisqusScript();
+            if (useReload) {
+                window.DISQUS.reset({
+                    reload: true,
+                    config: window.disqus_config
+                });
+            }
+        }, 500);
+    }
+}
+
 var contractions = ["aight","aint","amnt","arent","cant","cause","couldve","couldnt","couldntve","darent","daresnt","dasnt","didnt","doesnt","dont","dunno","dye","eer","everybodys","everyones","finna","gday","gimme","givn","gonna","gont","gotta","hadnt","hadve","hasnt","havent","hed","hell","hes","heve","howd","howdy","howll","howre","hows","id","idve","ill","im","ima","imo","innit","ive","isnt","itd","itll","its","iunno","lets","maam","maynt","mayve","methinks","mightnt","mightve","mustnt","mustntve","mustve","neednt","nal","neer","oclock","oer","ol","oughtnt","s","shallnt","shant","shed","shell","shes","shouldve","shouldnt","shouldntve","somebodys","someones","somethings","sore","thatll","thatre","thats","thatd","thered","therell","therere","theres","thesere","theseve","theyd","theyll","theyre","theyve","thiss","thosere","thoseve","tis","tove","twas","wanna","wasnt","wed","wedve","well","were","weve","werent","whatd","whatll","whatre","whats","whatve","whens","whered","wherell","wherere","wheres","whereve","whichd","whichll","whichre","whichs","whichve","whod","whodve","wholl","whore","whos","whove","whyd","whyre","whys","willnt","wont","wonnot","wouldve","wouldnt","wouldntve","yall","yalldve","yallre","youd","youll","youre","youve"];
 
 var BlogPost = {
     view: function (vnode) {
         return m.fragment({}, [
-            m('div', { class: 'main-container' },
+            m('div', { class: 'main-container' }, 
                 m('div', { class: 'blog-body' }, [
                     m('h2', { class: 'blog-body-title' }, vnode.state.title),
                     m('div', { class: 'blog-body-info' }, [
@@ -74,14 +94,17 @@ var BlogPost = {
                         m('span', 'by ' + vnode.state.authorName + ' • ' + vnode.state.publishDate)
                     ]),
                     m('div', { class: 'blog-body-content bottom-divider' }, vnode.state.postContent),
-                    vnode.state.category ? m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary/-/' + vnode.state.category + '?alt=json&max-results=5', title: 'Recommended' }) : undefined
+                    vnode.state.category ? m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary/-/' + vnode.state.category + '?alt=json&max-results=5', title: 'Recommended' }) : undefined,
+                    vnode.state.show_comments ? m('div', { id: 'disqus_thread' }) : m('button', { class: 'show-comments-btn', onclick: loadDisqusComments.bind(this, vnode) }, 'Show Comments')
                 ])
             ),
             m('style', '@media only screen and (max-width:998px){.content-wrapper-container.flex{overflow:hidden}}')
         ]);
     },
     oncreate: function (vnode) {
-        window.history.replaceState({}, '', m.parsePathname(m.route.get()).path.replace('/blog/post/', '/blog/entry/'));
+        var hash = window.location.hash;
+        vnode.state.show_comments = false;
+        window.history.replaceState({}, '', m.parsePathname(m.route.get()).path.replace('/blog/post/', '/blog/entry/') + hash);
         var year = vnode.attrs.year;
         var month = vnode.attrs.month;
         var slug = vnode.attrs.slug;
@@ -131,6 +154,12 @@ var BlogPost = {
                     }
                     if (!entry) throw Error;
 
+                    var canon_id = entry.id.$t;
+                    canon_id = canon_id.slice(canon_id.lastIndexOf('-') + 1);
+                    var canon_url = '/blog/entry' + (new URL(entry.link[2].href.slice(0, -5))).pathname;
+                    vnode.state.canon_id = canon_id;
+                    vnode.state.canon_url = canon_url;
+
                     vnode.state.title = entry.title.$t;
                     vnode.state.authorImg = 'https:' + entry.author[0].gd$image.src;
                     vnode.state.authorName = entry.author[0].name.$t;
@@ -144,11 +173,15 @@ var BlogPost = {
     
                     setTitle(vnode.state.title);
 
-                    try {
+                    err(function() {
                         removeNativePlcment();
                         insertNativePlcment();
                         loadGAScript();
-                    } catch (error) { }
+                    });
+
+                    err(function() {
+                        if (window.location.hash.indexOf('#comment-') === 0) loadDisqusComments(vnode);
+                    });
                 } catch (error) {
                     if (!didRetry) {
                         didRetry = true;

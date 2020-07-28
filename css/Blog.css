@@ -110,3 +110,13 @@
     font-size: 0.6em;
     padding: 1.2em;
 }
+
+.blog-body #disqus_thread {
+    padding-top: 1.3em;
+}
+
+.blog-body .show-comments-btn {
+    border-radius: 19px;
+    margin: 1.3em auto 0;
+    display: block;
+}
