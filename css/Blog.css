@@ -120,3 +120,9 @@
     margin: 1.3em auto 0;
     display: block;
 }
+
+.blog-body iframe.instagram-media {
+    margin: 0 auto !important;
+    display: block !important;
+    min-width: initial !important;
+}
