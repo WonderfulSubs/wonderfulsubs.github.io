@@ -514,6 +514,8 @@ function loadInstgramScript() {
         script.src = instgramEmbedUrl;
         script.async = true;
         document.head.appendChild(script);
+    } else {
+        window.instgrm.Embeds.process();
     }
 }
 
