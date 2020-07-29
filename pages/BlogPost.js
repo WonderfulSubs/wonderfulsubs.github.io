@@ -213,6 +213,10 @@ var BlogPost = {
                 };
             }
         });
+
+        if (document.querySelector('.instagram-media')) {
+            loadInstgramScript();
+        }
     },
     onremove: function () {
         removeGAInstances();
