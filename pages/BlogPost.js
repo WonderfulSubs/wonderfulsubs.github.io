@@ -1,4 +1,4 @@
-function insertNativePlcment() {
+function insertNativePlcment(callback) {
     try {
         setTimeout(function () {
             var blogBodyContent = document.querySelector('.blog-body-content');
@@ -45,18 +45,25 @@ function insertNativePlcment() {
                     maxNodesReached = true;
                 }
             }
+            if (typeof callback === 'function') callback();
         }, 1000);
     } catch (error) {
         // console.log(error);
+        if (typeof callback === 'function') callback();
     }
 }
 
-function removeNativePlcment() {
-    document.querySelectorAll('ins[data-ad-layout="in-article"]').forEach(function (elem) {
-        var nextEl = elem.nextElementSibling;
-        if (nextEl && nextEl.nodeName === 'BR') nextEl.parentElement.removeChild(nextEl);
-        elem.parentElement.removeChild(elem);
-    });
+function removeNativePlcment(callback) {
+    try {
+        document.querySelectorAll('ins[data-ad-layout="in-article"]').forEach(function (elem) {
+            var nextEl = elem.nextElementSibling;
+            if (nextEl && nextEl.nodeName === 'BR') nextEl.parentElement.removeChild(nextEl);
+            elem.parentElement.removeChild(elem);
+        });
+        if (typeof callback === 'function') callback();
+    } catch(error) {
+        if (typeof callback === 'function') callback();
+    }
 }
 
 function loadDisqusComments(vnode) {
@@ -85,6 +92,7 @@ var contractions = ["aight","aint","amnt","arent","cant","cause","couldve","coul
 
 var BlogPost = {
     view: function (vnode) {
+        if (!vnode.state.canon_id) return;
         return m.fragment({}, [
             m('div', { class: 'main-container' }, 
                 m('div', { class: 'blog-body' }, [
@@ -165,18 +173,18 @@ var BlogPost = {
                     vnode.state.authorName = entry.author[0].name.$t;
                     vnode.state.publishDate = (new Date(entry.published.$t).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
                     vnode.state.postContent = m.trust(entry.content.$t);
-                    try {
+                    err(function() {
                         var categories = entry.category.map(function(e) {return e.term;});
                         var category = categories[Math.floor(Math.random() * categories.length)];
                         vnode.state.category = category;
-                    } catch (error) {}
+                    });
     
                     setTitle(vnode.state.title);
 
                     err(function() {
-                        removeNativePlcment();
-                        insertNativePlcment();
-                        loadGAScript();
+                        removeNativePlcment(function() {
+                            insertNativePlcment(loadGAScript);
+                        });
                     });
 
                     err(function() {
@@ -206,20 +214,23 @@ var BlogPost = {
         var id = year + month + slug;
         if (id !== BlogPost.currentId) BlogPost.oncreate(vnode);
 
-        vnode.dom.querySelectorAll('img').forEach(function (target) {
-            if (!target.onclick) {
-                target.onclick = function (e) {
-                    preventAndStop(e, openMediaViewer.bind(this, e));
-                };
+        if (vnode.dom) {
+            var recList = vnode.dom.querySelector('.showcase-container');
+            vnode.dom.querySelectorAll('img').forEach(function (target) {
+                if ((recList ? !recList.contains(target) : true) && !target.onclick) {
+                    target.onclick = function (e) {
+                        preventAndStop(e, openMediaViewer.bind(this, e));
+                    };
+                }
+            });
+
+            if (vnode.dom.querySelector('.instagram-media')) {
+                loadInstgramScript();
             }
-        });
 
-        if (document.querySelector('.instagram-media')) {
-            loadInstgramScript();
-        }
-
-        if (document.querySelector('.twitter-tweet')) {
-            loadTwitterScript();
+            if (vnode.dom.querySelector('.twitter-tweet')) {
+                loadTwitterScript();
+            }
         }
     },
     onremove: function () {

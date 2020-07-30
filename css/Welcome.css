@@ -27,6 +27,10 @@
     color: #1DA1F2;
 }
 
+.welcome-message i.icon-instagram {
+    color: #E1306C;
+}
+
 .welcome-message i.icon-youtube-play {
     color: #FF0000;
 }

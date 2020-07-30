@@ -516,7 +516,7 @@ function loadInstgramScript() {
         script.async = true;
         document.head.appendChild(script);
     } else {
-        window.instgrm.Embeds.process();
+        if (window.instgrm) window.instgrm.Embeds.process();
     }
 }
 
@@ -528,7 +528,7 @@ function loadTwitterScript() {
         script.charset = 'utf-8';
         document.head.appendChild(script);
     } else {
-        window.twttr.widgets.load();
+        if (window.twttr) window.twttr.widgets.load();
     }
 }
 

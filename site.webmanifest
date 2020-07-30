@@ -13,8 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "start_url": "https://www.wonderfulsubs.com",
+    "theme_color": "#171717",
+    "background_color": "#171717",
     "display": "standalone"
 }
