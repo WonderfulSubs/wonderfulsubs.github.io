@@ -217,6 +217,10 @@ var BlogPost = {
         if (document.querySelector('.instagram-media')) {
             loadInstgramScript();
         }
+
+        if (document.querySelector('.twitter-tweet')) {
+            loadTwitterScript();
+        }
     },
     onremove: function () {
         removeGAInstances();

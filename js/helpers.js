@@ -16,6 +16,7 @@ var hcaptchaUrl = 'https://hcaptcha.com/1/api.js';
 var gaUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
 var disqusUrl = 'https://wonderful-subs.disqus.com/embed.js';
 var instgramEmbedUrl = 'https://www.instagram.com/embed.js';
+var twitterEmbedUrl = 'https://platform.twitter.com/widgets.js';
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
 
@@ -516,6 +517,18 @@ function loadInstgramScript() {
         document.head.appendChild(script);
     } else {
         window.instgrm.Embeds.process();
+    }
+}
+
+function loadTwitterScript() {
+    var twitterEmbedScriptExists = document.querySelector('script[src*="' + twitterEmbedUrl + '"]');
+    if (!twitterEmbedScriptExists) {
+        var script = document.createElement('script');
+        script.src = twitterEmbedUrl;
+        script.charset = 'utf-8';
+        document.head.appendChild(script);
+    } else {
+        window.twttr.widgets.load();
     }
 }
 
