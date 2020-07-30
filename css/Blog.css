@@ -126,3 +126,7 @@
     display: block !important;
     min-width: initial !important;
 }
+
+.blog-body .twitter-tweet {
+    margin: 0 auto !important;
+}
