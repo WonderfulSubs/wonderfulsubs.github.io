@@ -201,11 +201,11 @@
                     <div class="nav-buttons dropdown">
                         <button class="dropbtn"><label>&#9776;</label></button>
                         <div class="dropdown-content side-scroll animated faster">
-                            <button class="dropbtn subdrop"><label>Series</label></button>
+                            <!-- <button class="dropbtn subdrop"><label>Series</label></button>
                             <div class="dropdown-content animated faster">
                                 <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
                                 <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
-                            </div>
+                            </div> -->
                             <a href="/blog" onclick="routeAnchor(event, '/blog');"
                                 class="button">Blog</a>
                         </div>
@@ -310,13 +310,14 @@
 
         m.route.prefix = '';
         m.route(root, '/', {
-            '/': Home,
+            '/': tmpRte,
+            // '/': Home,
             '/blog': Blog,
             '/feed': Home,
             '/login': Login,
             '/signup': Welcome,
-            '/series': Series,
-            '/genre': Genre,
+            // '/series': Series,
+            // '/genre': Genre,
             // '/popular': SeriesFeed.popular,
             // '/updated': SeriesFeed.updated,
             '/search': Search,

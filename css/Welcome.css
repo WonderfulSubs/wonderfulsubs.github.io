@@ -47,6 +47,10 @@
     color: #575757;
 }
 
+.welcome-message .is-home p {
+    display: block;
+}
+
 @media only screen and (min-width: 700px) {
     .welcome-message {
         text-align: left;

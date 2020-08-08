@@ -22,6 +22,12 @@ var loginErrMsg = 'You must log in to do that.';
 
 var supportsTouch = 'ontouchend' in document.documentElement;
 
+var tmpRte = {
+    view: function() {
+        return m(Welcome, { isHome: true });
+    }
+};
+
 // Temp Coming soon toast
 function comingSoon() {
     nativeToast({
