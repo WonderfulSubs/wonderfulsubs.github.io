@@ -19,7 +19,7 @@ var Welcome = {
                     m('p', m('a', { href: 'https://discord.gg/CegGQ2G', target: '_blank', rel: 'noreferrer' }, [m('i.icon-comment'), 'Join us on Discord'])),
                     m('p', m('a', { href: 'https://app.wonderfulsubs.com/newsletter', target: '_blank', rel: 'noreferrer' }, [m('i.icon-mail-alt'), 'Subscribe to our Newsletter']))
                 ]),
-                m('button', { onclick: function(){ m.route.set('/blog'); } }, 'Check Out Our Blog For More!')
+                m('button', { style: { borderRadius: '19px' }, onclick: function(){ m.route.set('/blog'); } }, 'Check Out Our Blog For More!')
             ]),
             isHome ? undefined : m(Login)
         ]);
