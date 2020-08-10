@@ -1,12 +1,12 @@
 function announcementClick() {
-    window.open('https://discord.gg/AQkYAbb');
+    window.open('https://ko-fi.com/wonderfulsubs');
     err(function () {
         ga('send', {
             hitType: 'event',
             eventCategory: 'Top Announcement',
             eventAction: 'Click',
-            eventLabel: 'Join WS Discord',//title,
-            eventValue: 3552917,//id,
+            eventLabel: 'Become A Supporter',//title,
+            eventValue: 2557916,//id,
         });
     });
 }

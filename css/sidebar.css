@@ -3,7 +3,7 @@
     height: 72px;
     background: center no-repeat;
     background-size: cover;
-    background-image: url(/img/Discord_Rectangle.png);
+    background-image: url(/img/Support_Rectangle.png);
     background-color: #ffffff;
 }
 
@@ -49,7 +49,7 @@
 @media only screen and (min-width: 1000px) {
     .sidebar-top-announcement {
         height: 268px;
-        background-image: url(/img/Discord_Square.png);
+        background-image: url(/img/Support_Square.png);
     }
     .sidebar-container {
         right: 0;
