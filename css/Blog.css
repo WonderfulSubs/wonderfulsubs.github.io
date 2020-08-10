@@ -130,3 +130,13 @@
 .blog-body .twitter-tweet {
     margin: 0 auto !important;
 }
+
+.blog-body .spot-the-diff {
+    background-color: #808080;
+    color: transparent;
+}
+
+.blog-body .spot-the-diff:hover {
+    background-color: inherit;
+    color: inherit;
+}
