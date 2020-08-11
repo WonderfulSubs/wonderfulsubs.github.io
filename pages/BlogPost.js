@@ -6,11 +6,12 @@ function insertNativePlcment(callback) {
             var maxNodesReached = false;
             var nodeIndex = 2;
 
-            var isInDiv = Boolean(document.querySelector('div > br'));
+            var isInParagraph = Boolean(blogBodyContent.querySelector('p'));
+            var isInDiv = Boolean(blogBodyContent.querySelector('div > br'));
 
             while (maxNodesReached === false) {
                 try {
-                    var textNode = isInDiv ? document.querySelectorAll('div > br')[nodeIndex] : document.evaluate(
+                    var textNode = isInParagraph ? blogBodyContent.querySelectorAll('p')[nodeIndex] : isInDiv ? blogBodyContent.querySelectorAll('div > br')[nodeIndex] : document.evaluate(
                         '//br/following-sibling::text()[' + nodeIndex + ']',
                         blogBodyContent,
                         null,
@@ -31,7 +32,7 @@ function insertNativePlcment(callback) {
                         textNode.parentElement.insertBefore(nativePlcment, textNode);
 
                         var br = document.createElement('br');
-                        if (isInDiv) {
+                        if (isInParagraph || isInDiv) {
                             nativePlcment.parentElement.insertBefore(br, nativePlcment);
                         } else {
                             textNode.parentElement.insertBefore(br, textNode);
