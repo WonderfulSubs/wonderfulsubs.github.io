@@ -140,3 +140,10 @@
     background-color: inherit;
     color: inherit;
 }
+
+.twitter-tweet + .twitter-tweet,
+iframe.instagram-media + iframe.instagram-media,
+ins.adsbygoogle + .twitter-tweet,
+ins.adsbygoogle + iframe.instagram-media {
+    padding-top: 30px;
+}

@@ -6,12 +6,12 @@ function insertNativePlcment(callback) {
             var maxNodesReached = false;
             var nodeIndex = 2;
 
-            var isInParagraph = Boolean(blogBodyContent.querySelector('p'));
-            var isInDiv = Boolean(blogBodyContent.querySelector('div > br'));
+            var allowedElems = 'p,div > br,iframe.instagram-media,.twitter-tweet';
+            var insertElems = Boolean(blogBodyContent.querySelector(allowedElems));
 
             while (maxNodesReached === false) {
                 try {
-                    var textNode = isInParagraph ? blogBodyContent.querySelectorAll('p')[nodeIndex] : isInDiv ? blogBodyContent.querySelectorAll('div > br')[nodeIndex] : document.evaluate(
+                    var textNode = insertElems ? blogBodyContent.querySelectorAll(allowedElems)[nodeIndex] : document.evaluate(
                         '//br/following-sibling::text()[' + nodeIndex + ']',
                         blogBodyContent,
                         null,
@@ -32,7 +32,7 @@ function insertNativePlcment(callback) {
                         textNode.parentElement.insertBefore(nativePlcment, textNode);
 
                         var br = document.createElement('br');
-                        if (isInParagraph || isInDiv) {
+                        if (insertElems) {
                             nativePlcment.parentElement.insertBefore(br, nativePlcment);
                         } else {
                             textNode.parentElement.insertBefore(br, textNode);
