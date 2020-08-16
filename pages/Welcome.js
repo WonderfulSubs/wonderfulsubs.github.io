@@ -9,7 +9,7 @@ var Welcome = {
                     m('h1', ['Welcome to ', m('span', 'WonderfulSubs')]),
                     m('h2', 'Anime Entertainment Paradise'),
                     m('p', 'We strive to entertain and inform people of the latest and greatest in the Anime world.'),
-                    isHome ? m(VideoPlayer, { src: { src: 'https://www.youtube.com/watch?v=G8Aq7AManu8&list=PLFKXApK6bByWwRr8f_bwX2f1pKyNLtceA', type: 'video/youtube' }, options: { muted: true } }) : undefined
+                    /*isHome ? m(VideoPlayer, { src: { src: 'https://www.youtube.com/watch?v=G8Aq7AManu8&list=PLFKXApK6bByWwRr8f_bwX2f1pKyNLtceA', type: 'video/youtube' }, options: { muted: true } }) : undefined*/
                 ]),
                 m('div', {class: 'flex one two-1000' + (isHome ? ' is-home' : '')}, [
                     m('p', m('a', { href: 'https://www.facebook.com/WonderfulSubs', target: '_blank', rel: 'noreferrer' }, [m('i.icon-facebook-squared'), 'Like us on Facebook'])),
