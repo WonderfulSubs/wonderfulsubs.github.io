@@ -17,6 +17,7 @@ var gaUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
 var disqusUrl = 'https://wonderful-subs.disqus.com/embed.js';
 var instgramEmbedUrl = 'https://www.instagram.com/embed.js';
 var twitterEmbedUrl = 'https://platform.twitter.com/widgets.js';
+var redditEmbedUrl = 'https://embed.redditmedia.com/widgets/platform.js';
 var defaultErrMsg = 'Something went wrong. Please try again later.';
 var loginErrMsg = 'You must log in to do that.';
 
@@ -535,6 +536,16 @@ function loadTwitterScript() {
         document.head.appendChild(script);
     } else {
         if (window.twttr) window.twttr.widgets.load();
+    }
+}
+
+function loadRedditScript() {
+    var redditEmbedScriptExists = document.querySelector('script[src*="' + redditEmbedUrl + '"]');
+    if (!redditEmbedScriptExists) {
+        var script = document.createElement('script');
+        script.src = redditEmbedUrl;
+        script.async = true;
+        document.head.appendChild(script);
     }
 }
 

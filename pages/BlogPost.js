@@ -232,6 +232,11 @@ var BlogPost = {
             if (vnode.dom.querySelector('.twitter-tweet')) {
                 loadTwitterScript();
             }
+
+            if (vnode.dom.querySelector('.embedly-card')) {
+                loadRedditScript();
+            }
+            
         }
     },
     onremove: function () {
