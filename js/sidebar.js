@@ -33,6 +33,12 @@ var Sidebar = {
                         }
                     })
                 ]),
+                m('div', { id: 'M628654ScriptRootC994332', oncreate: function() {
+                    var s = document.createElement('script');
+                    s.src = 'https://jsc.mgid.com/w/o/wonderfulsubs.com.994332.js';
+                    s.async = true;
+                    document.head.appendChild(s);
+                } }),
                 blogPosts,
                 m('div', { class: 'animated fadeInUp slower' }, '© ' + (new Date()).getFullYear() + ' WonderfulSubs LLC')
                 // llv('iframe', { src: 'https://discordapp.com/widget?id=386361030353354765&theme=light', width: '100%', height: '500', allowtransparency: 'true', frameborder: '0' })
