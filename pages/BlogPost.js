@@ -189,6 +189,10 @@ var BlogPost = {
                     });
 
                     err(function() {
+                        pintrk('track', 'pagevisit');
+                    });
+
+                    err(function() {
                         if (window.location.hash.indexOf('#comment-') === 0) loadDisqusComments(vnode);
                     });
                 } catch (error) {
