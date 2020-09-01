@@ -100,6 +100,18 @@ function loadMgidPlacements() {
     document.head.appendChild(s);
 }
 
+function loadOutbrainPlacements() {
+    var o = document.querySelectorAll('script[src*=".outbrain.com"]');
+    o.forEach(function(elem) {
+        elem.parentElement.removeChild(elem);
+    });
+    window.OBR = undefined;
+    var s = document.createElement('script');
+    s.src = '//widgets.outbrain.com/outbrain.js';
+    s.async = true;
+    document.head.appendChild(s);
+}
+
 var contractions = ["aight","aint","amnt","arent","cant","cause","couldve","couldnt","couldntve","darent","daresnt","dasnt","didnt","doesnt","dont","dunno","dye","eer","everybodys","everyones","finna","gday","gimme","givn","gonna","gont","gotta","hadnt","hadve","hasnt","havent","hed","hell","hes","heve","howd","howdy","howll","howre","hows","id","idve","ill","im","ima","imo","innit","ive","isnt","itd","itll","its","iunno","lets","maam","maynt","mayve","methinks","mightnt","mightve","mustnt","mustntve","mustve","neednt","nal","neer","oclock","oer","ol","oughtnt","s","shallnt","shant","shed","shell","shes","shouldve","shouldnt","shouldntve","somebodys","someones","somethings","sore","thatll","thatre","thats","thatd","thered","therell","therere","theres","thesere","theseve","theyd","theyll","theyre","theyve","thiss","thosere","thoseve","tis","tove","twas","wanna","wasnt","wed","wedve","well","were","weve","werent","whatd","whatll","whatre","whats","whatve","whens","whered","wherell","wherere","wheres","whereve","whichd","whichll","whichre","whichs","whichve","whod","whodve","wholl","whore","whos","whove","whyd","whyre","whys","willnt","wont","wonnot","wouldve","wouldnt","wouldntve","yall","yalldve","yallre","youd","youll","youre","youve"];
 
 var BlogPost = {
@@ -114,7 +126,7 @@ var BlogPost = {
                         m('span', 'by ' + vnode.state.authorName + ' • ' + vnode.state.publishDate)
                     ]),
                     m('div', { class: 'blog-body-content bottom-divider' }, vnode.state.postContent),
-                    m('div', { 'id': "M628654ScriptRootC992110" }),
+                    m('div', { class: "OUTBRAIN", 'data-src': window.location.href, 'data-widget-id': 'GS_1' }),
                     vnode.state.category ? m(BloggerList, { url: 'https://blog.wonderfulsubs.com/feeds/posts/summary/-/' + vnode.state.category + '?alt=json&max-results=5', title: 'Recommended' }) : undefined,
                     vnode.state.show_comments ? m('div', { id: 'disqus_thread' }) : m('button', { class: 'show-comments-btn', onclick: loadDisqusComments.bind(this, vnode) }, 'Show Comments')
                 ])
@@ -201,7 +213,7 @@ var BlogPost = {
                     });
 
                     err(function() {
-                        loadMgidPlacements();
+                        loadOutbrainPlacements();
                     });
 
                     err(function() {

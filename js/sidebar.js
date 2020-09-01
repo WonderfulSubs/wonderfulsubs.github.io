@@ -33,9 +33,9 @@ var Sidebar = {
                         }
                     })
                 ]),
-                m('div', { id: 'M628654ScriptRootC994332', oncreate: function() {
+                m('div', { class: "OUTBRAIN", 'data-src': window.location.href, 'data-widget-id': 'GS_6', oncreate: function() {
                     var s = document.createElement('script');
-                    s.src = 'https://jsc.mgid.com/w/o/wonderfulsubs.com.994332.js';
+                    s.src = '//widgets.outbrain.com/outbrain.js';
                     s.async = true;
                     document.head.appendChild(s);
                 } }),
