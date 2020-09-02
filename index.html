@@ -2,409 +2,427 @@
 <html>
 
 <head>
-    <!-- Start Single Page Apps for GitHub Pages -->
-    <script type="text/javascript">
-        // Single Page Apps for GitHub Pages
-        // https://github.com/rafrex/spa-github-pages
-        // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
-        // ----------------------------------------------------------------------
-        // This script checks to see if a redirect is present in the query string
-        // and converts it back into the correct url and adds it to the
-        // browser's history using window.history.replaceState(...),
-        // which won't cause the browser to attempt to load the new url.
-        // When the single page app is loaded further down in this file,
-        // the correct url will be waiting in the browser's history for
-        // the single page app to route accordingly.
-        (function (l) {
-            if (l.search) {
-                var q = {};
-                l.search.slice(1).split('&').forEach(function (v) {
-                    var a = v.split('=');
-                    q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
-                });
-                if (q.p !== undefined) {
-                    window.history.replaceState(null, null,
-                        l.pathname.slice(0, -1) + (q.p || '') +
-                        (q.q ? ('?' + q.q) : '') +
-                        l.hash
-                    );
-                }
-            }
-        }(window.location))
-    </script>
-    <!-- End Single Page Apps for GitHub Pages -->
-
-    <script>
-        window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }, ga.l = +new Date, ga("create", "UA-84398451-4", "auto"), ga("require", "cleanUrlTracker", { stripQuery: !0, trailingSlash: "remove" }), ga("require", "pageVisibilityTracker", { sendInitialPageview: !0 }), ga("require", "urlChangeTracker", { fieldsObj: { dimension1: "virtual", shouldTrackUrlChange: function (e, a) { return e !== a } } });
-    </script>
-    <script async src="https://www.google-analytics.com/analytics.js"></script>
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
-
-    <title>WonderfulSubs | Anime Entertainment Paradise</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:site_name" content="WonderfulSubs">
-    <meta property="fb:app_id" content="2103300303228684">
-    <meta property="fb:pages" content="1468178876729959">
-    <meta name="twitter:site" content="WonderfulSubs">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="WonderfulSubs | Anime Entertainment Paradise">
-    <meta name="twitter:creator" content="@WonderfulSubs">
-    <meta property="og:image" content="https://www.wonderfulsubs.com/img/header.png">
-    <meta property="og:title" content="WonderfulSubs | Anime Entertainment Paradise">
-    <meta property="og:description" content="The best place on the web for all things Anime!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.wonderfulsubs.com">
-    <meta name="author" content="WonderfulSubs LLC">
-    <meta name="keywords" content="anime, manga, japan, otaku, japanese culture, weeaboo">
-    <meta name="description" content="The best place on the web for all things Anime!">
-
-    <meta name="theme-color" content="#171717">
-    <meta name="msapplication-TileColor" content="#ffffff">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff9900">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.2/picnic.min.css" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="/css/Home.css" />
-    <link rel="stylesheet" href="/css/Users.css" />
-    <link rel="stylesheet" href="/css/overrides.css" />
-    <link rel="stylesheet" href="/css/Login.css" />
-    <link rel="stylesheet" href="/css/Welcome.css" />
-    <link rel="stylesheet" href="/css/Watch.css" />
-    <link rel="stylesheet" href="/css/Club.css" />
-    <link rel="stylesheet" href="/css/Blog.css" />
-    <link rel="stylesheet" href="/css/sidebar.css" />
-    <link rel="stylesheet" href="/css/poster.css" />
-    <link rel="stylesheet" href="/css/showcase.css" />
-    <link rel="stylesheet" href="/css/player.css" />
-    <link rel="stylesheet" href="/css/posts.css" />
-    <link rel="stylesheet" href="/css/user.css" />
-    <link rel="stylesheet" href="/css/settings.css" />
-    <link rel="stylesheet" href="https://vjs.zencdn.net/7.6.6/video-js.min.css" />
-    <link rel="stylesheet" href="/css/vsg-skin.css" />
-    <link rel="stylesheet" href="/css/icons.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
-
-    <noscript id="deferred-styles">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
-        <link rel="stylesheet" href="/css/native-toast.css" />
-    </noscript>
-
-    <script>
-        var polyfills = [
-            { func: 'URL', url: '/js/ie-url-polyfill.js' },
-            { func: 'IntersectionObserver', url: '/js/intersection-observer.js' }
-        ];
-        polyfills.forEach(function (pf) {
-            if (typeof window[pf.func] !== 'function') {
-                document.write('<script type="text/javascript" src="' + pf.url + '"><\/script>');
-            }
-        });
-    </script>
-    <script src="https://vjs.zencdn.net/7.6.6/video.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.0/Youtube.min.js"></script>
-    <script src="/js/videojs-contrib-quality-levels.min.js"></script>
-    <script src="/js/videojs-hls-quality-selector.min.js"></script>
-    <script src="https://unpkg.com/mithril@2.0.4/mithril.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/markedjs/marked/lib/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.0.7/dist/purify.min.js"></script>
-    <script src="/js/native-toast.js"></script>
-    <script src="/js/helpers.js"></script>
-    <script src="/js/posts.js"></script>
-    <script src="/js/useritem.js"></script>
-    <script src="/js/poster.js"></script>
-    <script src="/js/showcase.js"></script>
-    <script src="/js/lists.js"></script>
-    <script src="/js/sidebar.js"></script>
-    <script src="/js/player.js"></script>
-    <script src="/js/user.js"></script>
-    <script src="/js/chatbox.js"></script>
-    <script src="/js/settings.js"></script>
-    <script src="/js/fileupload.js"></script>
-    <script src="/pages/Home.js"></script>
-    <script src="/pages/Login.js"></script>
-    <script src="/pages/Welcome.js"></script>
-    <script src="/pages/Users.js"></script>
-    <script src="/pages/Series.js"></script>
-    <script src="/pages/Genre.js"></script>
-    <script src="/pages/Watch.js"></script>
-    <script src="/pages/Search.js"></script>
-    <script src="/pages/Profile.js"></script>
-    <script src="/pages/Club.js"></script>
-    <script src="/pages/Blog.js"></script>
-    <script src="/pages/About.js"></script>
-    <script src="/pages/Contact.js"></script>
-    <script src="/pages/BlogPost.js"></script>
-    <script src="/js/darkthemecss.js" async></script>
-
-    <script type='application/ld+json'>
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "url": "https://www.wonderfulsubs.com",
-            "logo": "https://www.wonderfulsubs.com/img/icon.png"
-        }
-    </script>
-    <script type='application/ld+json'>
-        {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "WonderfulSubs",
-            "url": "https://www.wonderfulsubs.com",
-            "sameAs": [
-              "https://www.facebook.com/WonderfulSubs",
-              "https://twitter.com/WonderfulSubs",
-              "https://www.youtube.com/WonderfulSubs",
-              "https://www.instagram.com/wonderful.subs"
-            ]
-        }
-    </script>
-    <script type='application/ld+json'>
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "WonderfulSubs",
-            "url": "https://www.wonderfulsubs.com",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://www.wonderfulsubs.com/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
+<!-- Start Single Page Apps for GitHub Pages -->
+<script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // https://github.com/rafrex/spa-github-pages
+    // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+    // ----------------------------------------------------------------------
+    // This script checks to see if a redirect is present in the query string
+    // and converts it back into the correct url and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which won't cause the browser to attempt to load the new url.
+    // When the single page app is loaded further down in this file,
+    // the correct url will be waiting in the browser's history for
+    // the single page app to route accordingly.
+    (function (l) {
+        if (l.search) {
+            var q = {};
+            l.search.slice(1).split('&').forEach(function (v) {
+                var a = v.split('=');
+                q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+            });
+            if (q.p !== undefined) {
+                window.history.replaceState(null, null,
+                    l.pathname.slice(0, -1) + (q.p || '') +
+                    (q.q ? ('?' + q.q) : '') +
+                    l.hash
+                );
             }
         }
-    </script>
+    }(window.location))
+</script>
+<!-- End Single Page Apps for GitHub Pages -->
+
+<script>
+    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }, ga.l = +new Date, ga("create", "UA-84398451-4", "auto"), ga("require", "cleanUrlTracker", { stripQuery: !0, trailingSlash: "remove" }), ga("require", "pageVisibilityTracker", { sendInitialPageview: !0 }), ga("require", "urlChangeTracker", { fieldsObj: { dimension1: "virtual", shouldTrackUrlChange: function (e, a) { return e !== a } } });
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
+
+<title>WonderfulSubs | Anime Entertainment Paradise</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="WonderfulSubs">
+<meta property="fb:app_id" content="2103300303228684">
+<meta property="fb:pages" content="1468178876729959">
+<meta name="twitter:site" content="WonderfulSubs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WonderfulSubs | Anime Entertainment Paradise">
+<meta name="twitter:creator" content="@WonderfulSubs">
+<meta property="og:image" content="https://www.wonderfulsubs.com/img/header.png">
+<meta property="og:title" content="WonderfulSubs | Anime Entertainment Paradise">
+<meta property="og:description" content="The best place on the web for all things Anime!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.wonderfulsubs.com">
+<meta name="author" content="WonderfulSubs LLC">
+<meta name="keywords" content="anime, manga, japan, otaku, japanese culture, weeaboo">
+<meta name="description" content="The best place on the web for all things Anime!">
+
+<meta name="theme-color" content="#171717">
+<meta name="msapplication-TileColor" content="#ffffff">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff9900">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic@6.5.2/picnic.min.css" />
+<link rel="stylesheet" href="/css/main.css" />
+<link rel="stylesheet" href="/css/Home.css" />
+<link rel="stylesheet" href="/css/Users.css" />
+<link rel="stylesheet" href="/css/overrides.css" />
+<link rel="stylesheet" href="/css/Login.css" />
+<link rel="stylesheet" href="/css/Welcome.css" />
+<link rel="stylesheet" href="/css/Watch.css" />
+<link rel="stylesheet" href="/css/Club.css" />
+<link rel="stylesheet" href="/css/Blog.css" />
+<link rel="stylesheet" href="/css/sidebar.css" />
+<link rel="stylesheet" href="/css/poster.css" />
+<link rel="stylesheet" href="/css/showcase.css" />
+<link rel="stylesheet" href="/css/player.css" />
+<link rel="stylesheet" href="/css/posts.css" />
+<link rel="stylesheet" href="/css/user.css" />
+<link rel="stylesheet" href="/css/settings.css" />
+<link rel="stylesheet" href="https://vjs.zencdn.net/7.6.6/video-js.min.css" />
+<link rel="stylesheet" href="/css/vsg-skin.css" />
+<link rel="stylesheet" href="/css/icons.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
+
+<noscript id="deferred-styles">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
+    <link rel="stylesheet" href="/css/native-toast.css" />
+</noscript>
+
+<script>
+    var polyfills = [
+        { func: 'URL', url: '/js/ie-url-polyfill.js' },
+        { func: 'IntersectionObserver', url: '/js/intersection-observer.js' }
+    ];
+    polyfills.forEach(function (pf) {
+        if (typeof window[pf.func] !== 'function') {
+            document.write('<script type="text/javascript" src="' + pf.url + '"><\/script>');
+        }
+    });
+</script>
+<script src="https://vjs.zencdn.net/7.6.6/video.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.0/Youtube.min.js"></script>
+<script src="/js/videojs-contrib-quality-levels.min.js"></script>
+<script src="/js/videojs-hls-quality-selector.min.js"></script>
+<script src="https://unpkg.com/mithril@2.0.4/mithril.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/markedjs/marked/lib/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@2.0.7/dist/purify.min.js"></script>
+<script src="/js/native-toast.js"></script>
+<script src="/js/helpers.js"></script>
+<script src="/js/posts.js"></script>
+<script src="/js/useritem.js"></script>
+<script src="/js/poster.js"></script>
+<script src="/js/showcase.js"></script>
+<script src="/js/lists.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/player.js"></script>
+<script src="/js/user.js"></script>
+<script src="/js/chatbox.js"></script>
+<script src="/js/settings.js"></script>
+<script src="/js/fileupload.js"></script>
+<script src="/pages/Home.js"></script>
+<script src="/pages/Login.js"></script>
+<script src="/pages/Welcome.js"></script>
+<script src="/pages/Users.js"></script>
+<script src="/pages/Series.js"></script>
+<script src="/pages/Genre.js"></script>
+<script src="/pages/Watch.js"></script>
+<script src="/pages/Search.js"></script>
+<script src="/pages/Profile.js"></script>
+<script src="/pages/Club.js"></script>
+<script src="/pages/Blog.js"></script>
+<script src="/pages/About.js"></script>
+<script src="/pages/Contact.js"></script>
+<script src="/pages/BlogPost.js"></script>
+<script src="/js/darkthemecss.js" async></script>
+
+<script type='application/ld+json'>
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://www.wonderfulsubs.com",
+        "logo": "https://www.wonderfulsubs.com/img/icon.png"
+    }
+</script>
+<script type='application/ld+json'>
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "WonderfulSubs",
+        "url": "https://www.wonderfulsubs.com",
+        "sameAs": [
+            "https://www.facebook.com/WonderfulSubs",
+            "https://twitter.com/WonderfulSubs",
+            "https://www.youtube.com/WonderfulSubs",
+            "https://www.instagram.com/wonderful.subs"
+        ]
+    }
+</script>
+<script type='application/ld+json'>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "WonderfulSubs",
+        "url": "https://www.wonderfulsubs.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.wonderfulsubs.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+</script>
 
 
-    <script data-obct type="text/javascript">
-        /** DO NOT MODIFY THIS CODE**/
-        !function (_window, _document) {
-            var OB_ADV_ID = '00d621267ada7f2756ee02c889c6713edb';
-            if (_window.obApi) { var toArray = function (object) { return Object.prototype.toString.call(object) === '[object Array]' ? object : [object]; }; _window.obApi.marketerId = toArray(_window.obApi.marketerId).concat(toArray(OB_ADV_ID)); return; }
-            var api = _window.obApi = function () { api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments); }; api.version = '1.1'; api.loaded = true; api.marketerId = OB_ADV_ID; api.queue = []; var tag = _document.createElement('script'); tag.async = true; tag.src = '//amplify.outbrain.com/cp/obtp.js'; tag.type = 'text/javascript'; var script = _document.getElementsByTagName('script')[0]; script.parentNode.insertBefore(tag, script);
-        }(window, document);
-        obApi('track', 'PAGE_VIEW');
-    </script>
+<script data-obct type="text/javascript">
+    /** DO NOT MODIFY THIS CODE**/
+    !function (_window, _document) {
+        var OB_ADV_ID = '00d621267ada7f2756ee02c889c6713edb';
+        if (_window.obApi) { var toArray = function (object) { return Object.prototype.toString.call(object) === '[object Array]' ? object : [object]; }; _window.obApi.marketerId = toArray(_window.obApi.marketerId).concat(toArray(OB_ADV_ID)); return; }
+        var api = _window.obApi = function () { api.dispatch ? api.dispatch.apply(api, arguments) : api.queue.push(arguments); }; api.version = '1.1'; api.loaded = true; api.marketerId = OB_ADV_ID; api.queue = []; var tag = _document.createElement('script'); tag.async = true; tag.src = '//amplify.outbrain.com/cp/obtp.js'; tag.type = 'text/javascript'; var script = _document.getElementsByTagName('script')[0]; script.parentNode.insertBefore(tag, script);
+    }(window, document);
+    obApi('track', 'PAGE_VIEW');
+</script>
 
 
-    <!-- Pinterest Tag -->
-    <script>
-        !function (e) {
-            if (!window.pintrk) {
-                window.pintrk = function () {
-                    window.pintrk.queue.push(Array.prototype.slice.call(arguments))
-                }; var
-                    n = window.pintrk; n.queue = [], n.version = "3.0"; var
-                        t = document.createElement("script"); t.async = !0, t.src = e; var
-                            r = document.getElementsByTagName("script")[0];
-                r.parentNode.insertBefore(t, r)
-            }
-        }("https://s.pinimg.com/ct/core.js");
-        pintrk('load', '2613549131484', { em: '<user_email_address>' });
-        pintrk('page');
-    </script>
-    <noscript>
-        <img height="1" width="1" style="display:none;" alt=""
-            src="https://ct.pinterest.com/v3/?event=init&tid=2613549131484&pd[em]=<hashed_email_address>&noscript=1" />
-    </noscript>
-    <!-- end Pinterest Tag -->
+<!-- Pinterest Tag -->
+<script>
+    !function (e) {
+        if (!window.pintrk) {
+            window.pintrk = function () {
+                window.pintrk.queue.push(Array.prototype.slice.call(arguments))
+            }; var
+                n = window.pintrk; n.queue = [], n.version = "3.0"; var
+                    t = document.createElement("script"); t.async = !0, t.src = e; var
+                        r = document.getElementsByTagName("script")[0];
+            r.parentNode.insertBefore(t, r)
+        }
+    }("https://s.pinimg.com/ct/core.js");
+    pintrk('load', '2613549131484', { em: '<user_email_address>' });
+    pintrk('page');
+</script>
+<noscript>
+    <img height="1" width="1" style="display:none;" alt=""
+        src="https://ct.pinterest.com/v3/?event=init&tid=2613549131484&pd[em]=<hashed_email_address>&noscript=1" />
+</noscript>
+<!-- end Pinterest Tag -->
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '3220402948080860');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=3220402948080860&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
 </head>
 
 <body>
-    <div class="header">
-        <div class="nav-menu">
-            <nav class="nav-menu-content">
-                <div>
-                    <a href="/" onclick="routeAnchor(event, '/')">
-                        <img class="brand" src="/svg/logo.svg" />
-                    </a>
-                    <div class="user-panel-button" title="User Profile" onclick="showHideUserPanel()">
-                        <i class="icon-user-circle"></i>
-                    </div>
-                    <form class="nav-search" action="/search" onsubmit="getSearchResults(event)" acceptCharset="utf-8">
-                        <label>
-                            <input type="search" name="q" placeholder="Search..." autoComplete="off"
-                                onsubmit="dismissKeyboard(event)" onclick="event.target.form.style['z-index'] = '2'"
-                                onblur="event.target.form.style['z-index'] = ''">
-                            <i class="icon-search"
-                                onclick="if(window.innerWidth >= 768){getSearchResults(event.target.parentElement, true);}"></i>
-                        </label>
-                    </form>
-                    <div class="nav-buttons dropdown">
-                        <button class="dropbtn"><label>&#9776;</label></button>
-                        <div class="dropdown-content side-scroll animated faster">
-                            <!-- <button class="dropbtn subdrop"><label>Series</label></button>
-                            <div class="dropdown-content animated faster">
-                                <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
-                                <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
-                            </div> -->
-                            <a href="/blog" onclick="routeAnchor(event, '/blog');" class="button">Blog</a>
-                            <a href="/contact" onclick="routeAnchor(event, '/contact');" class="button">Contact</a>
-                        </div>
+<div class="header">
+    <div class="nav-menu">
+        <nav class="nav-menu-content">
+            <div>
+                <a href="/" onclick="routeAnchor(event, '/')">
+                    <img class="brand" src="/svg/logo.svg" />
+                </a>
+                <div class="user-panel-button" title="User Profile" onclick="showHideUserPanel()">
+                    <i class="icon-user-circle"></i>
+                </div>
+                <form class="nav-search" action="/search" onsubmit="getSearchResults(event)" acceptCharset="utf-8">
+                    <label>
+                        <input type="search" name="q" placeholder="Search..." autoComplete="off"
+                            onsubmit="dismissKeyboard(event)" onclick="event.target.form.style['z-index'] = '2'"
+                            onblur="event.target.form.style['z-index'] = ''">
+                        <i class="icon-search"
+                            onclick="if(window.innerWidth >= 768){getSearchResults(event.target.parentElement, true);}"></i>
+                    </label>
+                </form>
+                <div class="nav-buttons dropdown">
+                    <button class="dropbtn"><label>&#9776;</label></button>
+                    <div class="dropdown-content side-scroll animated faster">
+                        <!-- <button class="dropbtn subdrop"><label>Series</label></button>
+                        <div class="dropdown-content animated faster">
+                            <a href="/series" onclick="routeAnchor(event, '/series')" class="button">A-Z</a>
+                            <a href="/genre" onclick="routeAnchor(event, '/genre')" class="button">Genre</a>
+                        </div> -->
+                        <a href="/blog" onclick="routeAnchor(event, '/blog');" class="button">Blog</a>
+                        <a href="/contact" onclick="routeAnchor(event, '/contact');" class="button">Contact</a>
                     </div>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </div>
-    <div class="content-wrapper-container flex animated">
-        <div id="root" class="content-wrapper animated"></div>
-        <div id="mini-player"></div>
-        <div class="sidebar-container animated slideInDown"></div>
-    </div>
-    <div id="settings-panel" class="panel-body animated faster lists fadeInRight none"></div>
-    <div id="user-panel" class="panel-body animated faster lists fadeInRight none"></div>
-    <div class="panel-bg animated fadeIn faster" onclick="dismissOpenPanels();"></div>
+</div>
+<div class="content-wrapper-container flex animated">
+    <div id="root" class="content-wrapper animated"></div>
+    <div id="mini-player"></div>
+    <div class="sidebar-container animated slideInDown"></div>
+</div>
+<div id="settings-panel" class="panel-body animated faster lists fadeInRight none"></div>
+<div id="user-panel" class="panel-body animated faster lists fadeInRight none"></div>
+<div class="panel-bg animated fadeIn faster" onclick="dismissOpenPanels();"></div>
 
-    <script>
-        var miniPlayerFrag = document.createDocumentFragment();
-        m.mount(miniPlayerFrag, {
-            view: function () {
-                this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true, enableBackForwardButtons: /*true Fix this later*/ false } });
-                return this.player;
-            }
-        });
-        var WatchPlayer = {
-            dom: miniPlayerFrag.vnodes[0].dom,
-            player: miniPlayerFrag.vnodes[0].state.player.state.player
-        };
-
-        var miniPlayerContainer = document.getElementById('mini-player');
-        var miniPlayConfig = getStorage('mini_player_config');
-        if (miniPlayConfig) {
-            var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
-            var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
-            if (parseFloat(miniPlayConfig.right) < (window.innerWidth - (miniPlayerWidthHalf * 2))) {
-                miniPlayerContainer.style.right = miniPlayConfig.right;
-            }
-            if (parseFloat(miniPlayConfig.top) < window.innerHeight - miniPlayerHeightHalf) {
-                miniPlayerContainer.style.top = miniPlayConfig.top;
-            }
-            setStorage('mini_player_config', {
-                top: window.getComputedStyle(miniPlayerContainer).top,
-                right: window.getComputedStyle(miniPlayerContainer).right
-            });
+<script>
+    var miniPlayerFrag = document.createDocumentFragment();
+    m.mount(miniPlayerFrag, {
+        view: function () {
+            this.player = m(VideoPlayer, { options: { showTheaterToggle: true, disablePauseOnScroll: true, enableBackForwardButtons: /*true Fix this later*/ false } });
+            return this.player;
         }
+    });
+    var WatchPlayer = {
+        dom: miniPlayerFrag.vnodes[0].dom,
+        player: miniPlayerFrag.vnodes[0].state.player.state.player
+    };
 
-        window.addEventListener('resize', function () {
-            var rightStyle = window.getComputedStyle(miniPlayerContainer).right;
-            var topStyle = window.getComputedStyle(miniPlayerContainer).top;
-            var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
-            var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
-            if (parseFloat(rightStyle) >= (window.innerWidth - (miniPlayerWidthHalf * 2))) {
-                miniPlayerContainer.style.right = (window.innerWidth - (miniPlayerWidthHalf * 2)) + 'px';
-            }
-            if (parseFloat(topStyle) >= window.innerHeight - (miniPlayerHeightHalf * 2)) {
-                miniPlayerContainer.style.top = window.innerHeight - (miniPlayerHeightHalf * 2) + 'px';
-            }
-            setStorage('mini_player_config', {
-                top: window.getComputedStyle(miniPlayerContainer).top,
-                right: window.getComputedStyle(miniPlayerContainer).right
-            });
+    var miniPlayerContainer = document.getElementById('mini-player');
+    var miniPlayConfig = getStorage('mini_player_config');
+    if (miniPlayConfig) {
+        var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
+        var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
+        if (parseFloat(miniPlayConfig.right) < (window.innerWidth - (miniPlayerWidthHalf * 2))) {
+            miniPlayerContainer.style.right = miniPlayConfig.right;
+        }
+        if (parseFloat(miniPlayConfig.top) < window.innerHeight - miniPlayerHeightHalf) {
+            miniPlayerContainer.style.top = miniPlayConfig.top;
+        }
+        setStorage('mini_player_config', {
+            top: window.getComputedStyle(miniPlayerContainer).top,
+            right: window.getComputedStyle(miniPlayerContainer).right
         });
+    }
 
-        [{ type: 'mousemove', isMobile: false }, { type: 'touchmove', isMobile: true }].forEach(function (eventType) {
-            miniPlayerContainer.addEventListener(eventType.type, function (e) {
-                e.preventDefault();
-                if (eventType.isMobile) e = e.touches[0];
-                var buttonPressed = eventType.isMobile || ('which' in e ? e.which : e.buttons) === 1;
-                if (buttonPressed) {
-                    var elemWidthHalf = miniPlayerContainer.clientWidth / 2;
-                    var elemHeightHalf = miniPlayerContainer.clientHeight / 2;
-                    if (e.clientX <= elemWidthHalf) {
-                        miniPlayerContainer.style.right = (window.innerWidth - (elemWidthHalf * 2)) + 'px';
-                    } else if (e.clientX >= (window.innerWidth - elemWidthHalf)) {
-                        miniPlayerContainer.style.right = '0px';
-                    } else {
-                        miniPlayerContainer.style.right = (window.innerWidth - e.clientX - elemWidthHalf) + 'px';
-                    }
-                    if (e.clientY <= elemHeightHalf) {
-                        miniPlayerContainer.style.top = '0px';
-                    } else if (e.clientY >= (window.innerHeight - elemHeightHalf)) {
-                        miniPlayerContainer.style.top = window.innerHeight - elemWidthHalf + 'px';
-                    } else {
-                        miniPlayerContainer.style.top = (e.clientY - elemHeightHalf) + 'px';
-                    }
+    window.addEventListener('resize', function () {
+        var rightStyle = window.getComputedStyle(miniPlayerContainer).right;
+        var topStyle = window.getComputedStyle(miniPlayerContainer).top;
+        var miniPlayerWidthHalf = miniPlayerContainer.clientWidth / 2;
+        var miniPlayerHeightHalf = miniPlayerContainer.clientHeight / 2;
+        if (parseFloat(rightStyle) >= (window.innerWidth - (miniPlayerWidthHalf * 2))) {
+            miniPlayerContainer.style.right = (window.innerWidth - (miniPlayerWidthHalf * 2)) + 'px';
+        }
+        if (parseFloat(topStyle) >= window.innerHeight - (miniPlayerHeightHalf * 2)) {
+            miniPlayerContainer.style.top = window.innerHeight - (miniPlayerHeightHalf * 2) + 'px';
+        }
+        setStorage('mini_player_config', {
+            top: window.getComputedStyle(miniPlayerContainer).top,
+            right: window.getComputedStyle(miniPlayerContainer).right
+        });
+    });
+
+    [{ type: 'mousemove', isMobile: false }, { type: 'touchmove', isMobile: true }].forEach(function (eventType) {
+        miniPlayerContainer.addEventListener(eventType.type, function (e) {
+            e.preventDefault();
+            if (eventType.isMobile) e = e.touches[0];
+            var buttonPressed = eventType.isMobile || ('which' in e ? e.which : e.buttons) === 1;
+            if (buttonPressed) {
+                var elemWidthHalf = miniPlayerContainer.clientWidth / 2;
+                var elemHeightHalf = miniPlayerContainer.clientHeight / 2;
+                if (e.clientX <= elemWidthHalf) {
+                    miniPlayerContainer.style.right = (window.innerWidth - (elemWidthHalf * 2)) + 'px';
+                } else if (e.clientX >= (window.innerWidth - elemWidthHalf)) {
+                    miniPlayerContainer.style.right = '0px';
+                } else {
+                    miniPlayerContainer.style.right = (window.innerWidth - e.clientX - elemWidthHalf) + 'px';
                 }
+                if (e.clientY <= elemHeightHalf) {
+                    miniPlayerContainer.style.top = '0px';
+                } else if (e.clientY >= (window.innerHeight - elemHeightHalf)) {
+                    miniPlayerContainer.style.top = window.innerHeight - elemWidthHalf + 'px';
+                } else {
+                    miniPlayerContainer.style.top = (e.clientY - elemHeightHalf) + 'px';
+                }
+            }
+        });
+    });
+
+    [{ type: 'mouseup', isMobile: false }, { type: 'touchend', isMobile: true }, { type: 'touchcancel', isMobile: true }].forEach(function (eventType) {
+        miniPlayerContainer.addEventListener(eventType.type, function (e) {
+            if (eventType.isMobile) e = e.changedTouches[0];
+            setStorage('mini_player_config', {
+                top: window.getComputedStyle(miniPlayerContainer).top,
+                right: window.getComputedStyle(miniPlayerContainer).right
             });
         });
+    });
 
-        [{ type: 'mouseup', isMobile: false }, { type: 'touchend', isMobile: true }, { type: 'touchcancel', isMobile: true }].forEach(function (eventType) {
-            miniPlayerContainer.addEventListener(eventType.type, function (e) {
-                if (eventType.isMobile) e = e.changedTouches[0];
-                setStorage('mini_player_config', {
-                    top: window.getComputedStyle(miniPlayerContainer).top,
-                    right: window.getComputedStyle(miniPlayerContainer).right
-                });
-            });
-        });
+    var root = document.getElementById('root');
 
-        var root = document.getElementById('root');
+    m.route.prefix = '';
+    m.route(root, '/', {
+        '/': tmpRte,
+        // '/': Home,
+        '/blog': Blog,
+        '/about': About,
+        '/contact': Contact,
+        '/feed': Home,
+        '/login': Login,
+        '/signup': Welcome,
+        // '/series': Series,
+        // '/genre': Genre,
+        // '/popular': SeriesFeed.popular,
+        // '/updated': SeriesFeed.updated,
+        '/search': Search,
+        '/users': Users,
+        '/profile/:id': Profile,
+        '/club/:id': Club,
+        '/watch/:id': Watch,
+        '/blog/entry/:year/:month/:slug': BlogPost,
+        '/blog/post/:year/:month/:slug': BlogPost,
+    });
 
-        m.route.prefix = '';
-        m.route(root, '/', {
-            '/': tmpRte,
-            // '/': Home,
-            '/blog': Blog,
-            '/about': About,
-            '/contact': Contact,
-            '/feed': Home,
-            '/login': Login,
-            '/signup': Welcome,
-            // '/series': Series,
-            // '/genre': Genre,
-            // '/popular': SeriesFeed.popular,
-            // '/updated': SeriesFeed.updated,
-            '/search': Search,
-            '/users': Users,
-            '/profile/:id': Profile,
-            '/club/:id': Club,
-            '/watch/:id': Watch,
-            '/blog/entry/:year/:month/:slug': BlogPost,
-            '/blog/post/:year/:month/:slug': BlogPost,
-        });
+    var sidebarExists = document.querySelector('.sidebar-top-announcement');
+    if (!sidebarExists) {
+        m.mount(document.querySelector('.sidebar-container'), Sidebar);
+    }
 
-        var sidebarExists = document.querySelector('.sidebar-top-announcement');
-        if (!sidebarExists) {
-            m.mount(document.querySelector('.sidebar-container'), Sidebar);
-        }
+    var loadDeferredStyles = function () {
+        var addStylesNode = document.getElementById("deferred-styles");
+        var replacement = document.createElement("div");
+        replacement.innerHTML = addStylesNode.textContent;
+        document.body.appendChild(replacement)
+        addStylesNode.parentElement.removeChild(addStylesNode);
+    };
+    var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
+    else window.addEventListener('load', loadDeferredStyles);
 
-        var loadDeferredStyles = function () {
-            var addStylesNode = document.getElementById("deferred-styles");
-            var replacement = document.createElement("div");
-            replacement.innerHTML = addStylesNode.textContent;
-            document.body.appendChild(replacement)
-            addStylesNode.parentElement.removeChild(addStylesNode);
-        };
-        var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-        if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
-        else window.addEventListener('load', loadDeferredStyles);
+    // window.addEventListener('load', function setF() {
+    //     window.removeEventListener('load', setF);
 
-        // window.addEventListener('load', function setF() {
-        //     window.removeEventListener('load', setF);
+    //     var sidebar = document.querySelector('.sidebar-container');
+    //     var origOffsetY = sidebar.offsetTop;
 
-        //     var sidebar = document.querySelector('.sidebar-container');
-        //     var origOffsetY = sidebar.offsetTop;
+    //     function onScroll(e) {
+    //         var body = document.body,
+    //             html = document.documentElement;
 
-        //     function onScroll(e) {
-        //         var body = document.body,
-        //             html = document.documentElement;
+    //         var height = Math.max(body.scrollHeight, body.offsetHeight,
+    //             html.clientHeight, html.scrollHeight, html.offsetHeight);
+    //         if (window.scrollY < (height - 50)) {
+    //             sidebar.style.marginTop = window.scrollY + 'px';
+    //         }
+    //     }
 
-        //         var height = Math.max(body.scrollHeight, body.offsetHeight,
-        //             html.clientHeight, html.scrollHeight, html.offsetHeight);
-        //         if (window.scrollY < (height - 50)) {
-        //             sidebar.style.marginTop = window.scrollY + 'px';
-        //         }
-        //     }
-
-        //     document.addEventListener('scroll', onScroll);
-        // });
-    </script>
-    <script type="text/javascript">var subscribersSiteId='6755f731-5569-4c6c-a4da-f01533da2c5d';</script><script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
+    //     document.addEventListener('scroll', onScroll);
+    // });
+</script>
+<script type="text/javascript">var subscribersSiteId='6755f731-5569-4c6c-a4da-f01533da2c5d';</script><script type="text/javascript" src="https://cdn.subscribers.com/assets/subscribers.js"></script>
 </body>
 
 </html>
