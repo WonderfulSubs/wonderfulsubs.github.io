@@ -6,7 +6,7 @@ function insertNativePlcment(callback) {
             var maxNodesReached = false;
             var nodeIndex = 2;
 
-            var allowedElems = 'p,div > br,iframe.instagram-media,.twitter-tweet';
+            var allowedElems = 'p,div > br,h3,iframe.instagram-media,.twitter-tweet';
             var insertElems = Boolean(blogBodyContent.querySelector(allowedElems));
 
             while (maxNodesReached === false) {
