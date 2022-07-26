@@ -1,2 +1,3 @@
-User-Agent: *
-Allow: /blog
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
