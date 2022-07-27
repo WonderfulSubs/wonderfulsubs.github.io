@@ -1,12 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.dda0859b.css",
-    "main.js": "/static/js/main.6edd0cd6.js",
+    "main.js": "/static/js/main.593a7d72.js",
     "static/js/27.3add3fc4.chunk.js": "/static/js/27.3add3fc4.chunk.js",
-    "static/media/ws_logo.svg": "/static/media/ws_logo.233fd653241c52c17fb3428700912368.svg",
+    "static/media/ws_logo.svg": "/static/media/ws_logo.3496c345ad363981cf39a2883176d978.svg",
     "static/media/normal_mode_restore.mp3": "/static/media/normal_mode_restore.380f5c1fd313a4096457.mp3",
     "static/media/danger_mode_alarm.mp3": "/static/media/danger_mode_alarm.00e43c4b9dc561ec21ab.mp3",
     "static/media/button_lift_up.mp3": "/static/media/button_lift_up.2ff76b3e19d5c2898fb0.mp3",
+    "static/media/jpi_text.svg": "/static/media/jpi_text.c0480173fafb15852878c742a2a42dc4.svg",
     "static/media/button_press_in.mp3": "/static/media/button_press_in.b6f10a1125c79af355ec.mp3",
     "static/media/ws_icon.svg": "/static/media/ws_icon.b1fbb9ebb9dc7256962c317b84ceb4e7.svg",
     "static/media/button_undo.mp3": "/static/media/button_undo.52b930ade5794020e511.mp3",
@@ -24,6 +25,6 @@
   },
   "entrypoints": [
     "static/css/main.dda0859b.css",
-    "static/js/main.6edd0cd6.js"
+    "static/js/main.593a7d72.js"
   ]
 }
